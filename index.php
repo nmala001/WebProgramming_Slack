@@ -5,7 +5,7 @@ require_once 'php_action/db_connect.php';
 session_start();
 
 if(isset($_SESSION['userId'])){
-  header('location: http://localhost/slack/dashboard.php');
+  header('location: http://localhost/WebProgramming_Slack/dashboard.php');
 }
 
 $errors = array();
@@ -47,7 +47,7 @@ if($_POST){
 
 				$_SESSION['userId'] = $user_id;
 
-				header('location: http://localhost/slack/dashboard.php');
+				header('location: http://localhost/WebProgramming_Slack/dashboard.php');
 			}else{
 
 			$errors[] = "Incorrect username/password combination";
