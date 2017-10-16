@@ -81,7 +81,7 @@ if($_POST){
 	
 <style>
 body {
-    background-image: url("/WebProgramming_Slack/images/img2.jpg");
+    background-image: url("/slack/images/img2.jpg");
     background-size: cover;
 }
 </style>
@@ -91,7 +91,7 @@ body {
 
 <body>
         <div class="top_block">
-   <h1> <img src="/WebProgramming_Slack/images/img4.jpg" class="img-circle" alt="icon" style="float:left;width:400px;height:400px;"><font size="300">Welcome to Slack</font></h1>
+   <h1> <img src="/slack/images/img4.jpg" class="img-circle" alt="icon" style="float:left;width:400px;height:400px;"><font size="300">Welcome to Slack</font></h1>
         </div>
 <div class= "container">
 	<div class="row vertical">
