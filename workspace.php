@@ -5,7 +5,7 @@ global $connect;
 session_start();
 
 if(isset($_SESSION['workSpace'])){
-  header('location: http://localhost/Slack_1/index.php');
+  header('location: http://localhost/WebProgramming_Slack/index.php');
 }
 /*
 if($_POST){
