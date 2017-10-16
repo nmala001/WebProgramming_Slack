@@ -7,29 +7,7 @@ session_start();
 if(isset($_SESSION['workSpace'])){
   header('location: http://localhost/WebProgramming_Slack/index.php');
 }
-/*
-if($_POST){
-  $wname=$_POST['workspace'];
-  
-        if($wname == ""){
-          $errors[] = "Workspace is required";
-        }
-        else
-        {
-          $sql = "SELECT * FROM workspace WHERE wname = '$wname'";
-          $result = $connect->query($sql);
-        
-          if($result-> num_rows == 1)
-          {
-          header('location: http://localhost/Slack_1/index.php');
-      	  }
-          else
-          {
-          $errors[] = "Workspace does not exists";
-     	  }
-        }
-?>
- */
+
  if($_POST){
 		$wsname = $_POST['workspace'];
 
@@ -49,13 +27,13 @@ if($_POST){
 					if(!$sql)
 					{
 							$errors[] = "Incorrect workspace";
-							//header('location: http://localhost/Slack_1/index.php');
+							
 					}
 					else{
 
 						$_SESSION['workSpace'] = $wsname;
-						//$errors[] = "Incorrect workspace";
-						header('location: http://localhost/Slack_1/index.php');
+	
+						header('location: http://localhost/WebProgramming_Slack/index.php');
 				    }
 					
 			}
