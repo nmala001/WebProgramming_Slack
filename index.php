@@ -5,7 +5,7 @@ require_once 'php_action/db_connect.php';
 session_start();
 
 if(isset($_SESSION['userId'])){
-  header('location: http://localhost/slack/dashboard.php');
+  header('location: http://localhost/WebProgramming_Slack/dashboard.php');
 }
 
 $errors = array();
@@ -47,7 +47,7 @@ if($_POST){
 
 				$_SESSION['userId'] = $user_id;
 
-				header('location: http://localhost/slack/dashboard.php');
+				header('location: http://localhost/WebProgramming_Slack/dashboard.php');
 			}else{
 
 			$errors[] = "Incorrect username/password combination";
@@ -81,7 +81,7 @@ if($_POST){
 	
 <style>
 body {
-    background-image: url("/slack/images/img2.jpg");
+    background-image: url("/WebProgramming_Slack/images/img2.jpg");
     background-size: cover;
 }
 </style>
@@ -91,7 +91,7 @@ body {
 
 <body>
         <div class="top_block">
-   <h1> <img src="/slack/images/img4.jpg" class="img-circle" alt="icon" style="float:left;width:400px;height:400px;"><font size="300">Welcome to Slack</font></h1>
+   <h1> <img src="/WebProgramming_Slack/images/img4.jpg" class="img-circle" alt="icon" style="float:left;width:400px;height:400px;"><font size="300">Welcome to Slack</font></h1>
         </div>
 <div class= "container">
 	<div class="row vertical">
