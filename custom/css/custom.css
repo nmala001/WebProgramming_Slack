@@ -1,7 +1,56 @@
 /*login form*/
 
-.vertical{
 
-    padding-top: 150px;
+.top_block{
+    padding-top:2%;
+    position:absolute;
+    border:none;
+    text-align: center;
+    width:100%;
+    font-family: sans-serif; 
+    color: #fff;
+    font-size: 800px;
+    padding-right: 270px;
+
+}
+.vertical{
+	padding-top: 200px;
 	padding-bottom: 150px;
 }
+
+#username{
+	margin: 10px 0;
+	width: 350px;
+   
+}
+
+#password{
+	margin: 10px 0;
+	width: 350px;
+}
+
+.panel-heading {
+    height:80px;
+    background-color: #333;
+
+}
+
+.panel{
+	width:500px;
+	height:420px; 
+}
+
+.panel-default > .panel-heading{
+	background-color: #008B8B !important;
+}
+
+h3.panel-title {
+  color: white;
+  font-size:25px;
+  padding-top:20px;
+}
+
+
+
+
+
