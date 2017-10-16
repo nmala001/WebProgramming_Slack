@@ -1,8 +1,8 @@
 <?php  
 
-$localhost = "localhost";
-$username = "admin";
-$password =  "M0n@rch$";
+$localhost = "127.0.0.1";
+$username = "root";
+$password =  "";
 $dbname  = "slack";
 
 

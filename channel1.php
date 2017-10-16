@@ -1,5 +1,35 @@
 <?php
 include("dashboard.php");
+require_once 'php_action/db_connect.php';
+
+/*if(isset($_POST['submit'])){
+
+
+//$submit = $mymysqli -> real_escape_string($_POST['search']);
+
+//Query the database
+
+//$resultset = $mysqli -> query("SELECT * FROM ")
+
+
+	$message = $_POST['message'];
+	$username = $_POST['username'];
+	$channel = $_POST['channel'];
+
+	$sql = "INSERT into message values('$message')";
+	$query = mysql_query($sql);
+
+	if(!$query)
+
+		echo mysql_error();
+
+	else
+
+		echo "succesfully inserted";
+
+}*/
+
+
 ?>
 
 
@@ -30,8 +60,13 @@ include("dashboard.php");
 
 <div id="textarea">
 
-<textarea  rows="2" cols="100" placeholder="Type your message here..."></textarea>
- <input type="submit" value="Submit">
+<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+
+<textarea  rows="2" cols="100" name="message"  placeholder="Type your message here..."></textarea>
+
+
+ <input type="submit" value="submit">
+ </form>
 
 </div>
 	
