@@ -6,7 +6,7 @@ require_once 'php_action/db_connect.php';
 session_start();
 
 if(isset($_SESSION['userId']) && isset($_SESSION['userName'])){
-  header('location: http://localhost/WebProgramming_Slack/dashboard.php');
+  header('location: dashboard.php');
 }
 
 $errors = array();
