@@ -11,7 +11,21 @@
 </style>
 
 
+
+
+
+
 <?php
+
+require_once 'php_action/core.php';
+require_once 'php_action/db_connect.php';
+require_once 'queries.php';
+
+if(isset($_POST['message'])){
+  insertMessages();
+}
+
+
 //require_once('custom/css/stylemsg.css');
 //echo "<link rel='stylesheet' type='text/css' href='custom/css/stylemsg.css' />";
 function getAllChannels(){
@@ -52,22 +66,29 @@ function getAllUsers(){
 /* inserting messages into database */
 function insertMessages(){
   global $connect;
-   $sql = "INSERT INTO 'message' (message_id,created_by,created_time,message,channel_id) VALUES (NULL,'$created_by', CURRENT_TIMESTAMP ,'$message','$channel_id' )";
+
+   $created_by=$_POST['user_id'];
+   $channel_id=$_POST['channel_id'];
+   $message=$_POST['message'];
+
+   $sql = "INSERT INTO `message` (message_id,created_by,created_time,message,channel_id) VALUES (NULL,'$created_by', CURRENT_TIMESTAMP ,'$message','$channel_id' )";
    $result = $connect->query($sql);
+   $location = 'location: http://localhost/WebProgramming_Slack/dashboard.php?channel_id='.$channel_id;
+   echo $location;
+   header($location);
+   // if ($result->num_rows > 0) {
+   //    $message = '';
+   //    while($row = $result->fetch_assoc()) {
 
-   if ($result->num_rows > 0) {
-      $message = '';
-      while($row = $result->fetch_assoc()) {
-
-            $message = $message."<li><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['message']." </a></li>";
+   //          $message = $message."<li> <a href=dashboard.php?channel_id= ".$row['channel_id'].">  ".$row['message']." </a></li>";
            
-       }
-       return $message;
-    }
-    else{
+   //     }
+   //     return $message;
+   //  }
+   //  else{
 
-      return 0;
-    }
+   //    return 0;
+   //  }
 
 
 }
@@ -76,6 +97,8 @@ function getMessages($channel_id){
 
   global $connect;
   // global $channel_id;
+
+  //echo "$channel_id";
 
   
 
@@ -89,14 +112,16 @@ function getMessages($channel_id){
       while($row = $result->fetch_assoc()) {
             //$message = $message."<div class="msg"><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
             //$message = $message."<div><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
+
             //echo "<div style='color:red;'>".$message."</div>" ;//
 
-            echo $message."<div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div>";
+            echo $message."<a href=dashboard.php> <div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div> </a>";
        }
     
        return $message;
     }
     else{
+
       return 0;
     }
 

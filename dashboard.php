@@ -7,6 +7,10 @@ require_once 'queries.php';
 $user = $_SESSION['userId'];
 //$userdispname=$_SESSION['user']
 $channel_id ;
+
+$username = $_SESSION['userName'];
+
+
 // echo $user;
 ?>
 
@@ -29,369 +33,6 @@ $channel_id ;
 
 </head>
 
-<style>
-
-body {
-    position: relative;
-    overflow-x: hidden;
-}
-body,
-html { height: 100%;
-background-color:#e1f0f2;
-
-
-
-}
-.nav .open > a, 
-.nav .open > a:hover, 
-.nav .open > a:focus {background-color: transparent;}
-
-/*-------------------------------*/
-/*           Wrappers            */
-/*-------------------------------*/
-
-/*-------------Message Box------------------*/
-
-#textarea{
-
-  padding-top: 850px;
-  margin-left: 550px;
-  padding-left: 300px;
-
-
-}
-
-#msg-btn{
-
-  margin-left: 1550px;
-  margin-top: -45px;
-
-
-
-
-
-
-}
-
-.input-group{
-
-  width:1000px;
-}
-
-.navbar-collapse.collapse {
-  display: block!important;
-}
-
-.navbar-nav>li, .navbar-nav {
-  float: left !important;
-}
-
-
-#wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
-#wrapper.toggled {
-    padding-left: 220px;
-}
-
-#sidebar-wrapper {
-    z-index: 1000;
-    left: 220px;
-    width: 0;
-    height: 100%;
-    margin-left: -220px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: #1a1a1a;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
-#sidebar-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-    width: 511px;
-}
-
-#page-content-wrapper {
-    width: 100%;
-    padding-top: 70px;
-    padding-left: 300px;
-    
-}
-
-
-.overflow-chat{
-
-    overflow-y: scroll;
-    border: 2px solid #848383;
-    border-radius: 4px;
-    width: 900px;
-    height: 700px;
-    background-color:#f2fdff;
-
-
-
-}
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -220px;
-
-}
-
-/*-------------------------------*/
-/*     Sidebar nav styles        */
-/*-------------------------------*/
-
-.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 220px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.sidebar-nav li {
-    position: relative; 
-    line-height: 20px;
-    display: inline-block;
-    width: 100%;
-}
-
-.sidebar-nav li:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    height: 100%;
-    width: 3px;
-    background-color: #1c1c1c;
-    -webkit-transition: width .2s ease-in;
-      -moz-transition:  width .2s ease-in;
-       -ms-transition:  width .2s ease-in;
-            transition: width .2s ease-in;
-
-}
-.sidebar-nav li:first-child a {
-    color: #fff;
-    background-color: #1a1a1a;
-}
-.sidebar-nav li:nth-child(2):before {
-    background-color: #ec1b5a;   
-}
-.sidebar-nav li:nth-child(3):before {
-    background-color: #79aefe;   
-}
-.sidebar-nav li:nth-child(4):before {
-    background-color: #314190;   
-}
-.sidebar-nav li:nth-child(5):before {
-    background-color: #279636;   
-}
-.sidebar-nav li:nth-child(6):before {
-    background-color: #7d5d81;   
-}
-.sidebar-nav li:nth-child(7):before {
-    background-color: #ead24c;   
-}
-.sidebar-nav li:nth-child(8):before {
-    background-color: #2d2366;   
-}
-.sidebar-nav li:nth-child(9):before {
-    background-color: #35acdf;   
-}
-.sidebar-nav li:hover:before,
-.sidebar-nav li.open:hover:before {
-    width: 100%;
-    -webkit-transition: width .2s ease-in;
-      -moz-transition:  width .2s ease-in;
-       -ms-transition:  width .2s ease-in;
-            transition: width .2s ease-in;
-
-}
-
-.sidebar-nav li a {
-    display: block;
-    color: #ddd;
-    text-decoration: none;
-    padding: 10px 15px 10px 30px;    
-}
-
-.sidebar-nav li a:hover,
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus,
-.sidebar-nav li.open a:hover,
-.sidebar-nav li.open a:active,
-.sidebar-nav li.open a:focus{
-    color: #fff;
-    text-decoration: none;
-    background-color: transparent;
-}
-
-.sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 20px;
-    line-height: 44px;
-}
-.sidebar-nav .dropdown-menu {
-    position: relative;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    border-radius: 0;
-    border: none;
-    background-color: #222;
-    box-shadow: none;
-}
-
-/*-------------------------------*/
-/*       Hamburger-Cross         */
-/*-------------------------------*/
-
-.hamburger {
-  position: fixed;
-  top: 20px;  
-  z-index: 999;
-  display: block;
-  width: 32px;
-  height: 32px;
-  margin-left: 15px;
-  background: transparent;
-  border: none;
-}
-.hamburger:hover,
-.hamburger:focus,
-.hamburger:active {
-  outline: none;
-}
-.hamburger.is-closed:before {
-  content: '';
-  display: block;
-  width: 100px;
-  font-size: 14px;
-  color: #fff;
-  line-height: 32px;
-  text-align: center;
-  opacity: 0;
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-closed:hover:before {
-  opacity: 1;
-  display: block;
-  -webkit-transform: translate3d(-100px,0,0);
-  -webkit-transition: all .35s ease-in-out;
-}
-
-.hamburger.is-closed .hamb-top,
-.hamburger.is-closed .hamb-middle,
-.hamburger.is-closed .hamb-bottom,
-.hamburger.is-open .hamb-top,
-.hamburger.is-open .hamb-middle,
-.hamburger.is-open .hamb-bottom {
-  position: absolute;
-  left: 0;
-  height: 4px;
-  width: 100%;
-}
-.hamburger.is-closed .hamb-top,
-.hamburger.is-closed .hamb-middle,
-.hamburger.is-closed .hamb-bottom {
-  background-color: #1a1a1a;
-}
-.hamburger.is-closed .hamb-top { 
-  top: 5px; 
-  -webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-closed .hamb-middle {
-  top: 50%;
-  margin-top: -2px;
-}
-.hamburger.is-closed .hamb-bottom {
-  bottom: 5px;  
-  -webkit-transition: all .35s ease-in-out;
-}
-
-.hamburger.is-closed:hover .hamb-top {
-  top: 0;
-  -webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-closed:hover .hamb-bottom {
-  bottom: 0;
-  -webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-open .hamb-top,
-.hamburger.is-open .hamb-middle,
-.hamburger.is-open .hamb-bottom {
-  background-color: #1a1a1a;
-}
-.hamburger.is-open .hamb-top,
-.hamburger.is-open .hamb-bottom {
-  top: 50%;
-  margin-top: -2px;  
-}
-.hamburger.is-open .hamb-top { 
-  -webkit-transform: rotate(45deg);
-  -webkit-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
-}
-.hamburger.is-open .hamb-middle { display: none; }
-.hamburger.is-open .hamb-bottom {
-  -webkit-transform: rotate(-45deg);
-  -webkit-transition: -webkit-transform .2s cubic-bezier(.73,1,.28,.08);
-}
-.hamburger.is-open:before {
-  content: '';
-  display: block;
-  width: 100px;
-  font-size: 14px;
-  color: #fff;
-  line-height: 32px;
-  text-align: center;
-  opacity: 0;
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-transition: all .35s ease-in-out;
-}
-.hamburger.is-open:hover:before {
-  opacity: 1;
-  display: block;
-  -webkit-transform: translate3d(-100px,0,0);
-  -webkit-transition: all .35s ease-in-out;
-}
-
-/*-------------------------------*/
-/*            Overlay            */
-/*-------------------------------*/
-
-.overlay {
-    position: fixed;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(250,250,250,.8);
-    z-index: 1;
-
-
-	
-
-
-</style>
-
-
 <body >
 <div id="wrapper" >
         <div class="overlay"></div>
@@ -400,9 +41,20 @@ background-color:#e1f0f2;
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
             <ul class="nav sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
-                       Stud-Collab
-                    </a>
+              
+                       Stud-Collab 
+                    
+                </li>
+                 <li class="welcome">
+                    
+                      <?php
+
+
+                        echo "Welcome" ."       " .$username;
+
+
+                      ?> 
+                    
                 </li>
                 <li>
                     <a href="logout.php">Signout</a>
@@ -451,10 +103,67 @@ background-color:#e1f0f2;
                 <div class="overflow-chat">
                     <div class="col-lg-8 col-lg-offset-2">
                         <h1>Welcome to Stud-Collab</h1>
-                        <?php  $result = getMessages($_GET["channel_id"]); echo $result; ?>
-                                                
+
+                        <?php 
+
+                          if(isset($_GET["channel_id"])){
+
+                            $result = getMessages($_GET["channel_id"]); 
+                          }else{
+
+                            $result = getMessages(1); 
+                          } echo $result;
+                        ?>
+                          
                     </div>
-                </div>
+
+                    
+                    
+
+                      
+                     
+                    
+
+
+
+                      </div>
+
+                      
+                    </div>
+
+
+                    
+
+                      <form  action="queries.php" method="POST" >
+
+                        <div  id= "textarea" class="input-group input-group-lg">
+                          
+                           <span class="input-group-addon" id="sizing-addon1">+</span>
+                           <input type="text" class="form-control" placeholder="Type Your Message..." name = "message" aria-describedby="sizing-addon1">
+                           <input type="hidden" name="user_id" value = <?php echo $user ?>>
+                           <input type="hidden" name="channel_id" value=<?php if (isset($_GET["channel_id"])) {
+                            echo $_GET["channel_id"];}
+                            else{
+                              $var = 1;
+                              echo $var;
+                              } ?>>
+
+
+                        </div>
+
+                         <div id="msg-btn">
+
+
+
+                            <input type="button" style="height: 45px; width: 90px; background-color:#58b759; color: white " value="Submit">
+
+                        </div>
+                      </form>
+
+
+
+
+                
                 </div>
             </div>
         </div>
@@ -462,45 +171,10 @@ background-color:#e1f0f2;
 
     </div>
 
-    <!-- <div id="textarea">
-
-<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
-
-<textarea  rows="2" cols="100" name="message"  placeholder="Type your message here..."></textarea>
-
-
- <input type="submit" value="submit">
- </form>
-
-</div> -->
+    
 
 
 
-<form  action="messages.php" method="POST">
-
-<div  id= "textarea" class="input-group input-group-lg">
-  
-   <span class="input-group-addon" id="sizing-addon1">+</span>
-   <input type="text" class="form-control" placeholder="Type Your Message..." name = "message" aria-describedby="sizing-addon1">
-   <input type="hidden" name="user_id" value = <?php echo $user ?>>
-   <input type="hidden" name="channel_id" value=<?php if (isset($_GET["channel_id"])) {
-    echo $_GET["channel_id"];} ?>>
-
-
-</div>
-<div id="msg-btn">
-
-
-
-<input type="button" style="height: 45px; width: 90px; background-color:#58b759; color: white " value="Submit">
-
-<!-- <?php  $result = insertMessages(); echo $result; ?> -->
-
-
-
-</div>
-
-</form>
 
 </body>
 

@@ -2,9 +2,10 @@
 
 require_once 'php_action/db_connect.php';
 
+
 session_start();
 
-if(isset($_SESSION['userId'])){
+if(isset($_SESSION['userId']) && isset($_SESSION['userName'])){
   header('location: http://localhost/WebProgramming_Slack/dashboard.php');
 }
 
@@ -41,11 +42,14 @@ if($_POST){
 
 				$value = $mainResult -> fetch_assoc();
 				$user_id = $value['user_id'];
+				$user_name = $value['user_name'];
 
 
 				//set session
 
 				$_SESSION['userId'] = $user_id;
+				$_SESSION['userName'] = $username;
+
 
 				header('location: http://localhost/WebProgramming_Slack/dashboard.php');
 			}else{
