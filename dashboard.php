@@ -45,13 +45,11 @@ $username = $_SESSION['userName'];
                        Stud-Collab 
                     
                 </li>
-                 <li class="welcome">
+                 <li id="welcome_msg">
                     
                       <?php
 
-
                         echo "Welcome" ."       " .$username;
-
 
                       ?> 
                     
@@ -147,23 +145,15 @@ $username = $_SESSION['userName'];
                               $var = 1;
                               echo $var;
                               } ?>>
-
-
-                        </div>
-
-                         <div id="msg-btn">
-
-
-
-                            <input type="button" style="height: 45px; width: 90px; background-color:#58b759; color: white " value="Submit">
-
                         </div>
                       </form>
 
+                         <div id="msg-btn">
+                            <input type="button" style="height: 45px; width: 90px; background-color:#58b759; color: white " value="Submit">
 
+                        </div>
+                      
 
-
-                
                 </div>
             </div>
         </div>
