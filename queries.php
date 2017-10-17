@@ -1,20 +1,30 @@
 <style>
 .msg{
   height:70px ;
-  color: black ;
+  color: blue ;
   box-sizing: content-box;
   border: 2px  solid #b7b3b6;
   border-radius: 18px;
   margin-bottom: 10px;
+  font-family: sans-serif;
+  font-size: 17px;
+  ba
+}
+#s1{
+  color: Black;
+  font-style: 
+  font-family:;
+  font-size:;
 
 }
+#s2{
+  color: grey;
+
+}
+#s3{
+  color: #373131;
+}
 </style>
-
-
-
-
-
-
 <?php
 
 require_once 'php_action/core.php';
@@ -115,7 +125,10 @@ function getMessages($channel_id){
 
             //echo "<div style='color:red;'>".$message."</div>" ;//
 
-            echo $message."<a href=dashboard.php> <div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div> </a>";
+            //echo $message."<a href=dashboard.php> <div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div> </a>";
+            echo $message."<div class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
+            <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp;<span id=\"s3\">".$row['message']."</span></div>";
        }
     
        return $message;

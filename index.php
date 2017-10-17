@@ -60,7 +60,7 @@ if($_POST){
 		}
 	}else{
 
-			$errors[] = "Username doesnot exists";
+			$errors[] = "Username does not exists";
 		}
 	}
 }
