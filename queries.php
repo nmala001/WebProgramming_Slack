@@ -83,7 +83,7 @@ function insertMessages(){
 
    $sql = "INSERT INTO `message` (message_id,created_by,created_time,message,channel_id) VALUES (NULL,'$created_by', CURRENT_TIMESTAMP ,'$message','$channel_id' )";
    $result = $connect->query($sql);
-   $location = 'location: http://localhost/WebProgramming_Slack/dashboard.php?channel_id='.$channel_id;
+   $location = 'location: dashboard.php?channel_id='.$channel_id;
    echo $location;
    header($location);
    // if ($result->num_rows > 0) {
