@@ -1,6 +1,7 @@
 <style>
 .msg{
-  height:70px ;
+  min-height: 50px;
+  overflow: hidden;
   color: blue ;
   box-sizing: content-box;
   border: 2px  solid #b7b3b6;
@@ -8,7 +9,7 @@
   margin-bottom: 10px;
   font-family: sans-serif;
   font-size: 17px;
-  ba
+  width: 750px;
 }
 #s1{
   color: Black;
