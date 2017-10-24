@@ -83,7 +83,7 @@ function insertMessages(){
 
    $sql = "INSERT INTO `message` (message_id,created_by,created_time,message,channel_id) VALUES (NULL,'$created_by', CURRENT_TIMESTAMP ,'$message','$channel_id' )";
    $result = $connect->query($sql);
-   $location = 'location: http://localhost/WebProgramming_Slack/dashboard.php?channel_id='.$channel_id;
+   $location = 'location: dashboard.php?channel_id='.$channel_id;
    echo $location;
    header($location);
    // if ($result->num_rows > 0) {
@@ -126,7 +126,7 @@ function getMessages($channel_id){
             //echo "<div style='color:red;'>".$message."</div>" ;//
 
             //echo $message."<a href=dashboard.php> <div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div> </a>";
-            echo $message."<div class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
+            echo $message.  "<div class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
             <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp;<span id=\"s3\">".$row['message']."</span></div>";
        }

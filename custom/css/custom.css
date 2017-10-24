@@ -412,11 +412,13 @@ background-color:#e1f0f2;
     z-index: 1;
 }
 #welcome_msg{
-        font-size: 5px;
+        font-size: 20px;
 }
 .form-control{
   width: 720px;
 }  
+
+
 
 
 
