@@ -49,7 +49,9 @@ $username = $_SESSION['userName'];
                     
                       <?php
 
-                        echo "Welcome" ."       " .$username;
+                        $welcome = "Welcome" ."       " .$username;
+
+                        echo htmlspecialchars_decode($welcome);
 
                       ?> 
                     
@@ -72,13 +74,13 @@ $username = $_SESSION['userName'];
                     <!-- <li><a href="channel1.php">Channel1</a></li>
                     <li><a href="channel2.php">Channel2</a></li>
                     <li><a href="channel3.php">Channel3</a></li> -->
-                    <?php  $result = getAllChannels(); echo $result; ?>
+                    <?php  $result = getAllChannels(); echo htmlspecialchars_decode($result); ?>
 
                   </ul>
                   <li>
                     <a href="#">Direct Messages</a>
 
-                    <?php  $result = getAllUsers(); echo $result; ?>
+                    <?php  $result = getAllUsers(); echo htmlspecialchars_decode($result); ?>
                 </li> 
                 </li>
       
@@ -110,7 +112,7 @@ $username = $_SESSION['userName'];
                           }else{
 
                             $result = getMessages(1); 
-                          } echo $result;
+                          } echo htmlspecialchars_decode($result);
                         ?>
                           
                     </div>
@@ -138,12 +140,12 @@ $username = $_SESSION['userName'];
                           
                            <span class="input-group-addon" id="sizing-addon1">+</span>
                            <input type="text" class="form-control" placeholder="Type Your Message..." name = "message" aria-describedby="sizing-addon1">
-                           <input type="hidden" name="user_id" value = <?php echo $user ?>>
+                           <input type="hidden" name="user_id" value = <?php echo htmlspecialchars_decode($user) ?>>
                            <input type="hidden" name="channel_id" value=<?php if (isset($_GET["channel_id"])) {
                             echo $_GET["channel_id"];}
                             else{
                               $var = 1;
-                              echo $var;
+                              echo htmlspecialchars_decode($var);
                               } ?>>
                         </div>
                       </form>
