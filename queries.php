@@ -41,7 +41,7 @@ if(isset($_POST['message'])){
 function getAllChannels(){
   global $connect;
     $sql = "SELECT * FROM channel";
-    $result = $connect->query($sql);
+    $result = $connect-> query($sql);
 
     if ($result->num_rows > 0) {
       $channel = '';
@@ -77,9 +77,9 @@ function getAllUsers(){
 function insertMessages(){
   global $connect;
 
-   $created_by=$_POST['user_id'];
-   $channel_id=$_POST['channel_id'];
-   $message=$_POST['message'];
+   $created_by= mysqli_real_escape_string($connect,$_POST['user_id']);
+   $channel_id= mysqli_real_escape_string($connect, $_POST['channel_id']);
+   $message = mysqli_real_escape_string($connect, $_POST['message']);
 
    $sql = "INSERT INTO `message` (message_id,created_by,created_time,message,channel_id) VALUES (NULL,'$created_by', CURRENT_TIMESTAMP ,'$message','$channel_id' )";
    $result = $connect->query($sql);
@@ -126,9 +126,13 @@ function getMessages($channel_id){
             //echo "<div style='color:red;'>".$message."</div>" ;//
 
             //echo $message."<a href=dashboard.php> <div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div> </a>";
+
+
+            $newmessage = htmlspecialchars($row['message']);
+
             echo $message.  "<div class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
-            <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp;<span id=\"s3\">".$row['message']."</span></div>";
+            <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp;<span id=\"s3\">".$newmessage."</span></div>";
        }
     
        return $message;
@@ -137,9 +141,6 @@ function getMessages($channel_id){
 
       return 0;
     }
-
-
-
 
 }
 
