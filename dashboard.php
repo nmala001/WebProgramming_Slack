@@ -34,102 +34,80 @@ $username = $_SESSION['userName'];
 </head>
 
 <body >
-<div id="wrapper" >
-        <div class="overlay"></div>
-    
-       
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
-            <ul class="nav sidebar-nav">
-                <li class="sidebar-brand">
-              
-                       Stud-Collab 
-                    
-                </li>
-                 <li id="welcome_msg">
-                    
-                      <?php
 
-                        $welcome = "Welcome" ."       " .$username;
 
-                        echo htmlspecialchars_decode($welcome);
 
-                      ?> 
-                    
-                </li>
-                <li>
-                    <a href="logout.php">Signout</a>
-                </li>
-                <li>
-                    <a href="#">Home</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Threads</a>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <!-- <li><a href="channel1.php">Channel1</a></li>
-                    <li><a href="channel2.php">Channel2</a></li>
-                    <li><a href="channel3.php">Channel3</a></li> -->
-                    <?php  $result = getAllChannels(); echo htmlspecialchars_decode($result); ?>
+<div id= "sidebar">
+<div class="navbar navbar-inverse navbar-fixed-left">
+  <a class="navbar-brand" href="#">Stud-Collab</a>
+  <ul class="nav navbar-nav">
+      <li id="welcome_msg">
+                          
+                            <?php
 
-                  </ul>
+                              $welcome = "Welcome" ."       " .$username;
+
+                              echo htmlspecialchars_decode($welcome);
+
+                            ?> 
+                          
+                      </li>
+                      <li>
+                          <a href="logout.php">Signout</a>
+                      </li>
+                      <li>
+                          <a href="#">Home</a>
+                      </li>
+                      <li>
+                          <a href="#">About</a>
+                      </li>
+                      <li>
+                          <a href="#">Threads</a>
+                      </li>
+                      <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels<span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        
+                        <?php  $result = getAllChannels(); echo htmlspecialchars_decode($result); ?>
+
+                      </ul>
                   <li>
                     <a href="#">Direct Messages</a>
 
                     <?php  $result = getAllUsers(); echo htmlspecialchars_decode($result); ?>
-                </li> 
+                  </li> 
                 </li>
+     
       
-            </ul>
-        </nav>
-        
+  </ul>
 
-       
-        <div id="page-content-wrapper">
-            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-    			<span class="hamb-middle"></span>
-				<span class="hamb-bottom"></span>
-            </button>
+  <div id="page-content-wrapper">
+            
+            
             <div class="container">
 
-            <div>
-            </div>
                 <div class="row">
-                <div class="overflow-chat">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <h1>Welcome to Stud-Collab</h1>
+                  <div class="overflow-chat">
+                      <div class="col-lg-8 col-lg-offset-2">
+                          <h1>Welcome to Stud-Collab</h1>
 
-                        <?php 
+                          <?php 
 
-                          if(isset($_GET["channel_id"])){
+                            if(isset($_GET["channel_id"])){
 
-                            $result = getMessages($_GET["channel_id"]); 
-                          }else{
+                              $result = getMessages($_GET["channel_id"]); 
+                            }else{
 
-                            $result = getMessages(1); 
-                          } echo htmlspecialchars_decode($result);
-                        ?>
-                          
-                    </div>
-
-                    
-                    
-
-                      
-                     
-                    
-
-
-
+                              $result = getMessages(1); 
+                            } echo htmlspecialchars_decode($result);
+                          ?>
+                            
                       </div>
 
+                  </div>
+
                       
-                    </div>
+                </div>
 
 
                     
@@ -150,29 +128,31 @@ $username = $_SESSION['userName'];
                         </div>
                       </form>
 
-                         <div id="msg-btn">
+                        <div id="msg-btn">
                             <input type="button" style="height: 45px; width: 90px; background-color:#58b759; color: white " value="Submit">
 
                         </div>
+
+               
+
+            
+            </div>
+               
                       
 
-                </div>
-            </div>
         </div>
+</div>
+
+
+</div>
+       
         
-
-    </div>
-
-    
-
-
-
 
 </body>
 
 <script type="text/javascript">
 	
-$(document).ready(function () {
+/*$(document).ready(function () {
   var trigger = $('.hamburger'),
       overlay = $('.overlay'),
      isClosed = false;
@@ -197,7 +177,7 @@ $(document).ready(function () {
   $('[data-toggle="offcanvas"]').click(function () {
         $('#wrapper').toggleClass('toggled');
   });  
-});
+});*/
 
 
 </script>
