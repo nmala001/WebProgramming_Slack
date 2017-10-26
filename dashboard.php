@@ -29,7 +29,8 @@ $username = $_SESSION['userName'];
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
 
 </head>
 
@@ -41,7 +42,7 @@ $username = $_SESSION['userName'];
 <div class="navbar navbar-inverse navbar-fixed-left">
   <a class="navbar-brand" href="#">Stud-Collab</a>
   <ul class="nav navbar-nav">
-      <li id="welcome_msg">
+      <li id="welcome_msg"><i class="fa fa-user" aria-hidden="true"></i>
                           
                             <?php
 
@@ -52,27 +53,23 @@ $username = $_SESSION['userName'];
                             ?> 
                           
                       </li>
+                      <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a></li>
                       <li>
-                          <a href="logout.php">Signout</a>
+                          <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
                       </li>
-                      <li>
-                          <a href="#">Home</a>
-                      </li>
-                      <li>
-                          <a href="#">About</a>
-                      </li>
+                     
                       <li>
                           <a href="#">Threads</a>
                       </li>
                       <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels<span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-television" aria-hidden="true"></i>Channels<span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
                         
                         <?php  $result = getAllChannels(); echo htmlspecialchars_decode($result); ?>
 
                       </ul>
                   <li>
-                    <a href="#">Direct Messages</a>
+                    <a href="#"><i class="fa fa-envelope-open" aria-hidden="true"></i>Direct Messages</a>
 
                     <?php  $result = getAllUsers(); echo htmlspecialchars_decode($result); ?>
                   </li> 
