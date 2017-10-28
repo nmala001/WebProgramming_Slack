@@ -5,13 +5,11 @@ require_once 'php_action/core.php';
 require_once 'php_action/db_connect.php';
 require_once 'queries.php';
 $user = $_SESSION['userId'];
-//$userdispname=$_SESSION['user']
 $channel_id ;
 
 $username = $_SESSION['userName'];
 
 
-// echo $user;
 ?>
 
 
@@ -41,17 +39,23 @@ $username = $_SESSION['userName'];
 <div class="navbar navbar-inverse navbar-fixed-left">
   <a class="navbar-brand" href="#">Stud-Collab</a>
   <ul class="nav navbar-nav">
-      <li id="welcome_msg">
+      <div class="welcome_msg">
                           
-                            <?php
+                            <button onclick="myFunction()" class="dropbtn"><?php
 
                               $welcome = "Welcome" ."       " .$username;
+                               echo htmlspecialchars_decode($welcome);
+                            ?></button>
 
-                              echo htmlspecialchars_decode($welcome);
-
-                            ?> 
+                             <div id="myDropdown" class="dropdown-content">
+                                  <b><?php echo "$username"; ?></b>
+                                  <button>Set a status</button>
+                                  <button onclick="openWin()">Profile and Account</button>
+                                
+                                </div>
+                           
                           
-                      </li>
+                      </div>
                       <li>
                           <a href="logout.php">Signout</a>
                       </li>
@@ -145,8 +149,44 @@ $username = $_SESSION['userName'];
 
 
 </div>
+<script>
+
+
+        function myFunction()
+         {
+          document.getElementById("myDropdown").classList.toggle("show");
+          }
+
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) 
+          {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+        for (i = 0; i < dropdowns.length; i++) 
+        {
+            var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) 
+      {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
        
-        
+// <!-- <button onclick="openWin()">Open w3schools.com in a new window</button>
+// <button onclick="closeWin()">Close the new window (w3schools.com)</button> -->
+
+
+var myWindow;
+
+function openWin() {
+    myWindow = window.open("profile.php", "_self");
+}
+
+
+</script>        
 
 </body>
 

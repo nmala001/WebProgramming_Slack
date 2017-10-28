@@ -23,10 +23,8 @@ global $connect;
 
    $result = $connect->query($sql);
       
-      // $insertStr = ->createChannelMessage($userid,$content,$channelid);
     }
 
-    /*header("location: ../dashboard.php?channel_id=".$channel_id);*/
 ?>
 
 

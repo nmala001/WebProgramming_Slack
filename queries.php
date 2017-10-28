@@ -4,12 +4,14 @@
   overflow: hidden;
   color: blue ;
   box-sizing: content-box;
-  border: 2px  solid #b7b3b6;
+  border: none;
+  background-color: powderblue;
   border-radius: 18px;
   margin-bottom: 10px;
   font-family: sans-serif;
   font-size: 17px;
   width: 750px;
+  padding: 20px;
 }
 #s1{
   color: Black;
@@ -37,8 +39,6 @@ if(isset($_POST['message'])){
 }
 
 
-//require_once('custom/css/stylemsg.css');
-//echo "<link rel='stylesheet' type='text/css' href='custom/css/stylemsg.css' />";
 function getAllChannels(){
   global $connect;
     $sql = "SELECT * FROM channel";
@@ -87,19 +87,7 @@ function insertMessages(){
    $location = 'location: dashboard.php?channel_id='.$channel_id;
    echo $location;
    header($location);
-   // if ($result->num_rows > 0) {
-   //    $message = '';
-   //    while($row = $result->fetch_assoc()) {
-
-   //          $message = $message."<li> <a href=dashboard.php?channel_id= ".$row['channel_id'].">  ".$row['message']." </a></li>";
-           
-   //     }
-   //     return $message;
-   //  }
-   //  else{
-
-   //    return 0;
-   //  }
+  
 
 
 }
@@ -107,9 +95,6 @@ function insertMessages(){
 function getMessages($channel_id){
 
   global $connect;
-  // global $channel_id;
-
-  //echo "$channel_id";
 
   
 
@@ -121,12 +106,6 @@ function getMessages($channel_id){
     if ($result->num_rows > 0) {
       $message = '';
       while($row = $result->fetch_assoc()) {
-            //$message = $message."<div class="msg"><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
-            //$message = $message."<div><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
-
-            //echo "<div style='color:red;'>".$message."</div>" ;//
-
-            //echo $message."<a href=dashboard.php> <div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div> </a>";
 
 
             $newmessage = htmlspecialchars($row['message']);
@@ -136,48 +115,18 @@ function getMessages($channel_id){
             <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp;<span id=\"s3\">".$newmessage."</span></div>";
        }
     
-       return $message;
-    }
-    else{
-
-      return 0;
-    }
-
-}
-
-
-/*function getUser(){
-
-  $sql = "SELECT * FROM message INNER JOIN user ON user.user_id = message.created_by";
-
-    $result = $connect->query($sql);
-
-    if ($result->num_rows > 0) {
-      $message = '';
-      while($row = $result->fetch_assoc()) {
-            //$message = $message."<div class="msg"><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
-            //$message = $message."<div><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
-            //echo "<div style='color:red;'>".$message."</div>" ;//
-
-            echo $message."<div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div>";
-       }
     
        return $message;
     }
     else{
+
       return 0;
     }
 
-
-
-}*/
-
-?>
-<!--
-div {
-    height: <?=$height?>;
-    width: <?=$width?>;
-    background-color: <?=$background_color?>;
 }
-*/
-select * from message where created_by=
+
+
+
+                
+
+
