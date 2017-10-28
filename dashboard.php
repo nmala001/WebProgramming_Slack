@@ -1,14 +1,11 @@
 
 <?php
-
 require_once 'php_action/core.php';
 require_once 'php_action/db_connect.php';
 require_once 'queries.php';
 $user = $_SESSION['userId'];
 $channel_id ;
-
 $username = $_SESSION['userName'];
-
 
 ?>
 
@@ -96,12 +93,9 @@ $username = $_SESSION['userName'];
                           <h1>Welcome to Stud-Collab</h1>
 
                           <?php 
-
                             if(isset($_GET["channel_id"])){
-
                               $result = getMessages($_GET["channel_id"]); 
                             }else{
-
                               $result = getMessages(1); 
                             } echo htmlspecialchars_decode($result);
                           ?>
@@ -196,11 +190,8 @@ function openWin() {
   var trigger = $('.hamburger'),
       overlay = $('.overlay'),
      isClosed = false;
-
     
-
     function hamburger_cross() {
-
       if (isClosed == false) {          
         overlay.hide();
         trigger.removeClass('is-open');
@@ -218,7 +209,5 @@ function openWin() {
         $('#wrapper').toggleClass('toggled');
   });  
 });*/
-
-
 </script>
 </html>
