@@ -78,7 +78,7 @@ $username = $_SESSION['userName'];
 <div class="navbar navbar-inverse navbar-fixed-left">
   <a class="navbar-brand" href="#">Stud-Collab</a>
   <ul class="nav navbar-nav">
-      <div class="welcome_msg">
+    
                           
                             <button onclick="myFunction()" class="dropbtn"><?php
 
@@ -94,7 +94,7 @@ $username = $_SESSION['userName'];
                                 </div>
                            
                           
-                      </div>
+                      
                       <li>
                           <a href="logout.php">Signout</a>
                       </li>
@@ -131,9 +131,9 @@ $username = $_SESSION['userName'];
   <div id="page-content-wrapper">
             
             
-            <div class="container">
+            
 
-                <div class="row">
+                
                   <div class="overflow-chat">
                       <div class="col-lg-8 col-lg-offset-2">
                           <h1>Welcome to Stud-Collab</h1>
@@ -147,16 +147,11 @@ $username = $_SESSION['userName'];
                           ?>
                             
                       </div>
+                      
 
                   </div>
 
-                      
-                </div>
-
-
-                    
-
-                      <form  action="queries.php" method="POST" >
+                  <form  action="queries.php" method="POST" >
 
                         <div  id= "textarea" class="input-group input-group-lg">
                           
@@ -177,16 +172,15 @@ $username = $_SESSION['userName'];
 
                         </div>
 
-               
-
-            
+                  
+    
             </div>
+
+
                
-                      
-
         </div>
-</div>
 
+        
 
 </div>
 <script>
@@ -232,7 +226,7 @@ function openWin() {
 
 <script type="text/javascript">
 	
-<<<<<<< HEAD
+
 $(document).ready(function () {
 
   var response = '';

@@ -4,14 +4,12 @@
   overflow: hidden;
   color: blue ;
   box-sizing: content-box;
-  border: none;
-  background-color: powderblue;
+  border: 2px  solid #b7b3b6;
   border-radius: 18px;
   margin-bottom: 10px;
   font-family: sans-serif;
   font-size: 17px;
   width: 750px;
-  padding: 20px;
 }
 #s1{
   color: Black;
@@ -39,6 +37,8 @@ if(isset($_POST['message'])){
 }
 
 
+//require_once('custom/css/stylemsg.css');
+//echo "<link rel='stylesheet' type='text/css' href='custom/css/stylemsg.css' />";
 function getAllChannels(){
   global $connect;
     $sql = "SELECT * FROM channel";
@@ -87,7 +87,19 @@ function insertMessages(){
    $location = 'location: dashboard.php?channel_id='.$channel_id;
    echo $location;
    header($location);
-  
+   // if ($result->num_rows > 0) {
+   //    $message = '';
+   //    while($row = $result->fetch_assoc()) {
+
+   //          $message = $message."<li> <a href=dashboard.php?channel_id= ".$row['channel_id'].">  ".$row['message']." </a></li>";
+           
+   //     }
+   //     return $message;
+   //  }
+   //  else{
+
+   //    return 0;
+   //  }
 
 
 }
@@ -95,6 +107,9 @@ function insertMessages(){
 function getMessages($channel_id){
 
   global $connect;
+  // global $channel_id;
+
+  //echo "$channel_id";
 
   
 
@@ -106,6 +121,13 @@ function getMessages($channel_id){
     if ($result->num_rows > 0) {
       $message = '';
       while($row = $result->fetch_assoc()) {
+        
+            //$message = $message."<div class="msg"><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
+            //$message = $message."<div><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
+
+            //echo "<div style='color:red;'>".$message."</div>" ;//
+
+            //echo $message."<a href=dashboard.php> <div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div> </a>";
 
 
             $newmessage = htmlspecialchars($row['message']);
@@ -114,7 +136,6 @@ function getMessages($channel_id){
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
             <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp;<span id=\"s3\">".$newmessage."</span></div>";
        }
-    
     
        return $message;
     }
@@ -126,7 +147,6 @@ function getMessages($channel_id){
 }
 
 
-<<<<<<< HEAD
 if(isset($_POST['insertChannels'])){
 
   global $connect;
@@ -137,7 +157,6 @@ $channel_type = $insertChannels['channel_type'];
 $created_by = $insertChannels['user_id'];
 $user_id = $insertChannels['user_id'];
 
-echo $user_id;
 
     $sql = "INSERT INTO `channel` (channel_id, channel_name, channel_type, created_by, created_time, user_id) VALUES (NULL, '$channel_name', '$channel_type', '$user_id', CURRENT_TIMESTAMP, '$user_id')";
    $result = $connect->query($sql);
@@ -154,9 +173,3 @@ echo $user_id;
 
 
 ?>
-=======
-
-                
-
-
->>>>>>> c16087d7dd7692cf3ab1feed3c5c48a90259592b
