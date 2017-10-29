@@ -146,38 +146,30 @@ function getMessages($channel_id){
 }
 
 
-/*function getUser(){
+if(isset($_POST['insertChannels'])){
 
-  $sql = "SELECT * FROM message INNER JOIN user ON user.user_id = message.created_by";
+  global $connect;
 
-    $result = $connect->query($sql);
+$insertChannels = $_POST['insertChannels'];
+$channel_name = $insertChannels['channel_name'];
+$channel_type = $insertChannels['channel_type'];
+$created_by = $insertChannels['user_id'];
+$user_id = $insertChannels['user_id'];
 
-    if ($result->num_rows > 0) {
-      $message = '';
-      while($row = $result->fetch_assoc()) {
-            //$message = $message."<div class="msg"><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
-            //$message = $message."<div><a href=dashboard.php?channel_id=".$row['channel_id']."> ".$row['created_by']." <br>".$row['message']." ".$row['created_time']." </a></div>";
-            //echo "<div style='color:red;'>".$message."</div>" ;//
+echo $user_id;
 
-            echo $message."<div class=\"msg\">".$row['email']." <br>".$row['message']." ".$row['created_time']."</div>";
-       }
-    
-       return $message;
-    }
-    else{
-      return 0;
-    }
+    $sql = "INSERT INTO `channel` (channel_id, channel_name, channel_type, created_by, created_time, user_id) VALUES (NULL, '$channel_name', '$channel_type', '$user_id', CURRENT_TIMESTAMP, '$user_id')";
+   $result = $connect->query($sql);
+   $location = 'location: dashboard.php';
+   echo $location;
+   header($location);
 
+}
 
+   /*$created_by= mysqli_real_escape_string($connect,$_POST['user_id']);
+   $channel_name= mysqli_real_escape_string($connect, $_POST['channel_name']);
+   $channel_type = mysqli_real_escape_string($connect, $_POST['channel_type']);
+   $user_id= mysqli_real_escape_string($connect, $_POST['user_id']);*/
 
-}*/
 
 ?>
-<!--
-div {
-    height: <?=$height?>;
-    width: <?=$width?>;
-    background-color: <?=$background_color?>;
-}
-*/
-select * from message where created_by=

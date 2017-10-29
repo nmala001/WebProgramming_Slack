@@ -36,6 +36,48 @@ $username = $_SESSION['userName'];
 
 <body >
 
+<!--Creating a channel-->
+
+
+
+  <div class="modal fade openchannel" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Create a Channel</h4>
+        </div>
+        <div class="modal-body">
+          <form action="queries.php" method="POST">
+            <div class="form-group">
+              <label for="channel_name">Channel Name</label>
+              <input type="text" class="form-control" id="channel_name"  placeholder="Eg: Team-Work">
+            </div>
+            <div class="form-group">
+            <label for="channel_type">Channel Type</label><br>
+            <input type="radio" name="channel_type" id = "channel_type" value="public">Public<br>
+            <input type="radio" name="channel_type" id = "channel_type" value="private">Private
+            </div>
+          </form>     
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class=" channelbutton btn btn-primary" name= "channelbutton">Create Channel  
+
+           <?php   if(isset($_POST['channelbutton'])) {  
+
+            insertChannels(); 
+
+            }
+
+            ?> 
+              
+            </button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
 
 
 <div id= "sidebar">
@@ -61,7 +103,7 @@ $username = $_SESSION['userName'];
                       <li>
                           <a href="#">Threads</a>
                       </li>
-                      <li class="dropdown">
+                      <li class="dropdown"><span><i class="createchannel fa fa-plus-square" aria-hidden="true"></i></span>
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-television" aria-hidden="true"></i>Channels<span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
                         
@@ -115,7 +157,7 @@ $username = $_SESSION['userName'];
                           
                            <span class="input-group-addon" id="sizing-addon1">+</span>
                            <input type="text" class="form-control" placeholder="Type Your Message..." name = "message" aria-describedby="sizing-addon1">
-                           <input type="hidden" name="user_id" value = <?php echo htmlspecialchars_decode($user) ?>>
+                           <input type="hidden" name="user_id" id="user_id" value = <?php echo htmlspecialchars_decode($user) ?>>
                            <input type="hidden" name="channel_id" value=<?php if (isset($_GET["channel_id"])) {
                             echo $_GET["channel_id"];}
                             else{
@@ -149,32 +191,48 @@ $username = $_SESSION['userName'];
 
 <script type="text/javascript">
 	
-/*$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
+$(document).ready(function () {
 
-    
+  var response = '';
 
-    function hamburger_cross() {
+  $( ".createchannel" ).click(function(){
 
-      if (isClosed == false) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = true;
-      } else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
+  $( ".openchannel" ).modal('show');
+
+
+ 
+
+});
+
+  $( ".channelbutton" ).click(function(){
+
+     $( ".openchannel" ).modal('hide');
+
+    var channel_name = $("#channel_name").val();
+    var channel_type = $("#channel_type").val();
+    var created_by = $("#user_id").val();
+    var user_id = $("#user_id").val();
+    var dataString = {'channel_name': channel_name, 'channel_type': channel_type, 'created_by': user_id, 'user_id': user_id};
+
+
+         $.ajax({
+          type: 'POST',
+          url: 'queries.php',
+          data: {'insertChannels':dataString},
+
+          success : function(data) {  
+
+            console.log(data);
+            
+          
+            }
+        });
+
+    });
   
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
-});*/
+
+  });
+
 
 
 </script>
