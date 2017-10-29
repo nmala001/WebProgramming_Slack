@@ -1,17 +1,12 @@
 
 <?php
-
 require_once 'php_action/core.php';
 require_once 'php_action/db_connect.php';
 require_once 'queries.php';
 $user = $_SESSION['userId'];
-//$userdispname=$_SESSION['user']
 $channel_id ;
-
 $username = $_SESSION['userName'];
 
-
-// echo $user;
 ?>
 
 
@@ -29,8 +24,7 @@ $username = $_SESSION['userName'];
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
@@ -84,34 +78,48 @@ $username = $_SESSION['userName'];
 <div class="navbar navbar-inverse navbar-fixed-left">
   <a class="navbar-brand" href="#">Stud-Collab</a>
   <ul class="nav navbar-nav">
-      <li id="welcome_msg"><i class="fa fa-user" aria-hidden="true"></i>
+      <div class="welcome_msg">
                           
-                            <?php
+                            <button onclick="myFunction()" class="dropbtn"><?php
 
                               $welcome = "Welcome" ."       " .$username;
+                               echo htmlspecialchars_decode($welcome);
+                            ?></button>
 
-                              echo htmlspecialchars_decode($welcome);
-
-                            ?> 
+                             <div id="myDropdown" class="dropdown-content">
+                                  <b><?php echo "$username"; ?></b>
+                                  <button>Set a status</button>
+                                  <button onclick="openWin()">Profile and Account</button>
+                                
+                                </div>
+                           
                           
-                      </li>
-                      <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a></li>
+                      </div>
                       <li>
-                          <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+                          <a href="logout.php">Signout</a>
                       </li>
-                     
+                      <li>
+                          <a href="#">Home</a>
+                      </li>
+                      <li>
+                          <a href="#">About</a>
+                      </li>
                       <li>
                           <a href="#">Threads</a>
                       </li>
                       <li class="dropdown"><span><i class="createchannel fa fa-plus-square" aria-hidden="true"></i></span>
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-television" aria-hidden="true"></i>Channels<span class="caret"></span></a>
+
+                      <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels<span class="caret"></span></a>
+
                       <ul class="dropdown-menu" role="menu">
                         
                         <?php  $result = getAllChannels(); echo htmlspecialchars_decode($result); ?>
 
                       </ul>
                   <li>
-                    <a href="#"><i class="fa fa-envelope-open" aria-hidden="true"></i>Direct Messages</a>
+                    <a href="#">Direct Messages</a>
 
                     <?php  $result = getAllUsers(); echo htmlspecialchars_decode($result); ?>
                   </li> 
@@ -131,12 +139,9 @@ $username = $_SESSION['userName'];
                           <h1>Welcome to Stud-Collab</h1>
 
                           <?php 
-
                             if(isset($_GET["channel_id"])){
-
                               $result = getMessages($_GET["channel_id"]); 
                             }else{
-
                               $result = getMessages(1); 
                             } echo htmlspecialchars_decode($result);
                           ?>
@@ -184,13 +189,50 @@ $username = $_SESSION['userName'];
 
 
 </div>
+<script>
+
+
+        function myFunction()
+         {
+          document.getElementById("myDropdown").classList.toggle("show");
+          }
+
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) 
+          {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+        for (i = 0; i < dropdowns.length; i++) 
+        {
+            var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) 
+      {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
        
-        
+// <!-- <button onclick="openWin()">Open w3schools.com in a new window</button>
+// <button onclick="closeWin()">Close the new window (w3schools.com)</button> -->
+
+
+var myWindow;
+
+function openWin() {
+    myWindow = window.open("profile.php", "_self");
+}
+
+
+</script>        
 
 </body>
 
 <script type="text/javascript">
 	
+<<<<<<< HEAD
 $(document).ready(function () {
 
   var response = '';
@@ -232,6 +274,7 @@ $(document).ready(function () {
   
 
   });
+
 
 
 
