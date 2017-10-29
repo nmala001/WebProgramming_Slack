@@ -78,9 +78,11 @@ $username = $_SESSION['userName'];
 <div class="navbar navbar-inverse navbar-fixed-left">
   <a class="navbar-brand" href="#">Stud-Collab</a>
   <ul class="nav navbar-nav">
-    
+
                           
-                            <button onclick="myFunction()" class="dropbtn"><?php
+                          <div class="welcome_msg">
+                            <button onclick="myFunction()" class="dropbtn">
+                            <?php
 
                               $welcome = "Welcome" ."       " .$username;
                                echo htmlspecialchars_decode($welcome);
@@ -92,26 +94,24 @@ $username = $_SESSION['userName'];
                                   <button onclick="openWin()">Profile and Account</button>
                                 
                                 </div>
+                          </div>
+                          </li>
                            
                           
                       
                       <li>
-                          <a href="logout.php">Signout</a>
+                          <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
                       </li>
                       <li>
-                          <a href="#">Home</a>
-                      </li>
-                      <li>
-                          <a href="#">About</a>
+                          <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
                       </li>
                       <li>
                           <a href="#">Threads</a>
                       </li>
                       <li class="dropdown"><span><i class="createchannel fa fa-plus-square" aria-hidden="true"></i></span>
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-television" aria-hidden="true"></i>Channels<span class="caret"></span></a>
 
                       <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels<span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-television" aria-hidden="true"></i>Channels<span class="caret"></span></a>
 
                       <ul class="dropdown-menu" role="menu">
                         
