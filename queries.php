@@ -153,11 +153,18 @@ function getMessages($channel_id){
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
             <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp; <span id=\"s3\">".$newmessage. " 
 
+
+
                           <div class= 'divbutton'>
 
-                              <span class=\"like\"><i class='fa fa-thumbs-o-up' aria-hidden='true'></i></span>
+                          
+
+                              <span class=\"like\" ><i class='fa fa-thumbs-o-up' aria-hidden='true'></i></span>
                               <span class=\"dislike\"><i class='fa fa-thumbs-o-down' aria-hidden='true'></i></span>
                               <span id= ".$message_id." class=\"reply\"><i class='fa fa-reply' aria-hidden='true'></i></span>
+
+                           
+
                           </div>";
 
                         $threadMsgReply =  getThreadMessages($row['message_id']);
@@ -180,7 +187,12 @@ function getMessages($channel_id){
                           </form>
                       </div>
 
+
+
                           </div>";
+
+
+
 
                echo $message;
 
@@ -230,6 +242,60 @@ function getThreadMessages($parentMsgId ){
             $threadmessage.= "<div style= 'margin-left: 100px' class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['created_by']." </b></span>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
             <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp; <span id=\"s3\">".$newmessage."
+
+            </div>";
+
+
+           // echo $threadmessage;
+
+
+       }
+    
+       return $threadmessage;
+    }
+    else{
+
+      return 0;
+    }
+
+}
+
+function Reaction($message_id ){
+
+  global $connect;
+  // global $channel_id;
+
+  //echo "$channel_id";
+
+  
+
+
+    $sql = "SELECT COUNT(*)FROM user_reaction INNER JOIN message ON message.message_id = user_reaction.message_id AND user_reaction.reaction = 1";
+
+    $sql = "SELECT COUNT(*)FROM user_reaction INNER JOIN message ON message.message_id = user_reaction.message_id AND user_reaction.reaction = 2";
+
+    $result = $connect->query($sql);
+
+    if ($result->num_rows > 0) {
+      $reaction = '';
+      while($row = $result->fetch_assoc()) {
+            
+
+
+            //$newmessage = htmlspecialchars($row['msg_content']);
+            //$to_message_id = htmlspecialchars($row['message_id']);
+
+            $threadmessage.= "<div style= 'margin-left: 100px' class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['created_by']." </b></span>
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
+            <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp; <span id=\"s3\">".$newmessage."
+
+                         
+                            <form id ='threadForm".$message_id."' method='POST'>
+                              <button class=\"like\" id='like'><i class='fa fa-thumbs-o-up' aria-hidden='true'></i></span>
+                              <button class=\"dislike\" id='dislike'><i class='fa fa-thumbs-o-down' aria-hidden='true'></i></span>
+                              <input type='hidden' name='to_message_id' id='to_message_id' value = ".$message_id.">
+                              <input type='hidden' name='channel_id' id='channel_id' value = ".$channel_id.">
+                            </form>
 
             </div>";
 
@@ -317,9 +383,9 @@ $to_message_id = $insertThreads['to_message_id'];
 $message_content = $insertThreads['message_content'];
 $created_by = $insertThreads['user_id'];
 
-echo $to_message_id;
-echo $message_content;
-echo $created_by;
+//echo $to_message_id;
+//echo $message_content;
+//echo $created_by;
 
 
 

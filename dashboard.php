@@ -35,8 +35,7 @@ $username = $_SESSION['userName'];
 
                       
 
-                    
-s
+  
                  
 
 
@@ -155,7 +154,9 @@ s
                               $result = getMessages($_GET["channel_id"]); 
                             }else{
                               $result = getMessages(1); 
-                            } echo htmlspecialchars_decode($result);
+                            } 
+
+                            echo htmlspecialchars_decode($result);
                           ?>
 
                            
