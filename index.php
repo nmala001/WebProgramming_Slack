@@ -108,7 +108,7 @@ body {
 			  </div>
 			  <div class="panel-body">
 
-			  	<form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']?>" method="POST" id="loginForm">
+			  	<form class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" id="loginForm">
 				  <div class="form-group">
 				    <label for="username" class="col-sm-2 control-label">Username</label>
 				    <div class="col-sm-12">
@@ -135,6 +135,7 @@ body {
 				      <button type="submit" class="btn btn-success">Submit</button>
 				    </div>
 				  </div>
+				  <a href="signup.php">Not a member?Sign in here</a>
 				</form>
 			  </div>
 			</div>
