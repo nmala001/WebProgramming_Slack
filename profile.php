@@ -3,7 +3,7 @@ require_once 'php_action/core.php';
 require_once 'php_action/db_connect.php';
 $user = $_SESSION['userId'];
 
-$sql = "SELECT first_name, last_name, email, username FROM user WHERE user_id ='$user'";
+$sql = "SELECT first_name, last_name, email,username,profile_pic FROM user WHERE user_id ='$user'";
 $result = mysqli_query($connect, $sql);
 
 while($row = mysqli_fetch_array($result))
@@ -15,6 +15,10 @@ $last_name=$row['last_name'];
 $email=$row['email'];
 
 $user_name=$row['username'];
+$profile_pic=$row['profile_pic'];
+
+
+
 }
 
 
@@ -33,6 +37,7 @@ else {
 	echo "Not a member of any channel ";
 }
 }
+
 
 ?>
 
@@ -57,13 +62,36 @@ body {
 	<h1>User Profile</h1>
 </header>
 	<div class="container">
-		<div class="profile">
-  			<h1><?php echo $user_name ?></h1>
-  			<b>Full name : <?php echo $first_name ?>&nbsp;<?php echo $last_name ?></b>
-  			<p class="title"><?php  $res = channelownership(); echo htmlspecialchars_decode($res); ?></p>
-  			<p class="title">E-mail :<?php echo $email ?></p>
- 			<button onclick="closeWin()">Cancel</button>
-	</div>
+             <div class="card"><?php 
+
+       $folder = "uploads";
+       echo '<img src="'. $folder. '/'. $profile_pic. '" height="200" width="400" align="right">';
+      ?>
+      
+       <div class="profile">
+        <h1><?php echo $user_name ?></h1>
+        <b>Full name : <?php echo $first_name ?>&nbsp;<?php echo $last_name ?></b>
+        <p class="title"><?php  $res = channelownership(); echo htmlspecialchars_decode($res); ?></p>
+        <p class="title">E-mail :<?php echo $email ?></p>
+        <button onclick="closeWin()" style ="width:40%">Cancel</button>
+
+        </div>
+    </div>
+
+
+    
+
+
+  </div> <!-- /container -->
+
+<!-- Button -->
+
+
+
+ 
+
+
+
 </div>
 <script>
 

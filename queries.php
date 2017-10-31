@@ -4,12 +4,14 @@
   overflow: hidden;
   color: blue ;
   box-sizing: content-box;
-  border: 2px  solid #b7b3b6;
+  border: none;
+  background-color: powderblue;
   border-radius: 18px;
   margin-bottom: 10px;
   font-family: sans-serif;
   font-size: 17px;
   width: 750px;
+  padding:20px;
 }
 #s1{
   color: Black;

@@ -78,7 +78,7 @@ background-color:#e1f0f2;
 #textarea{
 
  
-    padding-top: 50px;
+    padding-top: 5px;
     margin-left: 50px;
     padding-left: 50px;
 
@@ -128,8 +128,8 @@ background-color:#e1f0f2;
     overflow-y: auto;
     overflow-x: hidden;
     border: none;
-    width: 1650px;
-    height: 800px;
+    width: 1150px;
+    height: 650px;
     background-color:#f2fdff;
     margin-top: -65px;
     margin-left: -100px;
@@ -197,16 +197,14 @@ background-color:#e1f0f2;
 width:100%;}
 
 .show {display:block;}
-
-.profile{
-  width: 600px;
-  height: 400px;
   
-  text-align: center;
+.profile{
+
+  margin-left: 150%;
+
   font-family: arial;
-  float: center;
-  margin-top: 100px;
-  margin-left:500px;
+      width:60%;
+      height:50%;
 
 }
 header {
@@ -219,10 +217,11 @@ header {
 .container {
     width:100%;
     
-    border: 1px solid gray;
     
   
 }
+
+
 
 .title {
   color: grey;
@@ -235,13 +234,14 @@ button {
   display: inline-block;
   padding: 8px;
   color: black;
-  background-color: #B0E0E6;
+  background-color: #B0E0E66;
   text-align: center;
   cursor: pointer;
-  width: 20%;
+  width: 10%;
   font-size: 18px;
   margin-top: 100px;
 }
+
 
 
 
@@ -249,7 +249,16 @@ button:hover, a:hover {
   opacity: 0.7;
 }
 
+<<<<<<< HEAD
 /*.msg : hover  .divbutton {
     display: block;
 }*/
 
+=======
+
+.card {
+  width: 30%;
+  height: 30%;
+  margin-left:20%;
+}
+>>>>>>> 37f0540148f2aea75041a137c7f51267ab8fa3f5

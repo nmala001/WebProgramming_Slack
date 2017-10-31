@@ -14,7 +14,7 @@ function test_input($data)
 
 /*input validation part*/
 
-if ($_SERVER["REQUEST_METHOD"] == "POST")
+if ($_POST)
   {
   $first_name = test_input($_POST['first_name']);
   $last_name = test_input($_POST['last_name']);
@@ -179,9 +179,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
         if ($valid)
           {
-          $targetPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $name;
-          move_uploaded_file($tmpName, $targetPath);
-          $profile_pic = $targetPath;
+          /*$targetPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $name;*/
+          /*move_uploaded_file($tmpName, $targetPath);*/
+          $temp = explode(".", $_FILES["file"]["name"]);
+          $newfilename = round(microtime(true)) . '.' . end($temp);
+          
+          /*$newfilename = $username;*/
+          move_uploaded_file($_FILES["file"]["tmp_name"], "../WebProgramming_Slack/uploads/" . $newfilename);
+          $profile_pic = $newfilename;
           /*header( 'Location: signup.php' ) ;
           exit;*/
           }
@@ -393,34 +398,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   <label class="col-md-4 control-label" >Upload a profile picture</label> 
   <div>
   <div class="container">
-     
-      <div class="row">
-        <?php 
-          //scan "uploads" folder and display them accordingly
-         $folder = "uploads";
-         $results = scandir('uploads');
-         foreach ($results as $result) 
-         {
-          if ($result === '.' or $result === '..') continue;
-         
-          if (is_file($folder . '/' . $result))
-           {
-            echo '
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <img src="'.$folder . '/' . $result.'" alt="...">
-                  <div class="caption">
-                  <p><a href="remove.php?name='.$result.'" class="btn btn-danger btn-xs" role="button">Remove</a></p>
-                </div>
-              </div>
-            </div>';
-          }
-           unset($result);
-          }  
-                
-        ?>
-      </div>
-         
+             
       <div class="row">
           <div class="col-lg-12">
             <!-- <form class="well" action="upload.php" method="post" enctype="multipart/form-data">
@@ -430,7 +408,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             <input type="file" name="file" accept="image/*">
             <p class="help-block">Only jpg,jpeg,png and gif file with maximum size of 1 MB is allowed.</p>
           </div>
-          <input type="submit" class="btn btn-lg btn-primary" value="Upload">
+          <!--<input type="submit" class="btn btn-lg btn-primary" value="Upload">-->
           <!--</form>-->
           </div>
       </div>
