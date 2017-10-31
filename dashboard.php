@@ -5,6 +5,7 @@ require_once 'php_action/db_connect.php';
 require_once 'queries.php';
 $user = $_SESSION['userId'];
 $channel_id ;
+
 $username = $_SESSION['userName'];
 
 ?>
@@ -30,7 +31,18 @@ $username = $_SESSION['userName'];
 
 <body >
 
+<!-- Message Box-->
+
+                      
+
+                    
+s
+                 
+
+
+
 <!--Creating a channel-->
+
 
 
 
@@ -145,6 +157,8 @@ $username = $_SESSION['userName'];
                               $result = getMessages(1); 
                             } echo htmlspecialchars_decode($result);
                           ?>
+
+                           
                             
                       </div>
                       
@@ -265,7 +279,59 @@ $(document).ready(function () {
         });
 
     });
-  
+
+
+  // $( ".threadbutton" ).click(function(){
+
+  //   var to_message_id = $("#to_message_id").val();
+  //   var message_content = $("#message_content").val();
+  //   var created_by = $("#user_id").val();
+  //   var dataString = {'to_message_id': to_message_id, 'message_content': message_content, 'created_by': user_id};
+
+
+  //        $.ajax({
+  //         type: 'POST',
+  //         url: 'queries.php',
+  //         data: {'insertThreads':dataString},
+
+  //         success : function(data) {  
+
+  //         alert("successfully inserted")
+            
+          
+  //           }
+  //       });
+
+  //   });
+
+       
+  $(document).on("click", ".reply", function(e){
+
+   $('#messagereply_'+e.currentTarget.id).toggle();
+
+
+
+});
+
+
+//   $(".thread").keypress(function(event) {
+//     if (event.which == 13) {
+//         event.preventDefault();
+//         var msgId = event.currentTarget.id.split('_')[1];
+//         $("#threadForm"+msgId).submit();
+//     }
+// });
+
+
+$(document).on("click", ".threadbutton", function(event){
+    
+        event.preventDefault();
+        var msgId = event.currentTarget.id.split('_')[1];
+        $("#threadForm"+msgId).submit();
+    
+});
+
+
 
   });
 
