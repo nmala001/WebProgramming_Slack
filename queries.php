@@ -241,8 +241,9 @@ function getThreadMessages($parentMsgId ){
 
             $newmessage = htmlspecialchars($row['msg_content']);
             $to_message_id = htmlspecialchars($row['message_id']);
+            $profilepic = $row['profile_pic'];
 
-            $threadmessage.= "<div style= 'margin-left: 100px' class=\"msg\"> &emsp;<span id=\"s0\"> <img src=\"uploads\User_Avatar.png\" style='width:30px; height:30px'></span>&emsp;&emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
+            $threadmessage.= "<div style= 'margin-left: 100px' class='msg'> &emsp;<span id=\"s0\"> <img src=\"uploads\User_Avatar.png\" style='width:30px; height:30px'></span>&emsp;&emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
             <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp; <span id=\"s3\">".$newmessage."
 
