@@ -181,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
           {
           $targetPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $name;
           move_uploaded_file($tmpName, $targetPath);
-          $profile_pic = $targetPath;
+          $profile_pic = $name;
           /*header( 'Location: signup.php' ) ;
           exit;*/
           }
