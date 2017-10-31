@@ -73,7 +73,7 @@ body {
         <b>Full name : <?php echo $first_name ?>&nbsp;<?php echo $last_name ?></b>
         <p class="title"><?php  $res = channelownership(); echo htmlspecialchars_decode($res); ?></p>
         <p class="title">E-mail :<?php echo $email ?></p>
-        <button onclick="closeWin()">Cancel</button>
+        <button onclick="closeWin()" style ="width:40%">Cancel</button>
 
         </div>
     </div>
