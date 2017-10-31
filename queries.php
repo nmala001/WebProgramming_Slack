@@ -150,10 +150,11 @@ function getMessages($channel_id){
             $message_id = htmlspecialchars($row['message_id']);
             $form = htmlspecialchars($row['message_id']);
             $channel_id = htmlspecialchars($row['channel_id']);
+            $folder = "uploads";
 
-              $message =  "<div class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
+              $message =  "<div class=\"msg\"> &emsp;<span id=\"s0\"> <img src=\"uploads\User_Avatar.png\" style='width:30px; height:30px'></span>&emsp;&emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
-            <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp; <span id=\"s3\">".$newmessage. " 
+            <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp; <span id=\"s3\">".$newmessage." 
 
 
 
@@ -223,7 +224,7 @@ function getThreadMessages($parentMsgId ){
   
 
 
-    $sql = "SELECT * FROM threaded_message INNER JOIN message ON message.message_id = threaded_message.to_message_id AND message.message_id =".$parentMsgId." ";
+    $sql = "SELECT * FROM threaded_message INNER JOIN message ON message.message_id = threaded_message.to_message_id JOIN user ON user.user_id = message.created_by AND message.message_id =".$parentMsgId." ";
 
     $result = $connect->query($sql);
 
@@ -241,7 +242,7 @@ function getThreadMessages($parentMsgId ){
             $newmessage = htmlspecialchars($row['msg_content']);
             $to_message_id = htmlspecialchars($row['message_id']);
 
-            $threadmessage.= "<div style= 'margin-left: 100px' class=\"msg\"> &emsp;<span id=\"s1\"><b>".$row['created_by']." </b></span>
+            $threadmessage.= "<div style= 'margin-left: 100px' class=\"msg\"> &emsp;<span id=\"s0\"> <img src=\"uploads\User_Avatar.png\" style='width:30px; height:30px'></span>&emsp;&emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
             <span id=\"s2\">".$row['created_time']."</span><br><br>&emsp; <span id=\"s3\">".$newmessage."
 

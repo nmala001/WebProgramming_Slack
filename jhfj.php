@@ -1,0 +1,1 @@
+img src='" .$folder. '/' .$row['profile_pic']."'
