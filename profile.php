@@ -65,7 +65,7 @@ body {
              <div class="card"><?php 
 
        $folder = "uploads";
-       echo '<img src="'. $folder. '/'. $profile_pic. '" height="200" width="400" align="right">';
+       echo '<img src="'. $folder. '/'. $profile_pic. '" height="200" width="400" align="left">';
       ?>
       
        <div class="profile">
