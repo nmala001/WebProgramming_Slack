@@ -6,11 +6,10 @@ session_start();
 $channel_id=$_REQUEST["channel_id"];
 
 
-<<<<<<< HEAD
+
 $sql="SELECT m1.message_id, m1.created_time,u.username,u.user_id,m1.message,m1.reply_msg_id,m2.message as reply,u2.username as replied_by,(SELECT count(*) FROM `reactions` where message_id=m1.message_id and reaction=1) as likes,(SELECT count(*) FROM `reactions` where message_id=m1.message_id and reaction=0) as dislikes FROM `message` m1 left join message m2 on m1.reply_msg_id=m2.message_id left join user u on m1.created_by=u.user_id left join user u2 on m2.created_by=u2.user_id WHERE m1.ch_id = '$channel_id'";
-=======
-$sql="SELECT m1.message_id,u.username,u.user_id,m1.message,m1.reply_msg_id,m2.message as reply,u2.username as replied_by,(SELECT count(*) FROM `reactions` where message_id=m1.message_id and reaction=1) as likes,(SELECT count(*) FROM `reactions` where message_id=m1.message_id and reaction=0) as dislikes FROM `message` m1 left join message m2 on m1.reply_msg_id=m2.message_id left join user u on m1.created_by=u.user_id left join user u2 on m2.created_by=u2.user_id WHERE m1.ch_id = '$channel_id'";
->>>>>>> 9c074763af46e20b800c3078d0a4dfdf244c5eee
+
+
 $result = $connect->query($sql);
 $messages=array();
 //echo $sql."<br>";
