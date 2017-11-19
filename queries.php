@@ -70,7 +70,7 @@ function getAllUsers(){
     if ($result->num_rows > 0) {
       $user = '';
       while($row = $result->fetch_assoc()) {
-            $user = $user."<li><a href=dashboard.php?user_id=".$row['user_id']."> ".$row['username']." </a></li>";
+            $user = $user."<input type='checkbox'<br><a href=dashboard.php?user_id=".$row['user_id']."> ".$row['username']." </a>";
        }
        return $user;
     }
@@ -116,12 +116,30 @@ function getMessages($channel_id){
 
   //echo "$channel_id";
 
+  //No. of results per page
+
+  $results_per_page = 10;
+
+  //
+
   
 
 
     $sql = "SELECT * FROM message INNER JOIN user ON user.user_id = message.created_by WHERE channel_id ='$channel_id' ";
 
     $result = $connect->query($sql);
+
+    
+
+// 
+
+
+
+    
+
+        
+
+      
 
     if ($result->num_rows > 0) {
       $message = '';
@@ -149,6 +167,7 @@ function getMessages($channel_id){
             $form = htmlspecialchars($row['message_id']);
             $channel_id = htmlspecialchars($row['channel_id']);
             $folder = "uploads";
+            $user_id = htmlspecialchars($_SESSION['userId']);
 
               $message =  "<div class=\"msg\"> &emsp;<span id=\"s0\"> <img src=\"uploads\User_Avatar.png\" style='width:30px; height:30px'></span>&emsp;&emsp;<span id=\"s1\"><b>".$row['username']." </b></span>
             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;            
@@ -157,14 +176,13 @@ function getMessages($channel_id){
 
 
                           <div class= 'divbutton'>
-
                           
 
-                              <span class=\"like\" ><i class='fa fa-thumbs-o-up' aria-hidden='true'></i></span>
-                              <span class=\"dislike\"><i class='fa fa-thumbs-o-down' aria-hidden='true'></i></span>
-                              <span id= ".$message_id." class=\"reply\"><i class='fa fa-reply' aria-hidden='true'></i></span>
+                          <span id= ".$message_id." class=\"reply\"><i class='fa fa-reply' aria-hidden='true'></i></span>
+                          <span id='dislike_".$message_id."_".$user_id."' class=\"dislike\" name= 'reaction' value= '2' ><i class='fa fa-thumbs-o-down' aria-hidden='true'></i></span>
+                          <span id='like_".$message_id."_".$user_id."' class=\"like\"  name= 'reaction' value= '1' ><i class='fa fa-thumbs-o-up' aria-hidden='true'></i></span>
 
-                           
+                         
 
                           </div>";
 
@@ -183,7 +201,6 @@ function getMessages($channel_id){
                            <input type='hidden' name='to_message_id' id='to_message_id' value = ".$message_id.">
                            <input type='hidden' name='channel_id' id='channel_id' value = ".$channel_id.">
                             <button type = 'button' id= 'button_".$message_id."' class= 'threadbutton btn btn-primary' name= 'threadbutton'>Submit
-
                             </button>
                           </form>
                       </div>
@@ -192,8 +209,44 @@ function getMessages($channel_id){
 
                           </div>";
 
+    $number_of_messages = mysqli_num_rows($result); 
 
 
+    //dtermine total number of pages available
+
+    $number_of_pages = ceil($number_of_messages/$results_per_page);
+
+    //determine which page number visitor is currently on
+
+     if(!isset($_GET['page'])){
+
+      $page = 1;
+    }else{
+      $page = $_GET['page'];
+    }
+
+    //determine the sql LIMIT starting number
+
+    $this_page_first_result = ($page-1)*$results_per_page;
+
+    //retrieve selected results from database
+
+    $sql = "SELECT * FROM message LIMIT " .$this_page_first_result . ',' .$results_per_page;
+    $result = mysqli_query($connect, $sql);
+
+    while($row = mysqli_fetch_array($result)){
+
+      echo $message;
+    }
+
+    //starting_limit_number = (page_number - 1)*results_per_page;
+
+    //display links to the pages
+
+      for($page=1; $page<=$number_of_pages;$page++){
+
+        echo '<a href = "dashboard.php?page='.$page.'">' .$page. ' </a>';
+      }
 
                echo $message;
 
@@ -210,6 +263,7 @@ function getMessages($channel_id){
 
 }
 }
+
 
 
 function getThreadMessages($parentMsgId ){
@@ -274,7 +328,7 @@ function Reaction($message_id ){
 
     $sql = "SELECT COUNT(*)FROM user_reaction INNER JOIN message ON message.message_id = user_reaction.message_id AND user_reaction.reaction = 1";
 
-    $sql = "SELECT COUNT(*)FROM user_reaction INNER JOIN message ON message.message_id = user_reaction.message_id AND user_reaction.reaction = 2";
+    
 
     $result = $connect->query($sql);
 
@@ -293,8 +347,9 @@ function Reaction($message_id ){
 
                          
                             <form id ='threadForm".$message_id."' method='POST'>
-                              <button class=\"like\" id='like'><i class='fa fa-thumbs-o-up' aria-hidden='true'></i></span>
-                              <button class=\"dislike\" id='dislike'><i class='fa fa-thumbs-o-down' aria-hidden='true'></i></span>
+                              <button type='submit' class=\"like\"  name= 'reaction' id='like'><i class='fa fa-thumbs-o-up' aria-hidden='true'></i></button>
+                              <button type= 'submit' class=\"dislike\" name= 'reaction' id='dislike'><i class='fa fa-thumbs-o-down' aria-hidden='true'></i></button>
+                              <input type='hidden' name='created_by' id='created_by' value = ".$row['created_by'].">
                               <input type='hidden' name='to_message_id' id='to_message_id' value = ".$message_id.">
                               <input type='hidden' name='channel_id' id='channel_id' value = ".$channel_id.">
                             </form>
@@ -406,6 +461,39 @@ $created_by = $insertThreads['user_id'];
    $channel_name= mysqli_real_escape_string($connect, $_POST['channel_name']);
    $channel_type = mysqli_real_escape_string($connect, $_POST['channel_type']);
    $user_id= mysqli_real_escape_string($connect, $_POST['user_id']);*/
+
+if(isset($_POST['insertReactions'])){
+
+  global $connect;
+
+$insertReactions = $_POST['insertReactions'];
+$to_message_id = $insertReactions['msg_id'];
+$reaction = $insertReactions['reaction'];
+$created_by = $insertReactions['user_id'];
+
+//echo $to_message_id;
+//echo $message_content;
+//echo $created_by;
+
+
+
+
+  $sql = "INSERT INTO `user_reaction` (userreactionid, reaction, user_id, message_id) VALUES (NULL, $reaction, $to_message_id, $created_by)";
+
+   echo $sql;
+   $result = $connect->query($sql);
+   $location = 'location: dashboard.php?channel_id?to_message_id='.$channel_id .$to_message_id;
+   // echo $location;
+   header($location);
+
+}
+
+
+
+                              
+
+                              
+
 
 
 ?>
