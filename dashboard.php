@@ -1,18 +1,12 @@
-
 <?php
-require_once 'php_action/core.php';
+session_start();
 require_once 'php_action/db_connect.php';
 require_once 'queries.php';
-$user = $_SESSION['userId'];
-$channel_id ;
 
+$user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
 
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,26 +20,339 @@ $username = $_SESSION['userName'];
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="./tinymce/tinymce.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style type="text/css">
+    
+       table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
+        table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
 
+  </style>
+  <script type="text/javascript">
+    
+    var uname="<?php echo $_SESSION['userName']?>";
+    var uid="<?php echo $_SESSION['userId']?>";
+    var selMessage = 0;
+    var selChannel=0;
+    var lastMsgId=0;
+    var reaction;
+
+
+function showChannel(channel_id)
+{
+
+  selChannel= channel_id;
+  // fire ajax call
+  // get channel messages service
+  $("#channelChat").empty();
+
+   $.ajax({
+          type: 'POST',
+          url: 'message.php',
+          data: "channel_id="+channel_id,
+          dataType:"json",
+          success : function(data) {
+          console.log(data);  
+          var tableData=" <table id='example' class='display' cellspacing='0' width='100%''><thead><tr><th>Messages</th></tr> </thead><tbody>";
+        
+              $.each(data,function(i,d){
+                  lastMsgId= parseInt(d.message_id);
+
+                  //if(d.user_id==uid){
+                      if(d.reply_msg_id=="0"){
+                             tableData += "<tr><td><div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
+                      }
+              });
+              tableData +="</tbody></table>";
+
+              $("#channelChat").append(tableData);  
+
+               $.each(data,function(i,d){
+                  lastMsgId= parseInt(d.message_id);
+
+                  //if(d.user_id==uid){
+                      if(d.reply_msg_id!="0"){
+                             $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><p>"+d.created_time+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button></div></div>");
+                      }
+                });
+
+               $('#example').DataTable({ "ordering": false,
+        "info": false});
+          
+            }
+        });
+}
+
+
+
+$(document).ready(function() {
+
+
+  tinymce.init({ 
+
+    selector:'textarea',
+    plugins: ['advlist autolink lists link image charmap print preview anchor textcolor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table contextmenu paste code help'],
+    menubar: "insert",
+    toolbar : "imageupload",
+        setup: function(editor) {
+            var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
+            $(editor.getElement()).parent().append(inp);
+
+            inp.on("change",function(){
+                var input = inp.get(0);
+                var file = input.files[0];
+                var fr = new FileReader();
+                var myFormData = new FormData();
+                myFormData.append('image', file);
+
+
+                fr.onload = function() {
+                    var img = new Image();
+                   // img.src = "myimage.png";
+                    $.ajax({
+                           type: 'POST',
+                            url: 'upload.php',
+                            processData: false, // important
+                            contentType: false, // important
+                            data: myFormData,
+                            success : function(data) {
+                                console.log(data);
+                                img.src=""+data;
+                                editor.insertContent('<img src="'+img.src+'"/>');
+                                inp.val('');
+                            },error:function(data){
+                              console.log("error in image upload");
+                            }
+                    });
+                    //upload this file to your own server and get local image url and set this url to img src
+                   // img.src = fr.result;
+                    
+                }
+                fr.readAsDataURL(file);
+            });
+
+            editor.addButton( 'imageupload', {
+                text:"IMAGE",
+                icon: false,
+                onclick: function(e) {
+                    inp.trigger('click');
+                }
+            });
+        } 
+
+});
+
+
+  /*var channel_id=y;
+  $('.msgreply').modal('show');
+  var msg=tinymce.get("replymsg").getContent();
+
+ }
+  */
+
+  $('.createbutton').on('click', function(event1) {
+
+    event1.preventDefault();
+    $('.openchannel').modal('show');
+
+  });
+  
+
+  $('.channelbutton').on('click', function(event) {
+   event.preventDefault();
+    var channel_name = document.getElementById('channel_name').value;
+    var channel_type = $("input:radio[name='channel_type']:checked").val();
+
+    console.log(channel_name);
+
+    $.ajax({
+          type: 'POST',
+          url: 'CreateChannel.php',
+          data: "channel_name="+channel_name+"&channel_type="+channel_type,
+          success : function(data) {
+                if(data=="error"){
+                  alert("Cannot create channel at this moment!");
+                }
+                else{
+                  if(channel_type=="private"){
+                      $("#channelList").append("<a class='list-group-item active' href='javascript:showChannel("+data+")'> "+channel_name+" </a>");
+                  }else{
+                    $("#channelList").append("<a class='list-group-item' href='javascript:showChannel("+data+")'> "+channel_name+" </a>");
+                  }
+                  
+                    $('.openchannel').modal('hide');
+                }
+             }
+        });
+      });
+
+
+
+
+//document ready function closing
+});
+
+function sendreplies(x){
+  //$(document).on('click','.reply_c', function() {
+    $('#send_replyid').val(x);
+    $('.msgreply').modal('show');
+
+  //});
+ }
+
+
+
+
+
+function sendMessageToChannel(){
+  //ajax on success
+    var msg=tinymce.get("textmsg").getContent();
+    console.log(msg);
+
+     $.ajax({
+          type: 'POST',
+          url: 'createnewmsgforchannel.php',
+          data: "channel_id="+selChannel+"&message="+msg+"&replymsgid=0",
+          dataType:"json",
+          success : function(data) {
+          console.log("saving message to channel --- ");  
+                  //lastMsgId= parseInt(d.message_id);
+                  var chatTable=$('#example').DataTable();
+                
+                  chatTable.row.add( [
+                  "<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                    ] ).draw( false );
+                  
+              
+             },
+             error:function(error_msg){
+                console.log(error_msg);
+             }
+        });
+
+
+    
+}
+
+function sendRepliesToChannel(){
+  //ajax on success
+    var msg=tinymce.get("replymsg").getContent(); 
+    //msg contains html content
+    var reply_msg_id = $("#send_replyid").val() ;
+
+    console.log(reply_msg_id);
+
+     $.ajax({
+          type: 'POST',
+          url: 'createnewmsgforchannel.php',
+          data: "channel_id="+selChannel+"&replymsgid="+reply_msg_id+"&message="+msg,
+          success : function(data) {
+          console.log("saving message to channel --- "+data);  
+              lastMsgId= parseInt(data);
+
+               $("#thread-"+reply_msg_id).append("<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button></div></div>");
+              
+             },
+             error:function(error_msg){
+                console.log(error_msg);
+             }
+        });
+
+
+    
+}
+
+function addReactionToMessage(message_id, userId,reaction){
+  //ajax on success
+
+     $.ajax({
+          type: 'POST',
+          url: 'MessageReaction.php',
+          data: "message_id="+message_id+"&user_id="+uid +"&reaction="+reaction,
+          dataType:"json",                  //lastMsgId= parseInt(d.message_id);
+
+          success : function(data) {
+          console.log(data);  
+              
+                  
+                  
+              
+             }
+        });
+
+
+    
+}
+
+
+
+function getNewMessagesforChannel(){
+ //get New message for this channel every 5 seconds
+  //console.log("get new messages from ajax for this channel"+selChannel);
+  var chatTable=$('#example').DataTable();
+  
+  $.ajax({
+          type: 'POST',
+          url: 'getnewmsgforchannel.php',
+          data: "channel_id="+selChannel + "&msg_id="+lastMsgId,
+          dataType:"json",
+          success : function(data) {
+          //console.log(data);  
+              $.each(data,function(i,d){
+                  lastMsgId= parseInt(d.message_id);
+                  
+
+                  if(d.reply_msg_id=="0"){
+
+                    chatTable.row.add(["<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"]).draw(false);
+                  }else{
+                      $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button></div></div>");
+
+                  }
+              });
+             }
+        });
+}
+
+var pooler =setInterval(getNewMessagesforChannel,5000);
+
+  </script>
 </head>
 
 <body >
 
 <!-- Message Box-->
 
-                      
-
-  
-                 
-
-
+<div class="modal msgreply" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reply Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+        <textarea id="replymsg"></textarea>
+        <input type="hidden" id="send_replyid"></input>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary sendreply" onclick="sendRepliesToChannel()">Send</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--Creating a channel-->
 
-
-
-
-  <div class="modal fade openchannel" tabindex="-1" role="dialog">
+  <div class="modal fade openchannel" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -67,7 +374,7 @@ $username = $_SESSION['userName'];
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class=" channelbutton btn btn-primary" name= "channelbutton">Create Channel  
+          <button type="button" class=" channelbutton btn btn-primary" name= "channelbutton">Save 
 
            <?php   if(isset($_POST['channelbutton'])) {  
 
@@ -79,265 +386,79 @@ $username = $_SESSION['userName'];
               
             </button>
         </div>
-      </div><!-- /.modal-content -->
+      </div><!-- /.modal-content -->  
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
-
-
-<div id= "sidebar">
-<div class="navbar navbar-inverse navbar-fixed-left">
-  <a class="navbar-brand" href="#">Stud-Collab</a>
-  <ul class="nav navbar-nav">
-
-                          
-                          <div class="welcome_msg">
-                            <button onclick="myFunction()" class="dropbtn">
-                            <?php
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Stud-Collab</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#" data-toggle="modal" data-target="myModal">Create a channel</a></li>
+        <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>  <?php
 
                               $welcome = "Welcome" ."       " .$username;
                                echo htmlspecialchars_decode($welcome);
-                            ?></button>
+                            ?></a></li>
+            <li>
+              <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
+            </li>
+      </ul>
 
-                             <div id="myDropdown" class="dropdown-content">
-                                  <b><?php echo "$username"; ?></b>
-                                  <button>Set a status</button>
-                                  <button onclick="openWin()">Profile and Account</button>
-                                
-                                </div>
-                          </div>
-                          </li>
-                           
-                          
-                      
-                      <li>
-                          <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
-                      </li>
-                      <li>
-                          <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
-                      </li>
-                      <li>
-                          <a href="#">Threads</a>
-                      </li>
-                      <li class="dropdown"><span><i class="createchannel fa fa-plus-square" aria-hidden="true"></i></span>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid">
+    <div class="col-sm-3" style="margin:0px;">
+      <div class="list-group" id="channelList">
 
-                      <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-television" aria-hidden="true"></i>Channels<span class="caret"></span></a>
+           <?php 
+              $sql = "SELECT * FROM `channel` where channel_type='public' UNION SELECT * From `channel` where channel_type='private' and created_by=".$user." union select * from channel where channel_id in (select channel_id from user_channel where user_id=".$user.")";
 
-                      <ul class="dropdown-menu" role="menu">
-                        
-                        <?php  $result = getAllChannels(); echo htmlspecialchars_decode($result); ?>
-
-                      </ul>
-                  <li>
-                    <a href="#">Direct Messages</a>
-
-                    <?php  $result = getAllUsers(); echo htmlspecialchars_decode($result); ?>
-                  </li> 
-                </li>
-     
-      
-  </ul>
-
-  <div id="page-content-wrapper">
             
-            
-            
+                  $result = $connect-> query($sql);
 
-                
-                  <div class="overflow-chat">
-                      <div class="col-lg-8 col-lg-offset-2">
-                          <h1>Welcome to Stud-Collab</h1>
+                  if ($result->num_rows > 0) {
+                 
+                    while($row = $result->fetch_assoc()) {
+                      if($row["channel_type"]=="private"){
+                           echo "<a class='list-group-item active' href='javascript:showChannel(".$row['channel_id'].")'> ".$row['channel_name']." </a>";
+                      }else{
+                          echo "<a class='list-group-item' href='javascript:showChannel(".$row['channel_id'].")'> ".$row['channel_name']." </a>";
+                        }
+                     }
+                  }
+            ?>
+      </div>
+    </div>
 
-                          <?php 
-                            if(isset($_GET["channel_id"])){
-                              $result = getMessages($_GET["channel_id"]); 
-                            }else{
-                              $result = getMessages(1); 
-                            } 
-
-                            echo htmlspecialchars_decode($result);
-                          ?>
-
-                           
-                            
-                      </div>
-                      
-
-                  </div>
-
-                  <form  action="queries.php" method="POST" >
-
-                        <div  id= "textarea" class="input-group input-group-lg">
-                          
-                           <span class="input-group-addon" id="sizing-addon1">+</span>
-                           <input type="text" class="form-control" placeholder="Type Your Message..." name = "message" aria-describedby="sizing-addon1">
-                           <input type="hidden" name="user_id" id="user_id" value = <?php echo htmlspecialchars_decode($user) ?>>
-                           <input type="hidden" name="channel_id" value=<?php if (isset($_GET["channel_id"])) {
-                            echo $_GET["channel_id"];}
-                            else{
-                              $var = 1;
-                              echo htmlspecialchars_decode($var);
-                              } ?>>
-                        </div>
-                      </form>
-
-                        <div id="msg-btn">
-                            <input type="button" style="height: 45px; width: 90px; background-color:#58b759; color: white " value="Submit">
-
-                        </div>
-
-                  
-    
-            </div>
-
-
-               
+    <div class="col-sm-9">
+        <div id="channelChat">
+          
         </div>
-
-        
-
+      <div class="form-group">
+        <textarea id="textmsg"></textarea><button class="btn btn-primary" onclick="sendMessageToChannel()">Send</button>
+      </div>
+      
+    </div>
 </div>
-<script>
-
-
-        function myFunction()
-         {
-          document.getElementById("myDropdown").classList.toggle("show");
-          }
-
-        window.onclick = function(event) {
-          if (!event.target.matches('.dropbtn')) 
-          {
-          var dropdowns = document.getElementsByClassName("dropdown-content");
-          var i;
-        for (i = 0; i < dropdowns.length; i++) 
-        {
-            var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) 
-      {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-
-       
-// <!-- <button onclick="openWin()">Open w3schools.com in a new window</button>
-// <button onclick="closeWin()">Close the new window (w3schools.com)</button> -->
-
-
-var myWindow;
-
-function openWin() {
-    myWindow = window.open("profile.php", "_self");
-}
-
-
-</script>        
 
 </body>
 
-<script type="text/javascript">
-	
-
-$(document).ready(function () {
-
-  var response = '';
-
-  $( ".createchannel" ).click(function(){
-
-  $( ".openchannel" ).modal('show');
-
-
- 
-
-});
-
-  $( ".channelbutton" ).click(function(){
-
-     $( ".openchannel" ).modal('hide');
-
-    var channel_name = $("#channel_name").val();
-    var channel_type = $("#channel_type").val();
-    var created_by = $("#user_id").val();
-    var user_id = $("#user_id").val();
-    var dataString = {'channel_name': channel_name, 'channel_type': channel_type, 'created_by': user_id, 'user_id': user_id};
-
-
-         $.ajax({
-          type: 'POST',
-          url: 'queries.php',
-          data: {'insertChannels':dataString},
-
-          success : function(data) {  
-
-            console.log(data);
-            
-          
-            }
-        });
-
-    });
-
-
-  // $( ".threadbutton" ).click(function(){
-
-  //   var to_message_id = $("#to_message_id").val();
-  //   var message_content = $("#message_content").val();
-  //   var created_by = $("#user_id").val();
-  //   var dataString = {'to_message_id': to_message_id, 'message_content': message_content, 'created_by': user_id};
-
-
-  //        $.ajax({
-  //         type: 'POST',
-  //         url: 'queries.php',
-  //         data: {'insertThreads':dataString},
-
-  //         success : function(data) {  
-
-  //         alert("successfully inserted")
-            
-          
-  //           }
-  //       });
-
-  //   });
-
-       
-  $(document).on("click", ".reply", function(e){
-
-   $('#messagereply_'+e.currentTarget.id).toggle();
-
-
-
-});
-
-
-//   $(".thread").keypress(function(event) {
-//     if (event.which == 13) {
-//         event.preventDefault();
-//         var msgId = event.currentTarget.id.split('_')[1];
-//         $("#threadForm"+msgId).submit();
-//     }
-// });
-
-
-$(document).on("click", ".threadbutton", function(event){
-    
-        event.preventDefault();
-        var msgId = event.currentTarget.id.split('_')[1];
-        $("#threadForm"+msgId).submit();
-    
-});
-
-
-
-  });
-
-
-
-
-</script>
 </html>

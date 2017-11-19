@@ -30,6 +30,7 @@ if($_POST){
 
 		$sql = "SELECT * FROM user WHERE username = '$username'";
 		$result = $connect ->query($sql);
+		
 
 		if($result-> num_rows == 1){
 
@@ -38,6 +39,7 @@ if($_POST){
 			$mainSql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
 			$mainResult = $connect -> query($mainSql);
 
+			
 			if($mainResult-> num_rows == 1){
 
 				$value = $mainResult -> fetch_assoc();
@@ -52,7 +54,17 @@ if($_POST){
 
 
 				header('location: dashboard.php');
-			}else{
+			}
+
+
+
+
+			
+
+
+
+
+			else{
 
 			$errors[] = "Incorrect username/password combination";
 

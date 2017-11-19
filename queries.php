@@ -30,10 +30,7 @@
 </style>
 <?php
 
-require_once 'php_action/core.php';
 require_once 'php_action/db_connect.php';
-require_once 'queries.php';
-require_once 'dashboard.php';
 
 if(isset($_POST['message'])){
   insertMessages();
@@ -48,7 +45,8 @@ if (isset($_POST['message_content'])){
 //echo "<link rel='stylesheet' type='text/css' href='custom/css/stylemsg.css' />";
 function getAllChannels(){
   global $connect;
-    $sql = "SELECT * FROM channel";
+    $sql = "SELECT * FROM channel where channel_id in (select channel_id from user_channel where user_id=".$userId.")";
+    echo $sql;
     $result = $connect-> query($sql);
 
     if ($result->num_rows > 0) {
@@ -201,7 +199,7 @@ function getMessages($channel_id){
 
        }
     
-       return $message;
+       return "";
     }
     else{
 
