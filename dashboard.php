@@ -5,7 +5,6 @@ require_once 'queries.php';
 
 $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,6 +28,19 @@ $username = $_SESSION['userName'];
        table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
         table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
 
+        #searchResults{
+          z-index: 1000;
+          width:100%;
+        }
+        #searchResults a{
+            display: block;
+            text-decoration: none;
+            padding: 5px;
+        }
+        #searchResults a:hover{
+            background: #e4f0ff;
+        }
+
   </style>
   <script type="text/javascript">
     
@@ -40,7 +52,7 @@ $username = $_SESSION['userName'];
     var reaction;
 
 
-function showChannel(channel_id)
+function showChannel(channel_id,status)
 {
 
   selChannel= channel_id;
@@ -55,33 +67,43 @@ function showChannel(channel_id)
           dataType:"json",
           success : function(data) {
           console.log(data);  
-          var tableData=" <table id='example' class='display' cellspacing='0' width='100%''><thead><tr><th>Messages</th></tr> </thead><tbody>";
+          var tableData=" <table id='example' class='display' cellspacing='0' width='100%''><thead><tr><th>Id</th><th>Messages</th></tr> </thead><tbody>";
         
               $.each(data,function(i,d){
                   lastMsgId= parseInt(d.message_id);
 
                   //if(d.user_id==uid){
                       if(d.reply_msg_id=="0"){
-                             tableData += "<tr><td><div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
+                             tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
                       }
               });
               tableData +="</tbody></table>";
 
               $("#channelChat").append(tableData);  
-
+ 
                $.each(data,function(i,d){
                   lastMsgId= parseInt(d.message_id);
 
                   //if(d.user_id==uid){
                       if(d.reply_msg_id!="0"){
-                             $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><p>"+d.created_time+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button></div></div>");
+                             $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><p>"+d.created_time+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>"+d.dislikes+"</span></button></div></div>");
                       }
                 });
 
-               $('#example').DataTable({ "ordering": false,
-        "info": false});
-          
-            }
+               var dtable=$('#example').DataTable({ "ordering": true,
+                  "info": false});
+                dtable.column(0).visible(false);
+              $('#example').DataTable().order([0, 'desc']).draw();
+
+              if(status==0){
+                  $("#textAreaHolder").show();
+
+              }else{
+                   $("#textAreaHolder").hide();
+                   $('#channelChat').find('*').attr('disabled', true);
+              }
+
+                }
         });
 }
 
@@ -97,7 +119,8 @@ $(document).ready(function() {
     'searchreplace visualblocks code fullscreen',
     'insertdatetime media table contextmenu paste code help'],
     menubar: "insert",
-    toolbar : "imageupload",
+    entity_encoding : "raw",
+    toolbar : "imageupload media insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
         setup: function(editor) {
             var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
             $(editor.getElement()).parent().append(inp);
@@ -216,16 +239,22 @@ function sendMessageToChannel(){
      $.ajax({
           type: 'POST',
           url: 'createnewmsgforchannel.php',
-          data: "channel_id="+selChannel+"&message="+msg+"&replymsgid=0",
-          dataType:"json",
+          contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
+          data: {"channel_id":selChannel,"message":msg,"replymsgid":0},
           success : function(data) {
           console.log("saving message to channel --- ");  
+
+          console.log(data);
                   //lastMsgId= parseInt(d.message_id);
                   var chatTable=$('#example').DataTable();
                 
-                  chatTable.row.add( [
-                  "<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                  chatTable.row.add( [data,
+                  "<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
                     ] ).draw( false );
+
+                  $('#example').DataTable().order([0, 'desc']).draw();
+                  //to clear the previous typed message content
+                  tinymce.get("textmsg").setContent("");
                   
               
              },
@@ -318,6 +347,35 @@ function getNewMessagesforChannel(){
         });
 }
 
+function search()
+{
+  console.log($("#searchUser").val());
+  var key=$("#searchUser").val();
+  $("#searchResults").empty();
+ if(key.length>=1){
+   $.ajax({
+          type: 'POST',
+          url: 'search.php',
+          data: "key="+key,
+          dataType:"json",
+          success : function(data) {
+            console.log(data);
+                $.each(data,function(i,d){
+                  $("#searchResults").append("<a onclick='takeToProfile("+d.user_id+")'>"+d.username+"</a>");
+                });
+          }
+        });
+ 
+   
+  }
+ 
+}
+
+function takeToProfile(uid){
+  console.log(uid);
+  //redirect page to profile page using uid
+}
+
 var pooler =setInterval(getNewMessagesforChannel,5000);
 
   </script>
@@ -405,11 +463,13 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
         <li class="active"><a href="#">Home</a></li>
         <li><a href="#">Help</a></li>
         <li><a href="#">Settings</a></li>
-        <li><a href="#" data-toggle="modal" data-target="myModal">Create a channel</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><input type="text" id="searchUser" style="margin-top: 10px;color:black;" onkeyup="search()" />
+          <div id="searchResults" style="display: inline;position: absolute;background: white;color: blue;"></div>
+        </li>
         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>  <?php
 
                               $welcome = "Welcome" ."       " .$username;
@@ -438,9 +498,9 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
                  
                     while($row = $result->fetch_assoc()) {
                       if($row["channel_type"]=="private"){
-                           echo "<a class='list-group-item active' href='javascript:showChannel(".$row['channel_id'].")'> ".$row['channel_name']." </a>";
+                           echo "<a class='list-group-item active' href='javascript:showChannel(".$row['channel_id'].",".$row["archieve"].")'> ".$row['channel_name']." </a>";
                       }else{
-                          echo "<a class='list-group-item' href='javascript:showChannel(".$row['channel_id'].")'> ".$row['channel_name']." </a>";
+                          echo "<a class='list-group-item' href='javascript:showChannel(".$row['channel_id'].",".$row["archieve"].")'> ".$row['channel_name']." </a>";
                         }
                      }
                   }
@@ -452,7 +512,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
         <div id="channelChat">
           
         </div>
-      <div class="form-group">
+      <div class="form-group" id="textAreaHolder">
         <textarea id="textmsg"></textarea><button class="btn btn-primary" onclick="sendMessageToChannel()">Send</button>
       </div>
       
