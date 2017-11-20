@@ -20,7 +20,7 @@ if($result->num_rows == 0)
 		/*$reaction=$_REQUEST['reaction'];*/
 		$insert="INSERT INTO reactions (`reaction_id`, `user_id`, `message_id`, `reaction`) VALUES (NULL,$userid,$messageid,$user_reaction)";
 		//echo $insert;
-		if($connect->query($insert)==TRUE) 
+		if($connect->query($insert)===TRUE) 
 		{
 			//echo "Success";
 			$sql="SELECT count(*)as num,reaction FROM `reactions` where message_id=$messageid GROUP BY reaction"; 
@@ -76,6 +76,9 @@ else if($result->num_rows> 0)
 }
 
 ?>
+
+
+
 
 
 
