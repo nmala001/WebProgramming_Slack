@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2017 at 10:20 PM
+-- Generation Time: Nov 20, 2017 at 07:10 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-CREATE Database slack;
+CREATE DATABASE slack;
 USE slack;
 
 --
@@ -33,21 +33,26 @@ USE slack;
 
 CREATE TABLE `channel` (
   `channel_id` int(11) NOT NULL,
-  `channel_name` varchar(50) NOT NULL,
+  `channel_name` varchar(255) NOT NULL,
   `channel_type` varchar(50) NOT NULL,
   `created_by` int(11) NOT NULL,
-  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `archieve` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `channel`
 --
 
-INSERT INTO `channel` (`channel_id`, `channel_name`, `channel_type`, `created_by`, `created_time`) VALUES
-(1, 'create', 'public', 20, '2017-10-31 17:10:31'),
-(2, 'njdc', 'public', 20, '2017-10-31 17:11:09'),
-(3, 'I am Legend', 'public', 2, '2017-11-19 04:49:11'),
-(4, 'New Channel', 'private', 2, '2017-11-19 17:36:45');
+INSERT INTO `channel` (`channel_id`, `channel_name`, `channel_type`, `created_by`, `created_time`, `archieve`) VALUES
+(1, 'create', 'public', 20, '2017-10-31 17:10:31', 0),
+(2, 'njdc', 'public', 20, '2017-10-31 17:11:09', 0),
+(3, 'I am Legend', 'public', 2, '2017-11-19 04:49:11', 0),
+(6, 'Images', 'public', 2, '2017-11-19 23:50:09', 0),
+(7, 'Private Channel', 'private', 2, '2017-11-19 23:50:47', 0),
+(8, 'Public Channel', 'public', 2, '2017-11-20 00:02:30', 0),
+(9, 'Private Channel', 'private', 2, '2017-11-20 00:03:13', 0),
+(10, 'Tow Mater\'s Tall Tales!?', 'private', 2, '2017-11-20 03:18:56', 1);
 
 -- --------------------------------------------------------
 
@@ -74,9 +79,9 @@ CREATE TABLE `message` (
   `created_by` int(11) NOT NULL,
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `reply_msg_id` int(11) NOT NULL,
-  `message` longtext NOT NULL,
+  `message` longtext CHARACTER SET latin1 NOT NULL,
   `ch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_520_ci;
 
 --
 -- Dumping data for table `message`
@@ -100,7 +105,28 @@ INSERT INTO `message` (`message_id`, `created_by`, `created_time`, `reply_msg_id
 (52, 2, '2017-11-19 17:38:09', 0, '&lt;p&gt;This is a new private channel&lt;/p&gt;', 4),
 (53, 2, '2017-11-19 18:00:03', 0, '&lt;p&gt;Hii re&lt;/p&gt;', 4),
 (54, 2, '2017-11-19 18:00:07', 0, '&lt;p&gt;Hii re&lt;/p&gt;', 4),
-(56, 2, '2017-11-19 20:56:20', 0, '&lt;p&gt;Hello Tow How is this image ?&lt;/p&gt;\n&lt;p&gt;&lt;img src=&quot;uploads/5a11efdaebed5_post.jpg&quot; /&gt;&lt;/p&gt;\n&lt;p&gt;Light house btw&lt;/p&gt;', 1);
+(56, 2, '2017-11-19 20:56:20', 0, '&lt;p&gt;Hello Tow How is this image ?&lt;/p&gt;\n&lt;p&gt;&lt;img src=&quot;uploads/5a11efdaebed5_post.jpg&quot; /&gt;&lt;/p&gt;\n&lt;p&gt;Light house btw&lt;/p&gt;', 1),
+(57, 2, '2017-11-19 22:37:27', 0, '&lt;p&gt;Hello World&lt;/p&gt;', 1),
+(58, 2, '2017-11-19 22:38:15', 57, '&lt;p&gt;Hey There&lt;/p&gt;', 1),
+(59, 2, '2017-11-19 22:38:40', 0, '&lt;p&gt;Hello everyone&lt;/p&gt;', 4),
+(60, 2, '2017-11-19 23:48:44', 0, '&lt;p&gt;Hello All&lt;/p&gt;', 3),
+(61, 2, '2017-11-19 23:50:18', 0, '&lt;p&gt;Hii there&lt;/p&gt;', 6),
+(62, 2, '2017-11-19 23:51:23', 0, '&lt;p&gt;This is my private channel&lt;/p&gt;', 7),
+(63, 2, '2017-11-20 00:02:47', 0, '&lt;p&gt;My public channel&lt;/p&gt;', 8),
+(64, 2, '2017-11-20 00:03:34', 0, '&lt;p&gt;Heyy&lt;/p&gt;', 9),
+(65, 2, '2017-11-20 01:48:27', 0, '&lt;p&gt;Testing desc order message&lt;/p&gt;', 2),
+(66, 2, '2017-11-20 01:49:25', 0, '&lt;p&gt;This is my last msg to ordering&lt;/p&gt;', 2),
+(67, 2, '2017-11-20 02:05:44', 0, '&lt;pre&gt;I\'m happier than a tornado in a trailer park! &lt;/pre&gt;', 10),
+(68, 2, '2017-11-20 02:06:14', 0, '&lt;p&gt;Hello&lt;/p&gt;', 10),
+(69, 2, '2017-11-20 02:21:48', 0, '&lt;p&gt;This is my msg on top&lt;/p&gt;', 8),
+(70, 2, '2017-11-20 05:05:11', 0, '<p>&lt;?php echo \"Nehh !!\" ?&gt;</p>', 1),
+(76, 2, '2017-11-20 05:08:23', 0, '&lt;p&gt;', 6),
+(77, 2, '2017-11-20 05:10:18', 0, '&lt;p&gt;', 6),
+(78, 2, '2017-11-20 05:10:42', 0, '&lt;p&gt;', 6),
+(80, 2, '2017-11-20 05:14:17', 0, '&lt;p&gt;', 2),
+(81, 2, '2017-11-20 05:17:26', 0, '&lt;p&gt;', 2),
+(82, 2, '2017-11-20 05:20:48', 0, '&lt;p&gt;&amp;lt;?php echo &quot;&quot;?&amp;gt;&lt;/p&gt;', 3),
+(83, 2, '2017-11-20 05:22:28', 0, '&lt;p&gt;&amp;lt;?php ?&amp;gt;&lt;/p&gt;', 3);
 
 -- --------------------------------------------------------
 
@@ -120,7 +146,7 @@ CREATE TABLE `profile_pic` (
 
 INSERT INTO `profile_pic` (`user_id`, `img_id`, `img_path`) VALUES
 (1, 1, '51967684.jpg'),
-(2, 6, 'Business-Timeline-Infographics.png');
+(2, 6, 'User-icon.png');
 
 -- --------------------------------------------------------
 
@@ -284,6 +310,7 @@ ALTER TABLE `user`
 -- Indexes for table `user_channel`
 --
 ALTER TABLE `user_channel`
+  ADD UNIQUE KEY `user_id` (`user_id`,`channel_id`),
   ADD KEY `channel_fk` (`channel_id`),
   ADD KEY `user_fk` (`user_id`);
 
@@ -302,7 +329,7 @@ ALTER TABLE `workspace`
 -- AUTO_INCREMENT for table `channel`
 --
 ALTER TABLE `channel`
-  MODIFY `channel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `channel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `direct_message`
@@ -314,7 +341,7 @@ ALTER TABLE `direct_message`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `profile_pic`
