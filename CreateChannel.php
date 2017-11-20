@@ -4,8 +4,8 @@ session_start();
 /*$user_id=$_SESSION["user_id"];*/
 
 
-	$channel_name = $_REQUEST['channel_name'];
-	$channel_type = $_REQUEST['channel_type'];
+	$channel_name = mysqli_real_escape_string($connect,htmlspecialchars($_REQUEST['channel_name']));
+	$channel_type = mysqli_real_escape_string($connect,$_REQUEST['channel_type']);
 
 
 /*for public channel,updating channel table only*/
