@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2017 at 07:10 AM
+-- Generation Time: Nov 20, 2017 at 08:31 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -81,7 +81,7 @@ CREATE TABLE `message` (
   `reply_msg_id` int(11) NOT NULL,
   `message` longtext CHARACTER SET latin1 NOT NULL,
   `ch_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_520_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
 -- Dumping data for table `message`
