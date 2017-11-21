@@ -42,24 +42,27 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
             
             $sql="update profile_pic set img_path='".$fileName."' where user_id=".$_SESSION["userId"];
             
-            if ($connect->query($sql) === TRUE) {
-                /*echo '<img src="'. $folder. '/'. $img_path. '" height="100" width="200" align="left">';
-                echo "<br />";*/
+            if ($connect->query($sql) === TRUE) 
+            {
                 $result=1;
                 echo "<script type='text/javascript'>window.top.window.completeUpload('" . $result . "','" . $targetPath . "');</script> ";
-            } else {
+            } 
+            elseif($connect->query($sql) === FALSE) 
+            {
                     $sql="INSERT INTO `profile_pic`(`user_id`, `img_id`, `img_path`) VALUES ($user_id,NULL,$fileName)";
                     if($connect->query($sql) === TRUE)
                     {
                         $result=1;
                     }
-                    else{
+                    else
+                    {
                         $result=0;
                         echo  "<script>alert('Error uploading profile pic!!".$sql."');</script>";
                     }
             }
             
-        } else {
+          }
+        else {
             print_r ( $errors );
         }
     }
