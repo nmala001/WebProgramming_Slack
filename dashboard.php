@@ -26,7 +26,7 @@ $username = $_SESSION['userName'];
   <style type="text/css">
     
        table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
-        table.dataTable tr.even{ background-color: white; border:1px lightgrey;}
+        table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
 
         #searchResults{
           z-index: 1000;
@@ -40,6 +40,16 @@ $username = $_SESSION['userName'];
         #searchResults a:hover{
             background: #e4f0ff;
         }
+        pre {
+        white-space: pre-wrap;       /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      }
+/*p {
+  word-wrap: break-word;
+}*/
 
   </style>
   <script type="text/javascript">
@@ -115,10 +125,16 @@ $(document).ready(function() {
   tinymce.init({ 
 
     selector:'textarea',
+
+    //end_container_on_empty_block: true,
+    //br_in_pre: true,
+
     plugins: ['advlist autolink lists link image charmap print preview anchor textcolor',
     'searchreplace visualblocks code fullscreen',
     'insertdatetime media table contextmenu paste code help'],
     menubar: "insert",
+    //forced_root_block: '',
+    
     entity_encoding : "raw",
     toolbar : "imageupload media insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
         setup: function(editor) {
@@ -227,10 +243,6 @@ function sendreplies(x){
   //});
  }
 
-
-
-
-
 function sendMessageToChannel(){
   //ajax on success
     var msg=tinymce.get("textmsg").getContent();
@@ -249,7 +261,7 @@ function sendMessageToChannel(){
                   var chatTable=$('#example').DataTable();
                 
                   chatTable.row.add( [data,
-                  "<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                  "<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
                     ] ).draw( false );
 
                   $('#example').DataTable().order([0, 'desc']).draw();
@@ -283,7 +295,7 @@ function sendRepliesToChannel(){
           console.log("saving message to channel --- "+data);  
               lastMsgId= parseInt(data);
 
-               $("#thread-"+reply_msg_id).append("<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button></div></div>");
+               $("#thread-"+reply_msg_id).append("<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button></div></div>");
               
              },
              error:function(error_msg){
@@ -291,7 +303,7 @@ function sendRepliesToChannel(){
              }
         });
 
-
+      $('.msgreply').modal('hide');
     
 }
 
@@ -473,9 +485,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-
         <li class="active"><a href="Help.php">Help</a></li>
-
         <li><a href="#">Settings</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
         
@@ -513,12 +523,14 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
                   $result = $connect-> query($sql);
 
                   if ($result->num_rows > 0) {
-                 
-                    while($row = $result->fetch_assoc()) {
+                    while($row = $result->fetch_assoc()) 
+                    {
 
                       if($row["archive"]==1){
                         echo "<a class='list-group-item list-group-item-danger' href='javascript:showChannel(".$row['channel_id'].",".$row["archive"].")'> ".$row['channel_name']." </a>";
                       }
+                 
+                   
                       else if($row["channel_type"]=="private"){
                            echo "<a class='list-group-item active' href='javascript:showChannel(".$row['channel_id'].",".$row["archive"].")'> ".$row['channel_name']." </a>";
                       }else{
