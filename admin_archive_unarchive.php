@@ -138,7 +138,7 @@ function updateArchiveUnarchiveChannel(){
 </nav>
   <br><br>
   <!-- Add New Users code Start -->
-  <div class="container" style ="width: 25%">
+  <div class="container" style ="width: 40%">
     <div class="panel-group" >
  
         <div class="panel panel-primary"  >
