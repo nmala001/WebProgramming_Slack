@@ -2,7 +2,7 @@
 require_once 'php_action/db_connect.php';
 session_start();
 $user_id=$_SESSION["userId"];
-$folder="/uploads/images/";
+$folder="uploads/images/";
 $result=0;
 echo $user_id;
 if ($_SERVER ['REQUEST_METHOD'] == "POST") {
@@ -14,13 +14,11 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
         $file_name = $_FILES ['image'] ['name'];
         $file_tmp = $_FILES ['image'] ['tmp_name'];
         $file_type = $_FILES ['image'] ['type'];
-        $file_ext = strtolower ( end ( explode ( '.', $_FILES ['image'] ['name'] ) ) );
-        
+        //$file_ext = strtolower ( end ( explode ( '.', $_FILES ['image'] ['name'] ) ) );
+        $file_ext='jpeg';
         $fileName=$_SESSION["userId"].".".$file_ext;
         $targetPath=$folder. $fileName;
-        //echo $new_file_name;
-
-        
+        echo $targetPath;   
         $expensions = array (
                 "jpeg",
                 "jpg",
@@ -34,6 +32,7 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
         //echo "<script>alert(".$file_size.");</script>";
         if ($file_size > 2097152) {
             $errors [] = 'File size must be exactly 2 MB';
+            echo  "<script>alert('File size must be exactly 2MB!!".$sql."');</script>";
         }
         
         if (count ( $errors ) === 0) {
@@ -41,7 +40,7 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
             
             //echo "Status of file:".$status;
             
-            $sql="update profile_pic set img_path='".$targetPath."' where user_id=".$_SESSION["userId"];
+            $sql="update profile_pic set img_path='".$fileName."' where user_id=".$_SESSION["userId"];
             
             if ($connect->query($sql) === TRUE) {
                 /*echo '<img src="'. $folder. '/'. $img_path. '" height="100" width="200" align="left">';
@@ -59,3 +58,4 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
     }
 }
 ?>
+
