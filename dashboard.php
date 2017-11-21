@@ -214,7 +214,7 @@ $(document).ready(function() {
           data: "channel_name="+channel_name+"&channel_type="+channel_type,
           success : function(data) {
                 if(data=="error"){
-                  alert("Cannot create channel at this moment!");
+                 // alert("Cannot create channel at this moment!");
                 }
                 else{
                   if(channel_type=="private"){
