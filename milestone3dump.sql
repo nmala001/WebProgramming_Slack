@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Nov 20, 2017 at 08:37 AM
--- Server version: 5.7.19
--- PHP Version: 7.0.23
+-- Host: 127.0.0.1
+-- Generation Time: Nov 21, 2017 at 01:38 AM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -17,8 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
+
 CREATE DATABASE slack;
 USE slack;
+
 --
 -- Database: `slack`
 --
@@ -29,16 +31,14 @@ USE slack;
 -- Table structure for table `channel`
 --
 
-DROP TABLE IF EXISTS `channel`;
-CREATE TABLE IF NOT EXISTS `channel` (
-  `channel_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `channel` (
+  `channel_id` int(11) NOT NULL,
   `channel_name` varchar(255) NOT NULL,
   `channel_type` varchar(50) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `archive` int(11) NOT NULL,
-  PRIMARY KEY (`channel_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+  `archive` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `channel`
@@ -60,14 +60,12 @@ INSERT INTO `channel` (`channel_id`, `channel_name`, `channel_type`, `created_by
 -- Table structure for table `direct_message`
 --
 
-DROP TABLE IF EXISTS `direct_message`;
-CREATE TABLE IF NOT EXISTS `direct_message` (
-  `message_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `direct_message` (
+  `message_id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `message_desc` longtext NOT NULL,
-  `create_on` datetime NOT NULL,
-  PRIMARY KEY (`message_id`)
+  `create_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -76,16 +74,14 @@ CREATE TABLE IF NOT EXISTS `direct_message` (
 -- Table structure for table `message`
 --
 
-DROP TABLE IF EXISTS `message`;
-CREATE TABLE IF NOT EXISTS `message` (
-  `message_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `message` (
+  `message_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `reply_msg_id` int(11) NOT NULL,
   `message` longtext CHARACTER SET latin1 NOT NULL,
-  `ch_id` int(11) NOT NULL,
-  PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_520_ci;
+  `ch_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `message`
@@ -138,14 +134,11 @@ INSERT INTO `message` (`message_id`, `created_by`, `created_time`, `reply_msg_id
 -- Table structure for table `profile_pic`
 --
 
-DROP TABLE IF EXISTS `profile_pic`;
-CREATE TABLE IF NOT EXISTS `profile_pic` (
+CREATE TABLE `profile_pic` (
   `user_id` int(11) NOT NULL,
-  `img_id` int(11) NOT NULL AUTO_INCREMENT,
-  `img_path` varchar(255) NOT NULL,
-  PRIMARY KEY (`img_id`),
-  UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `img_id` int(11) NOT NULL,
+  `img_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profile_pic`
@@ -161,15 +154,12 @@ INSERT INTO `profile_pic` (`user_id`, `img_id`, `img_path`) VALUES
 -- Table structure for table `reactions`
 --
 
-DROP TABLE IF EXISTS `reactions`;
-CREATE TABLE IF NOT EXISTS `reactions` (
-  `reaction_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reactions` (
+  `reaction_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `message_id` int(11) NOT NULL,
-  `reaction` int(11) NOT NULL,
-  PRIMARY KEY (`reaction_id`),
-  UNIQUE KEY `user_id` (`user_id`,`message_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  `reaction` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reactions`
@@ -191,9 +181,8 @@ INSERT INTO `reactions` (`reaction_id`, `user_id`, `message_id`, `reaction`) VAL
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -201,9 +190,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_name` varchar(50) NOT NULL DEFAULT 'userlastname',
   `phone_number` varchar(10) NOT NULL DEFAULT '1234567891',
   `status` varchar(255) NOT NULL DEFAULT 'available',
-  `Admin` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+  `Admin` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -247,13 +235,9 @@ INSERT INTO `user` (`user_id`, `username`, `password`, `email`, `first_name`, `l
 -- Table structure for table `user_channel`
 --
 
-DROP TABLE IF EXISTS `user_channel`;
-CREATE TABLE IF NOT EXISTS `user_channel` (
+CREATE TABLE `user_channel` (
   `user_id` int(11) NOT NULL,
-  `channel_id` int(11) NOT NULL,
-  UNIQUE KEY `user_id` (`user_id`,`channel_id`),
-  KEY `channel_fk` (`channel_id`),
-  KEY `user_fk` (`user_id`)
+  `channel_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -261,8 +245,8 @@ CREATE TABLE IF NOT EXISTS `user_channel` (
 --
 
 INSERT INTO `user_channel` (`user_id`, `channel_id`) VALUES
-(2, 1),
 (1, 2),
+(2, 1),
 (2, 2);
 
 -- --------------------------------------------------------
@@ -271,13 +255,10 @@ INSERT INTO `user_channel` (`user_id`, `channel_id`) VALUES
 -- Table structure for table `workspace`
 --
 
-DROP TABLE IF EXISTS `workspace`;
-CREATE TABLE IF NOT EXISTS `workspace` (
-  `wid` int(10) NOT NULL AUTO_INCREMENT,
-  `wname` varchar(60) NOT NULL,
-  PRIMARY KEY (`wid`),
-  UNIQUE KEY `wname` (`wname`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+CREATE TABLE `workspace` (
+  `wid` int(10) NOT NULL,
+  `wname` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `workspace`
@@ -286,6 +267,102 @@ CREATE TABLE IF NOT EXISTS `workspace` (
 INSERT INTO `workspace` (`wid`, `wname`) VALUES
 (1, 'oducs');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `channel`
+--
+ALTER TABLE `channel`
+  ADD PRIMARY KEY (`channel_id`);
+
+--
+-- Indexes for table `direct_message`
+--
+ALTER TABLE `direct_message`
+  ADD PRIMARY KEY (`message_id`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`message_id`);
+
+--
+-- Indexes for table `profile_pic`
+--
+ALTER TABLE `profile_pic`
+  ADD PRIMARY KEY (`img_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `reactions`
+--
+ALTER TABLE `reactions`
+  ADD PRIMARY KEY (`reaction_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`message_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `user_channel`
+--
+ALTER TABLE `user_channel`
+  ADD UNIQUE KEY `user_id` (`user_id`,`channel_id`),
+  ADD KEY `channel_fk` (`channel_id`),
+  ADD KEY `user_fk` (`user_id`);
+
+--
+-- Indexes for table `workspace`
+--
+ALTER TABLE `workspace`
+  ADD PRIMARY KEY (`wid`),
+  ADD UNIQUE KEY `wname` (`wname`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `channel`
+--
+ALTER TABLE `channel`
+  MODIFY `channel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `direct_message`
+--
+ALTER TABLE `direct_message`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+--
+-- AUTO_INCREMENT for table `profile_pic`
+--
+ALTER TABLE `profile_pic`
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `reactions`
+--
+ALTER TABLE `reactions`
+  MODIFY `reaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+--
+-- AUTO_INCREMENT for table `workspace`
+--
+ALTER TABLE `workspace`
+  MODIFY `wid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
