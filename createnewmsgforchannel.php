@@ -11,8 +11,8 @@ require_once('./php_action/db_connect.php');
   $channel_id=  $_POST["channel_id"];
    $message = mysqli_real_escape_string($connect,htmlspecialchars($_POST["message"],ENT_QUOTES,'UTF-8'));
 
-echo $_POST["message"]."<br>";
-//echo htmlspecialchars($_POST["message"]);
+//echo $_POST["message"]."<br>";
+echo htmlspecialchars($_POST["message"]);
 
 $sql = "INSERT INTO `message` (message_id,created_by,created_time,reply_msg_id, message,ch_id) VALUES (NULL,".$_SESSION['userId'].", CURRENT_TIMESTAMP,".$replyid.", '".$message."', ".$channel_id.")";
 
