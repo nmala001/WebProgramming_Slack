@@ -51,7 +51,6 @@ INSERT INTO `channel` (`channel_id`, `channel_name`, `channel_type`, `created_by
 (6, 'Images', 'public', 2, '2017-11-19 23:50:09', 0),
 (7, 'Private Channel', 'private', 2, '2017-11-19 23:50:47', 0),
 (8, 'Public Channel', 'public', 2, '2017-11-20 00:02:30', 0),
-(9, 'Private Channel', 'private', 2, '2017-11-20 00:03:13', 0),
 (10, 'Tow Mater\'s Tall Tales!?', 'private', 2, '2017-11-20 03:18:56', 1);
 
 -- --------------------------------------------------------
