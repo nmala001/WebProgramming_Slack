@@ -48,8 +48,15 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
                 $result=1;
                 echo "<script type='text/javascript'>window.top.window.completeUpload('" . $result . "','" . $targetPath . "');</script> ";
             } else {
-                $result=0;
-                echo  "<script>alert('Error uploading profile pic!!".$sql."');</script>";
+                    $sql="INSERT INTO `profile_pic`(`user_id`, `img_id`, `img_path`) VALUES ($user_id,NULL,$fileName)";
+                    if($connect->query($sql) === TRUE)
+                    {
+                        $result=1;
+                    }
+                    else{
+                        $result=0;
+                        echo  "<script>alert('Error uploading profile pic!!".$sql."');</script>";
+                    }
             }
             
         } else {
