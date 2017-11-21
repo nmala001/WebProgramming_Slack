@@ -28,7 +28,7 @@ $username = $_SESSION['userName'];
     var uid="<?php echo $_SESSION['userId']?>";
     
      
-function insertIntoChannel(){
+function deleteFromChannel(){
   
  var channelid = $( "#channelName option:selected" ).val();
  var channelName= $( "#channelName option:selected" ).text();
@@ -43,14 +43,14 @@ function insertIntoChannel(){
                       } else{
                   $.ajax({
                               type: "post",
-                              url: "services/insert_add_new_users.php",
+                              url: "services/delete_existing_users.php",
                               data: "cid=" +channelid+"&uid=" +useridSelected,
                               success: function (response) {
 
                                 if(response=="success"){
-                                  alert(uname+" is added sucessfuly to the user_channel "+channelName);
+                                  alert(uname+" is deleted successfully from "+channelName);
                                 }else{
-                                  alert(uname+" already in channel");
+                                  alert(uname+" Not in the Channel");
                                   alert(response);
                                 }
                                 
@@ -116,8 +116,8 @@ function insertIntoChannel(){
       <ul class="nav navbar-nav">
         <li><a href="dashboard_admin.php">Home</a></li>
         <li><a href="admin_create_new_users.php">Create New Users</a></li>
-        <li class="active"><a href="#">Add Users</a></li>
-        <li><a href="admin_delete_users.php">Delete Users</a></li>
+        <li><a href="admin_add_new_users.php">Add Users</a></li>
+        <li class="active"><a href="#">Delete Users</a></li>
         <li><a href="admin_archive_unarchive.php">Archive/Un-Archive</a></li>
         <li><a href="admin_help.php">Help</a></li>
         <li><a href="admin_settings.php">Settings</a></li>
@@ -143,7 +143,7 @@ function insertIntoChannel(){
  
         <div class="panel panel-primary"  >
             <div class="panel-heading" style="color:white"> 
-                  <h3 align="center"><b>Add Users To a Channel</b></h3>
+                  <h3 align="center"><b>Delete Users From A Channel</b></h3>
             </div>
                       <div class="w3-padding-small panel-body">
                       <!-- Add New UsersForm -->
@@ -191,7 +191,7 @@ function insertIntoChannel(){
                       <div class="form-group ">
                           <label class ="control-label col-sm-4"  for="submit_button"> </label>
                           <div  class ="col-sm-6">
-                              <button type="button" onclick="insertIntoChannel()" class="btn btn-success">Submit</button>
+                              <button type="button" onclick="deleteFromChannel()" class="btn btn-success">Submit</button>
                         </div>
                       </div>
                     </form><!-- Add New UsersForm -->

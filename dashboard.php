@@ -26,7 +26,7 @@ $username = $_SESSION['userName'];
   <style type="text/css">
     
        table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
-        table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
+        table.dataTable tr.even{ background-color: white; border:1px lightgrey;}
 
         #searchResults{
           z-index: 1000;
@@ -473,6 +473,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
+        <!--<li><a href="invite_users.php">Invite Users</a></li>-->
         <li><a href="#">Help</a></li>
         <li><a href="#">Settings</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
@@ -513,7 +514,11 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
                   if ($result->num_rows > 0) {
                  
                     while($row = $result->fetch_assoc()) {
-                      if($row["channel_type"]=="private"){
+
+                      if($row["archive"]==1){
+                        echo "<a class='list-group-item list-group-item-danger' href='javascript:showChannel(".$row['channel_id'].",".$row["archive"].")'> ".$row['channel_name']." </a>";
+                      }
+                      else if($row["channel_type"]=="private"){
                            echo "<a class='list-group-item active' href='javascript:showChannel(".$row['channel_id'].",".$row["archive"].")'> ".$row['channel_name']." </a>";
                       }else{
                           echo "<a class='list-group-item' href='javascript:showChannel(".$row['channel_id'].",".$row["archive"].")'> ".$row['channel_name']." </a>";

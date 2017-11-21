@@ -117,6 +117,7 @@ function updateArchiveUnarchiveChannel(){
         <li><a href="dashboard_admin.php">Home</a></li>
         <li><a href="admin_create_new_users.php">Create New Users</a></li>
         <li ><a href="admin_add_new_users.php">Add Users</a></li>
+        <li ><a href="admin_delete_users.php">Delete Users</a></li>
         <li class="active"><a href="admin_archive_unarchive.php">Archive/Un-Archive</a></li>
         <li><a href="admin_help.php">Help</a></li>
         <li><a href="admin_settings.php">Settings</a></li>
