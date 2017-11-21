@@ -402,7 +402,7 @@ function search()
           success : function(data) {
             console.log(data);
                 $.each(data,function(i,d){
-                  $("#searchResults").append("<a onclick='takeToProfile("+d.user_id+")'>"+d.username+"</a>");
+                  $("#searchResults").append("<a href='OtherUserProfile.php?user_id="+d.user_id+"'>"+d.username+"</a>");
                 });
           }
         });
