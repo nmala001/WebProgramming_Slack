@@ -1,6 +1,7 @@
 <?php
 require_once 'php_action/db_connect.php';
 session_start();
+global $user_id;
 $user_id=$_REQUEST['user_id'];
 
 $upload=0;
@@ -17,7 +18,9 @@ $prof=new Profile();
 /*get channels for user*/
 function channelownership(){
 global $connect;
-$user_id = $_SESSION['userId'];
+//$user_id = $_SESSION['userId'];
+$user_id=$_REQUEST['user_id'];
+
 $sql = "SELECT channel_name FROM `channel` where channel_type='public'";
 $result1 = mysqli_query($connect, $sql);
 $channels=array();
@@ -42,7 +45,8 @@ $channels=array();
 
 function num_posts(){
 global $connect;
-$user_id = $_SESSION['userId'];
+//$user_id = $_SESSION['userId'];
+$user_id=$_REQUEST['user_id'];
 $posts = ("SELECT count(message) as number_posts FROM `message` where created_by=$user_id");
 $result = mysqli_query($connect, $posts);
 if($result->num_rows > 0)
@@ -64,7 +68,7 @@ else
 //number of likes
 function num_likes(){
 global $connect;
-$user_id = $_SESSION['userId'];
+$user_id=$_REQUEST['user_id'];
 $like_reactions = ("SELECT count(reaction) as Likes from reactions where user_id=$user_id and reaction=1");
 $result = mysqli_query($connect, $like_reactions);
  if($result->num_rows > 0)
@@ -89,7 +93,8 @@ else
 
 function num_dislikes(){
 global $connect;
-$user_id = $_SESSION['userId'];
+//$user_id = $_SESSION['userId'];
+$user_id=$_REQUEST['user_id'];
 $dislike_reactions = ("SELECT count(reaction) as Dislikes from reactions where user_id=$user_id and reaction=0");
 $result = mysqli_query($connect, $dislike_reactions);
  if($result->num_rows > 0)
@@ -115,7 +120,8 @@ else
 
 function num_privatechannels(){
 global $connect;
-$user_id = $_SESSION['userId'];
+//$user_id = $_SESSION['userId'];
+$user_id=$_REQUEST['user_id'];
 $private_channels= ("SELECT Count(c.channel_name) as private_channels FROM `channel` c JOIN user_channel u on u.channel_id=c.channel_id where u.user_id=$user_id");
 $result = mysqli_query($connect, $private_channels);
  if($result->num_rows > 0)
@@ -138,7 +144,8 @@ else
 //number of public channels to which user belongs to
 function num_publicchannels(){
 global $connect;
-$user_id = $_SESSION['userId'];
+//$user_id = $_SESSION['userId'];
+$user_id=$_REQUEST['user_id'];
 $public_channels= ("SELECT count(channel_name) num_public FROM `channel` WHERE channel_type='public'");
 $result = mysqli_query($connect, $public_channels);
 if($result->num_rows > 0)
