@@ -55,13 +55,13 @@
   <li>Login page : click on the hyperlink <b>"Not a member ? Sign in here"</b> as shown below</li>
     <br>
         <div class="container">                  
-        <img src="./help/Registration.jpg" class="img-responsive" alt="Cinque Terre" width="350" height="250"> 
+        <img src="./help/Registration4.jpg" class="img-responsive" alt="Cinque Terre" width="350" height="250"> 
         </div>
       <br>
   <li> Signup page : Enter user details --> <b>Submit</b> -- > click on the hyperlink  <b>"click here to login"</b></li>
       <br>
         <div class="container">                  
-        <img src="./help/Registration2.jpg" class="img-responsive" alt="Cinque Terre" width="650" height="450"> 
+        <img src="./help/Registration5.jpg" class="img-responsive" alt="Cinque Terre" width="650" height="450"> 
         </div>
 <br>
       <li>Login Page: You can login using the same credentials -- > <b>Submit</b></li>
