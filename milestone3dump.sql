@@ -145,8 +145,12 @@ CREATE TABLE `profile_pic` (
 --
 
 INSERT INTO `profile_pic` (`user_id`, `img_id`, `img_path`) VALUES
-(1, 1, '51967684.jpg'),
-(2, 6, 'User-icon.png');
+(1, 1, '4.jpeg'),
+(2, 6, '2.jpeg'),
+(3, 7, '3.jpeg'),
+(4, 8, '4.jpeg'),
+(6, 12, '6.jpeg'),
+(5, 13, '5.jpeg');
 
 -- --------------------------------------------------------
 
