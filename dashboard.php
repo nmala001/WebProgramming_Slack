@@ -373,7 +373,7 @@ function search()
           success : function(data) {
             console.log(data);
                 $.each(data,function(i,d){
-                  $("#searchResults").append("<a onclick='takeToProfile("+d.user_id+")'>"+d.username+"</a>");
+                  $("#searchResults").append("<a href='OtherUserProfile.php?user_id="+d.user_id+"'>"+d.username+"</a>");
                 });
           }
         });
@@ -473,8 +473,9 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <!--<li><a href="invite_users.php">Invite Users</a></li>-->
-        <li><a href="#">Help</a></li>
+
+        <li class="active"><a href="Help.php">Help</a></li>
+
         <li><a href="#">Settings</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
         

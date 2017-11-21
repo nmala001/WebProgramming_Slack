@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .bgcolor {
     background-color: lightblue;
 }
@@ -20,4 +21,28 @@ h1 {
 .w3-light-white {
     color: #000!important;
     background-color: #f1f1f1!important
+=======
+.bgcolor {
+    background-color: lightblue;
+}
+
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
+
+.w3-padding-small {
+    /*   padding-top: 200px;*/
+    margin-top: 50px;
+}
+
+.w3-light-grey {
+    color: #000!important;
+    background-color: #f1f1f1!important
+}
+
+.w3-light-white {
+    color: #000!important;
+    background-color: #f1f1f1!important
+>>>>>>> d9fd6299650ee9c3c1c2671c195137aba301a6c6
 }
