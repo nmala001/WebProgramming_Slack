@@ -30,7 +30,6 @@ if($_POST){
 
 		$sql = "SELECT * FROM user WHERE username = '$username'";
 		$result = $connect ->query($sql);
-		
 
 		if($result-> num_rows == 1){
 
@@ -39,32 +38,25 @@ if($_POST){
 			$mainSql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
 			$mainResult = $connect -> query($mainSql);
 
-			
 			if($mainResult-> num_rows == 1){
 
 				$value = $mainResult -> fetch_assoc();
 				$user_id = $value['user_id'];
-				$user_name = $value['user_name'];
-
+				$username = $value['username'];
+				// print($username); die;
 
 				//set session
 
 				$_SESSION['userId'] = $user_id;
 				$_SESSION['userName'] = $username;
 
-
-				header('location: dashboard.php');
-			}
-
-
-
-
-			
-
-
-
-
-			else{
+					if ($username == "Admin"){
+						header('location: dashboard_admin.php');
+						
+					}else{
+						header('location: dashboard.php');
+					}
+			}else{
 
 			$errors[] = "Incorrect username/password combination";
 
@@ -106,55 +98,62 @@ body {
 
 
 <body>
-        <div class="top_block">
-   <h1> <img src="/images/img4.jpg" class="img-circle" alt="icon" style="float:left;width:400px;height:400px;"><font size="300">Welcome to Slack</font></h1>
+        <div class="top_block row" style="background: linear-gradient(to bottom, #ff8c60 10%, rgba(255, 89, 10, 0.16) 90%); margin-top: 5px;">
+							<div class ="col-sm-2">
+								<img class="img-responsive rounded" src="images/img4.jpg" alt="icon" style="border-radius: 25px; border: 3px solid #71d051;">
+							</div>
+						<div class ="col-sm-10 ">
+						<h1 align="center"><font size="100">Welcome to Slack!!! </font></h1>
+						</div>
+							
         </div>
-<div class= "container">
-	<div class="row vertical">
+		<br><br>
+				<div  class= "container">
+									<div class="row vertical">
 
-		<div class="col-md-5 col-md-offset-4">
+												<div class="col-md-5 col-md-offset-4">
 
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h3 class="panel-title"> Sign In</h3>
-			  </div>
-			  <div class="panel-body">
+																<div class="well"  class="panel panel-default">
+																				<div class="panel-heading">
+																					<h3 align="center" class="panel-title"> <b>Sign In</b></h3>
+																				</div>
+																				<div class="panel-body">
 
-			  	<form class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" id="loginForm">
-				  <div class="form-group">
-				    <label for="username" class="col-sm-2 control-label">Username</label>
-				    <div class="col-sm-12">
-				      <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="password" class="col-sm-2 control-label">Password</label>
-				    <div class="col-sm-12">
-				      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <div class="checkbox">
-				        <label>
-				          <input type="checkbox"> Remember me
-				        </label>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button type="submit" class="btn btn-success" style="width: 30%">Submit</button>
-				    </div>
-				  </div>
-				  <a href="signup.php">Not a member?Sign in here</a>
-				</form>
-			  </div>
-			</div>
-		</div>
-	</div>
+																						<form class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" id="loginForm">
+																												<div class="form-group">
+																													<label for="username" class="col-sm-2 control-label">Username</label>
+																													<div class="col-sm-12">
+																														<input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+																													</div>
+																												</div>
+																												<div class="form-group">
+																													<label for="password" class="col-sm-2 control-label">Password</label>
+																													<div class="col-sm-12">
+																														<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+																													</div>
+																												</div>
+																												<div class="form-group">
+																													<div class="col-sm-offset-2 col-sm-10">
+																														<div class="checkbox">
+																															<label>
+																																<input type="checkbox"> Remember me
+																															</label>
+																														</div>
+																													</div>
+																												</div>
+																												<div class="form-group">
+																													<div class="col-sm-offset-2 col-sm-10">
+																														<button type="submit" class="btn btn-success" style="width: 30%">Submit</button>
+																													</div>
+																												</div>
+																												<a href="signup.php">Not a member?Sign in here</a>
+																					</form>
+																				</div>
+																</div>
+												</div>
+									</div>
 
-</div>
+							</div>
 
 
 
