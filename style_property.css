@@ -1,0 +1,23 @@
+.bgcolor {
+    background-color: lightblue;
+}
+
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
+
+.w3-padding-small {
+    /*   padding-top: 200px;*/
+    margin-top: 50px;
+}
+
+.w3-light-grey {
+    color: #000!important;
+    background-color: #f1f1f1!important
+}
+
+.w3-light-white {
+    color: #000!important;
+    background-color: #f1f1f1!important
+}
