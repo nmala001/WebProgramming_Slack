@@ -74,7 +74,7 @@ function showChannel(channel_id,status)
 
                   //if(d.user_id==uid){
                       if(d.reply_msg_id=="0"){
-                             tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button><button type='button' class='btn btn-default btn-sm delete' onclick='deleteposts("+d.message_id+","+d.reply_msg_id+")'><span class='glyphicon glyphicon glyphicon-trash'></span>Delete</button></div></div></td></tr>";
+                             tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button><button type='button' class='btn btn-default btn-sm delete' onclick='deleteposts(this, "+d.message_id+","+d.reply_msg_id+")'><span class='glyphicon glyphicon glyphicon-trash'></span>Delete</button></div></div></td></tr>";
                       }
               });
               tableData +="</tbody></table>";
@@ -86,7 +86,7 @@ function showChannel(channel_id,status)
 
                   //if(d.user_id==uid){
                       if(d.reply_msg_id!="0"){
-                             $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><p>"+d.created_time+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' id='dislikes' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)'>DisLikes <span class='badge'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm delete' onclick='deleteposts("+d.message_id+","+d.reply_msg_id+")'><span class='glyphicon glyphicon glyphicon-trash'></span>Delete</button></div></div>");
+                             $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><p>"+d.created_time+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' id='dislikes' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)'>DisLikes <span class='badge'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm delete' onclick='deleteposts(this,"+d.message_id+","+d.reply_msg_id+")'><span class='glyphicon glyphicon glyphicon-trash'></span>Delete</button></div></div>");
                       }
                 });
 
@@ -249,7 +249,7 @@ function sendMessageToChannel(){
                   var chatTable=$('#example').DataTable();
                 
                   chatTable.row.add( [data,
-                  "<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button><button type='button' class='btn btn-default btn-sm delete' onclick='deleteposts("+d.message_id+","+d.reply_msg_id+")'><span class='glyphicon glyphicon glyphicon-trash'></span>Delete</button></div></div>"
+                  "<div class='media'><div class='media-left'><img src='http://w3schools.com/bootstrap/img_avatar2.png' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button><button type='button' class='btn btn-default btn-sm delete' onclick='deleteposts(this, "+d.message_id+","+d.reply_msg_id+")'><span class='glyphicon glyphicon glyphicon-trash'></span>Delete</button></div></div>"
                     ] ).draw( false );
 
                   $('#example').DataTable().order([0, 'desc']).draw();
@@ -265,7 +265,7 @@ function sendMessageToChannel(){
     
 }
 
-function deleteposts(message_id,reply_msg_id) {
+function deleteposts(x, message_id,reply_msg_id) {
    
     //var reply_msg_id = $("#send_replyid").val() ;
     
@@ -284,7 +284,9 @@ function deleteposts(message_id,reply_msg_id) {
                   if(data=="success"){
 
                     alert("Message deleted successfully!");
-                      
+                    $(x).parent().parent().hide();
+                    //location.href = "dashboard_admin.php";
+                   // location.reload(true);  
                   }
                        
                 }
