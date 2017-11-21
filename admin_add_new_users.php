@@ -25,7 +25,7 @@ $username = $_SESSION['userName'];
   <script type="text/javascript">
     
     var uname="<?php echo $_SESSION['userName']?>";
-    var uid="<?php echo $_SESSION['userId']?>";
+   var uid="<?php echo $_SESSION['userId']?>";
     
      
 function insertIntoChannel(){
@@ -59,7 +59,128 @@ function insertIntoChannel(){
                       }
 
 }
+
+
+function showusersinChannel(){
+var channelName=$( "#channelName option:selected" ).text();
+                      $.ajax({
+                              type: "post",
+                              url: "./showusersinchannel.php",
+                              data: "cname=" +channelName,
+                              contentType:"application/x-www-form-urlencoded",
+                              success:function(data,status,jqXHR) {
+
+                              var users=JSON.parse(data);  
+                               console.log(data);
+                              $.each(users,function(i,d){
+          
+      $("#existingusers").append('<li class="list-group-item"><div class="row" id="eachrowexistingusers" ><a href="#" style="float:left;"><b>'+d.username+'</b></a>  <button type="button" class="btn btn-primary active" style="float:right;" onclick="removeuserfromchannel(this,'+d.user_id+',\''+d.channel_id+'\',\''+d.username+'\')">Remove User</button></div></li>');
+        });
+
+        console.log(data);
+      
+          
+      },error:function(data,status,jqXHR){
+        console.log(data);
+          alert("error");
+      }
+                           
+                              
+                          });
+                      
+
+}
+
+function removeuserfromchannel(x,userid,channelid,username){
+  $.ajax({
+                              type: "post",
+                              url: "./deleteusers.php",
+                              data: "userid=" +userid+"&channelid="+channelid,
+                              contentType:"application/x-www-form-urlencoded",
+                              success:function(data,status,jqXHR) {
+             console.log(data);                   
+$("#newusers").append('<li class="list-group-item"><div class="row" id="eachrownewusers" ><a href="#" style="float:left;"><b>'+username+'</b></a>  <button type="button" class="btn btn-primary active" style="float:right;" onclick="Adduser(this,'+userid+',\''+channelid+'\',\''+username+'\')">Add User</button></div></li>');
+$(x).parent().parent().remove();
+
+
+},error:function(data,status,jqXHR){
+        console.log(data);
+          alert("error");
+      }
+                           
+                              
+                          });
+
+}
+
+function showavailableusers(){
+  var channelName=$( "#channelName option:selected" ).text();
+
+   $.ajax({
+                              type: "post",
+                              url: "./showavailableusers.php",
+                              data: "cname=" +channelName,
+                              contentType:"application/x-www-form-urlencoded",
+                              success:function(data,status,jqXHR) {
+
+                              var usersnew=JSON.parse(data);  
+                               console.log(data);
+                              $.each(usersnew,function(i,d){
+                                $("#newusers").append('<li class="list-group-item"><div class="row" id="eachrownewusers" ><a href="#" style="float:left;"><b>'+d.username+'</b></a>  <button type="button" class="btn btn-primary active" style="float:right;" onclick="Adduser(this,'+d.user_id+',\''+d.channel_id+'\',\''+d.username+'\')">Add User</button></div></li>');
+        });
+
+        console.log(data);
+      
+
+
+          
+      },error:function(data,status,jqXHR){
+        console.log(data);
+          alert("error");
+      }
+                           
+                              
+                          });
+          
+
+}
+
+function Adduser(x,userid,channelid,username){
+  $.ajax({
+                              type: "post",
+                              url: "./addusers.php",
+                              data: "userid=" +userid+"&channelid="+channelid,
+                              contentType:"application/x-www-form-urlencoded",
+                              success:function(data,status,jqXHR) {
+console.log(data);
+$("#existingusers").append('<li class="list-group-item"><div class="row" id="eachrowexistingusers" ><a href="#" style="float:left;"><b>'+username+'</b></a>  <button type="button" class="btn btn-primary active" style="float:right;" onclick="removeuserfromchannel(this,\''+userid+'\',\''+channelid+'\',\''+username+'\')">Remove User</button></div></li>');
+
+$(x).parent().parent().remove();
+
+
+},error:function(data,status,jqXHR){
+        console.log(data);
+          alert("error");
+      }
+                           
+                              
+                          });
+          
+
+}
+
+
 </script>
+<style>
+#textright{
+  overflow-y:scroll;
+  
+  
+}
+
+
+
+</style>
 </head>
 
 <body >
@@ -116,8 +237,7 @@ function insertIntoChannel(){
       <ul class="nav navbar-nav">
         <li><a href="dashboard_admin.php">Home</a></li>
         <li><a href="admin_create_new_users.php">Create New Users</a></li>
-        <li class="active"><a href="#">Add Users</a></li>
-        <li><a href="admin_delete_users.php">Delete Users</a></li>
+        <li class="active"><a href="#">Manage Users</a></li>
         <li><a href="admin_archive_unarchive.php">Archive/Un-Archive</a></li>
         <li><a href="admin_help.php">Help</a></li>
         <li><a href="admin_settings.php">Settings</a></li>
@@ -138,12 +258,34 @@ function insertIntoChannel(){
 </nav>
   <br><br>
   <!-- Add New Users code Start -->
-  <div class="container" style ="width: 25%">
-    <div class="panel-group" >
- 
+  <div class="container-fluid" >
+  <div class="row">
+  <div class="col-sm-6 leftside" style="padding-left: 10%">
+  <div class="panel-group" style="width:60%;">
+    
         <div class="panel panel-primary"  >
             <div class="panel-heading" style="color:white"> 
-                  <h3 align="center"><b>Add Users To a Channel</b></h3>
+                  <h3 ><b>Available Users</b></h3>
+            </div>
+  <div id="textleft" style="border:2px solid black;height:400px;overflow-y:scroll;">
+<ul class="newusers" id="newusers">
+
+</ul> 
+
+
+
+
+
+</div>
+</div>
+</div>
+  </div>
+  <div class="col-sm-6 rightside" style="width:50%;">
+  <div class="panel-group" style="width:60%;">
+    
+        <div class="panel panel-primary"  >
+            <div class="panel-heading" style="color:white"> 
+                  <h3 ><b>Manage Users</b></h3>
             </div>
                       <div class="w3-padding-small panel-body">
                       <!-- Add New UsersForm -->
@@ -153,7 +295,7 @@ function insertIntoChannel(){
                           <div  class ="col-sm-7">
                                  <div class="dropdown">
                                    <!-- Select channel Name -->
-                                    <select id="channelName"style="background-color:#e6e6e6;color:black" name="cars">
+                                    <select id="channelName" style="background-color:#e6e6e6;color:black" name="cars">
                                     <option value="0">Select Channel</option>
                                     <?php
                                           $sql="SELECT channel_name,channel_id FROM `channel`WHERE channel_type='private' ";
@@ -169,11 +311,11 @@ function insertIntoChannel(){
                           </div>
                       </div>
                       
-                      <div class="form-group ">
+                     <!-- <div class="form-group ">
                           <label class ="control-label col-sm-5"  for="add_users_to_channel"> Users </label>
                           <div  class ="col-sm-7">
                               <div class="dropdown">
-                                   <!-- Select Users -->
+                                  
                                  <select id="usersSelected" style="background-color:#e6e6e6;color:black" name="cars">
                                  <option value="0">Select User</option>
                                         <?php
@@ -184,21 +326,46 @@ function insertIntoChannel(){
                                             }
                                           ?>                                    
                                     
-                                    </select> <!-- Select Users -->
+                                    </select> 
                               </div>
                         </div>
-                      </div>
+                      </div>-->
                       <div class="form-group ">
                           <label class ="control-label col-sm-4"  for="submit_button"> </label>
                           <div  class ="col-sm-6">
-                              <button type="button" onclick="insertIntoChannel()" class="btn btn-success">Submit</button>
+                              <button type="button" id="selectchannel" onclick="showusersinChannel(),showavailableusers()" class="btn btn-success">Select</button>
                         </div>
                       </div>
-                    </form><!-- Add New UsersForm -->
+                    </form>
               </div>
         </div>
-      </div>  
-    </div>
+      </div>  <!--panel-->
+
+
+      <div class="panel-group" >
+    
+        <div class="panel panel-primary"  >
+            <div class="panel-heading" style="color:white"> 
+                  <h3 ><b>Existing Users</b></h3>
+            </div>
+
+<div id="textright" style="border:2px solid black;height:400px;">
+<ul class="existingusers" id="existingusers">
+
+</ul> 
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+    </div><!--rightside-->
+    </div><!--row-->
+</div><!--container-->
      <!-- Add New Users code Ends -->
 </body>
 
