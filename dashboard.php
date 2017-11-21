@@ -473,7 +473,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Help</a></li>
+        <li class="active"><a href="Help.php">Help</a></li>
         <li><a href="#">Settings</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
         
