@@ -96,7 +96,7 @@ body {
 
 </head>
 
-<!--  -->
+
 <body>
         <div class="top_block row" style="background: linear-gradient(to bottom, #ff8c60 10%, rgba(255, 89, 10, 0.16) 90%); margin-top: 5px;">
 							<div class ="col-sm-2">
