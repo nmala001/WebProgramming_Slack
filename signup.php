@@ -101,7 +101,7 @@ if ($_POST)
           echo "Please check the the captcha form.";
           
                 }
-      $response=json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LdSCjgUAAAAADeIlXbuZW5b2tKxxS6b7pEMQyGN&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']), true);
+      $response=json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Ld4aDsUAAAAAEt7IOzvYQ1etEXCNvfuOPod6bsu&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']), true);
        if($response['success'] == false)
         {
           echo '<h2>Please check the the captcha form!</h2>';
@@ -204,7 +204,7 @@ if ($_POST)
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4"><br>
-  <div class="g-recaptcha" data-sitekey="6LdSCjgUAAAAAB72jzOoSA6rlZcalXpQIN0w73G-"></div>
+  <div class="g-recaptcha" data-sitekey="6Ld4aDsUAAAAACcz3qALipBOLjhjl9UwFieJK9tm"></div>
   </div>
 </div>
 <!-- Button -->
