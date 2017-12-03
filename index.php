@@ -10,23 +10,48 @@ if(isset($_SESSION['userId']) && isset($_SESSION['userName'])){
 }
 
 $errors = array();
+$error=false;
 
 if($_POST){
 		$username = $_POST['username'];
 		$password = $_POST['password'];
+		if(isset($_POST['g-recaptcha-response']))
+          $captcha=$_POST['g-recaptcha-response'];
+
+    if(!$captcha){
+      $errors[] = "Captcha is not checked";
+      $error=true;
+          echo '<script language="javascript">';
+          echo 'alert("Please check the the captcha form.")';
+          echo '</script>';
+          //echo "Please check the the captcha form.";
+      }
+      $response=json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Ld4aDsUAAAAAEt7IOzvYQ1etEXCNvfuOPod6bsu&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']), true);
+       if($response['success'] == false)
+        {
+        	$error=true;
+        	echo '<script language="javascript">';
+          echo 'alert("Please check the the captcha form.")';
+        	echo '</script>';
+          //echo '<h2>Please check the the captcha  form!</h2>';
+        }
 
 		   if(empty($username)||empty($password)){
 
 		   	if($username == ""){
-
+		   		$error=true;
 		   		$errors[] = "Username is required";
 		   	}
 		   	if($password == ""){
-
+		   		$error=true;
+		   		echo '<script language="javascript">';
+          echo 'alert("Password is required")';
+        	echo '</script>';
 		   		$errors[] = "Password is required";
+
 		   }
 
-	}else{
+	}elseif($error==false){
 
 		$sql = "SELECT * FROM user WHERE username = '$username'";
 		$result = $connect ->query($sql);
@@ -86,6 +111,8 @@ if($_POST){
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 	
 <style>
 body {
@@ -130,6 +157,11 @@ body {
 																													<label for="password" class="col-sm-2 control-label">Password</label>
 																													<div class="col-sm-12">
 																														<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+																													</div>
+																												</div>
+																												<div class="form-group">
+																													<div class="col-sm-offset-2 col-sm-10">
+																													<div class="g-recaptcha" data-sitekey="6Ld4aDsUAAAAACcz3qALipBOLjhjl9UwFieJK9tm"></div>
 																													</div>
 																												</div>
 																												<div class="form-group">
