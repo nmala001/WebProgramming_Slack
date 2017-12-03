@@ -7,6 +7,7 @@ $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
 ?>
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <html>
 <head>
 	<title>Stud-Collab</title>
