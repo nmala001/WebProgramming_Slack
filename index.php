@@ -141,7 +141,7 @@ body {
 
 												<div class="col-md-5 col-md-offset-4">
 
-																<div class="well"  class="panel panel-default">
+																<div class="panel panel-default">
 																				<div class="panel-heading">
 																					<h3 style="text-align:center" class="panel-title"> <b>Sign In</b></h3>
 																				</div>
