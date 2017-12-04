@@ -101,7 +101,6 @@ if($_POST){
 
 <!DOCTYPE html>
 <html lang="en"> 
-<html>
 <head>
 <meta charset="utf-8">	
 	<title>Stud-Collab</title>
@@ -132,7 +131,7 @@ body {
 								<img class="img-responsive rounded" src="images/img4.jpg" alt="icon" style="border-radius: 25px; border: 3px solid #71d051;">
 							</div>
 						<div class ="col-sm-10 ">
-						<h1 style="text-align:center"><p style="font-size:100">Welcome to Slack!!!</p></h1>
+						<h1 style="text-align:center"><b style="font-size:100">Welcome to Slack!!!</b></h1>
 						</div>
 							
         </div>
