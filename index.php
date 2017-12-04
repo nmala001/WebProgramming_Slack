@@ -100,8 +100,10 @@ if($_POST){
 ?>
 
 <!DOCTYPE html>
+<html lang="en"> 
 <html>
 <head>
+<meta charset="utf-8">	
 	<title>Stud-Collab</title>
 
 	<!--custom css -->
@@ -130,7 +132,7 @@ body {
 								<img class="img-responsive rounded" src="images/img4.jpg" alt="icon" style="border-radius: 25px; border: 3px solid #71d051;">
 							</div>
 						<div class ="col-sm-10 ">
-						<h1 align="center"><font size="100">Welcome to Slack!!! </font></h1>
+						<h1 style="text-align:center"><p style="font-size:100">Welcome to Slack!!!</p></h1>
 						</div>
 							
         </div>
@@ -142,7 +144,7 @@ body {
 
 																<div class="well"  class="panel panel-default">
 																				<div class="panel-heading">
-																					<h3 align="center" class="panel-title"> <b>Sign In</b></h3>
+																					<h3 style="text-align:center" class="panel-title"> <b>Sign In</b></h3>
 																				</div>
 																				<div class="panel-body">
 
