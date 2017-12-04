@@ -199,6 +199,7 @@ $userPictureURL = 'uploads/images/'.$userPicture;
 
 <html>
 <head>
+<meta charset="UTF-8">
 <style type="text/css">
     .container{width: 100%;}
 .user-box {
