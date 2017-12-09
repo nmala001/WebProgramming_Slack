@@ -1,14 +1,13 @@
 <?php
 session_start();
 require_once 'php_action/db_connect.php';
-require_once 'queries.php';
+//require_once 'queries.php';
 
 $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
 ?>
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<html>
 <head>
 	<title>Stud-Collab</title>
 
@@ -24,7 +23,7 @@ $username = $_SESSION['userName'];
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="./tinymce/tinymce.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <style type="text/css">
+  <style>
     
        table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
         table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
@@ -53,7 +52,7 @@ $username = $_SESSION['userName'];
 }*/
 
   </style>
-  <script type="text/javascript">
+  <script">
     
     var uname="<?php echo $_SESSION['userName']?>";
     var uid="<?php echo $_SESSION['userId']?>";
@@ -422,7 +421,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
       <div class="modal-body">
         <div class="form-group">
         <textarea id="replymsg"></textarea>
-        <input type="hidden" id="send_replyid"></input>
+        <input type="hidden" id="send_replyid">
       </div>
       </div>
       <div class="modal-footer">
@@ -502,8 +501,8 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
              ?>
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href=".\Profile.php">Profile</a></li>
-          <li><a href=".\UserMetrics.php">Usage</a></li>
+          <li><a href="Profile.php">Profile</a></li>
+          <li><a href="UserMetrics.php">Usage</a></li>
         </ul>
       </li>
               <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
