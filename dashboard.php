@@ -505,7 +505,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
           <li><a href="UserMetrics.php">Usage</a></li>
         </ul>
       </li>
-              <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
+              <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a></li>
       </ul>
 
     </div>
