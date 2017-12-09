@@ -42,6 +42,7 @@
       </ul>
 
   </div>
+ </div>
 </nav>
     <div class="container">
   <div class="page-header">
