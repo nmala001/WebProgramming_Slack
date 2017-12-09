@@ -52,7 +52,7 @@ $username = $_SESSION['userName'];
 }*/
 
   </style>
-  <script">
+  <script>
     
     var uname="<?php echo $_SESSION['userName']?>";
     var uid="<?php echo $_SESSION['userId']?>";
@@ -77,7 +77,7 @@ function showChannel(channel_id,status)
           dataType:"json",
           success : function(data) {
           console.log(data);  
-          var tableData=" <table id='example' class='display' cellspacing='0' width='100%''><thead><tr><th>Id</th><th>Messages</th></tr> </thead><tbody>";
+          var tableData=" <table id='example' class='display' cellspacing='0' width='100%'><thead><tr><th>Id</th><th>Messages</th></tr> </thead><tbody>";
         
               $.each(data,function(i,d){
                   lastMsgId= parseInt(d.message_id);
