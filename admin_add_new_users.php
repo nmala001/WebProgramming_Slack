@@ -1,12 +1,11 @@
 <?php
 session_start();
 require_once 'php_action/db_connect.php';
-require_once 'queries.php';
+//require_once 'queries.php';
 $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
 ?>
 <!DOCTYPE html>
-<html>
 <head>
 	<title>Admin-Collab</title>
 
@@ -22,7 +21,7 @@ $username = $_SESSION['userName'];
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="./tinymce/tinymce.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <script type="text/javascript">
+  <script>
     
     var uname="<?php echo $_SESSION['userName']?>";
    var uid="<?php echo $_SESSION['userId']?>";
