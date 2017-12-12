@@ -92,8 +92,9 @@ if($_POST){
 ?>		
     							  
 <!DOCTYPE html>
-<meta charset="UTF-8">
+
 <head>
+<meta charset="UTF-8">
 	<title>Stud-Collab</title>
 
 	<!--custom css -->
@@ -189,7 +190,7 @@ body {
 							</div>
 						<div class ="col-sm-10 " style= "padding-top:50px">
 						<hr >	
-						<div><strong><h4 style = "color:#000000;" align="center"><font size="100">SLACK </font></h4></div>
+						<div><strong><h4 style = "color:#000000;text-align:center;font-size:100">SLACK </h4></div>
 						<div style = "color:#ff0080;"><marquee >On a mission to make your work life simpler pleasant and more productive </marquee></div>
 						</strong>
 						<hr >
@@ -238,9 +239,9 @@ body {
 																													<button id = "submit_login" onclick ="showDiv()" type="button" class="btn btn-success" style="width: 30%">Submit</button>
 																													</div>
 																												</div>
-																												<div id="welcomeDiv" align="center"  style="display:none;margin-top: 5px;border-radius: 25px; border: 3px solid #ffffff; " class="answer_list" >
+																												<div id="welcomeDiv"  style="text-align:center;display:none;margin-top: 5px;border-radius: 25px; border: 3px solid #ffffff; " class="answer_list" >
 																													<b> Enter OTP Below</b>
-																													<input type="number" class="form-control otpnew" id="otpnew" name="otpnew" placeholder="OTP"></input>
+																													<input type="number" class="form-control otpnew" id="otpnew" name="otpnew" placeholder="OTP">
 																													<button id = "verifyOTP" type="button" onclick = "verOTP()" class="btn btn-default" style="width: 30%"> Verify OTP</button>
 																													
 																													</div>
