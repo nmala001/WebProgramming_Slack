@@ -85,7 +85,8 @@ if($_POST){
 
 			$errors[] = "Username does not exists";
 
-			}	
+			}
+			}
 
 		}
 ?>		
