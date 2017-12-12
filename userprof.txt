@@ -1,0 +1,5 @@
+if ($username == "Admin"){
+						header('location: dashboard_admin.php');
+					}else{
+						header('location: dashboard.php');
+					}

@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'php_action/db_connect.php';
-require_once 'queries.php';
+require_once 'C:\xampp\htdocs\Projects_AM\WebProgramming_Slack\php_action\db_connect.php';
+
 
 $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
@@ -199,6 +199,7 @@ $(document).ready(function() {
     $('.openchannel').modal('show');
 
   });
+
   
 
   $('.channelbutton').on('click', function(event) {
