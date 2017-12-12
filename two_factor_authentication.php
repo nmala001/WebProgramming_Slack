@@ -96,7 +96,7 @@ function sendOTP() {
 		'Reply-To: nandith.malapati@gmail.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
 	
-	$success = mail($email, $subject, $message, $headers);
+	//$success = mail($email, $subject, $message, $headers);
 	//if($success){
 	
 	  //echo "success";
