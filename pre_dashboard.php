@@ -35,7 +35,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 curl_setopt($ch,CURLOPT_USERAGENT,'http://developer.github.com/v3/#user-agent-required');
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
 $output=json_decode(curl_exec($ch),TRUE);
-var_dump($output);
+//var_dump($output);
 curl_close($ch);
 
 $username=$output["login"];
