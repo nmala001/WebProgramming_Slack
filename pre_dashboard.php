@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once 'php_action/db_connect.php';
+
 echo "In pre_dash page";
 
 
@@ -67,8 +69,19 @@ function fetchData(){
             $_SESSION['payload'] =$userPayLoad;
     
             $_SESSION['userName'] = $username;
+            
+            $sql = "SELECT * FROM user WHERE username = '$username'";
+		     $result = $connect ->query($sql);
+            if($result-> num_rows == 1){
+				$value = $result -> fetch_assoc();
+                $_SESSION['userId'] = $value["user_id"];
+            }else{
+            
+            //insert query to put username ;
+            }
+            
 
-            header("location: dashboard.php");
+            header("location: dashboard.php?uname=".$username);
     
            // return $userPayLoad;
     
