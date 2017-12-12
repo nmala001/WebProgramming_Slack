@@ -4,9 +4,6 @@ require_once 'php_action/db_connect.php';
 
 echo "In pre_dash page";
 
-
-function fetchData(){
-    
         $client_id = "4121dae809fdd1bbec46";
         $redirect_url = "http://nmala001.cs518.cs.odu.edu/dashboard.php";
     
@@ -92,10 +89,4 @@ function fetchData(){
     
             die('error');
         }
-    
-    
-    
-    }
-
-fetchdata();
 ?> 
