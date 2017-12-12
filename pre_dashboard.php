@@ -42,6 +42,8 @@ $username=$output["login"];
 $_SESSION["userName"]=$output["login"];
 $email=$output["email"];
 $_SESSION["payload"]=$output;
+$user_img=$output["avatar_url"];
+ 
 
             
             $sql = "SELECT * FROM user WHERE username = '$username'";
@@ -53,6 +55,7 @@ $_SESSION["payload"]=$output;
              $stmt="INSERT INTO `user`(`username`, `email` ,`password`) VALUES ('".$username."','".$email."','')";
 		 mysqli_query($connect,$stmt);
 		$_SESSION['userId'] = $connect->insert_id;
+		   
             //insert query to put username ;
             }
             
