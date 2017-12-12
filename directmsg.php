@@ -11,8 +11,9 @@ $username = $_SESSION['userName'];
 
 ?>
 <!DOCTYPE html>
-<meta charset="UTF-8">
+
 <head>
+<meta charset="UTF-8">
 	<title>Stud-Collab</title>
 
 	<!--custom css -->
