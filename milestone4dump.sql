@@ -69,6 +69,56 @@ CREATE TABLE `direct_message` (
   `sender_name` varchar(255) NOT NULL,
   `receiver_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+--
+-- Dumping data for table `direct_message`
+--
+
+INSERT INTO `direct_message` (`dmessage_id`, `sender_id`, `receiver_id`, `message_desc`, `create_on`, `sender_name`, `receiver_name`) VALUES
+(1, 2, 3, 'Hi there ! long time!', '2017-12-10 22:05:49', 'Tow1', 'Sally'),
+(2, 3, 2, 'yes !!! so good to hear from you !', '2017-12-10 22:06:47', 'Sally', 'Tow1'),
+(3, 3, 5, '', '2017-12-10 22:08:46', 'Sally', 'Finn'),
+(9, 3, 2, 'HI', '2017-12-10 20:31:44', 'Sally', 'Tow1'),
+(28, 3, 2, '', '2017-12-10 23:43:34', 'Sally', 'Tow1'),
+(29, 3, 2, '&quot;How are you doing?&quot;', '2017-12-10 23:45:24', 'Sally', 'Tow1'),
+(30, 3, 2, '', '2017-12-10 23:51:28', 'Sally', 'Tow1'),
+(31, 3, 2, '', '2017-12-10 23:55:59', 'Sally', 'Tow1'),
+(32, 3, 2, '&lt;p&gt;good,how are you?&lt;/p&gt;', '2017-12-11 00:00:57', 'Sally', 'Tow1'),
+(33, 3, 2, '&lt;p&gt;asdada&lt;/p&gt;', '2017-12-11 00:05:44', 'Sally', 'Tow1'),
+(34, 3, 2, '&lt;p&gt;dadqasdsa&lt;/p&gt;', '2017-12-11 00:08:26', 'Sally', 'Tow1'),
+(35, 3, 2, '&lt;p&gt;ashhjdsaksadhjsadkj&lt;/p&gt;', '2017-12-11 00:17:46', 'Sally', 'Tow1'),
+(36, 3, 4, '&lt;p&gt;HI&lt;/p&gt;', '2017-12-11 00:20:22', 'Sally', 'Doc'),
+(37, 3, 4, '&lt;p&gt;hey there&lt;/p&gt;', '2017-12-11 00:20:36', 'Sally', 'Doc'),
+(38, 3, 6, '&lt;p&gt;hiÂ &lt;/p&gt;', '2017-12-11 00:22:15', 'Sally', 'Lightning'),
+(39, 3, 8, '&lt;p&gt;hi kavya! how are you??&lt;/p&gt;', '2017-12-11 00:22:49', 'Sally', 'kavya1'),
+(40, 3, 31, '&lt;p&gt;hey Nandi!&lt;/p&gt;', '2017-12-11 00:24:10', 'Sally', 'Nandi'),
+(41, 3, 1, '&lt;p&gt;hi Admin!!&lt;/p&gt;', '2017-12-11 00:24:47', 'Sally', 'Admin'),
+(42, 3, 5, '&lt;p&gt;1&lt;/p&gt;', '2017-12-11 00:30:02', 'Sally', 'Finn'),
+(43, 3, 5, '&lt;p&gt;2&lt;/p&gt;', '2017-12-11 00:30:10', 'Sally', 'Finn'),
+(44, 3, 5, '&lt;p&gt;3&lt;/p&gt;', '2017-12-11 00:30:34', 'Sally', 'Finn'),
+(45, 3, 5, '&lt;p&gt;4&lt;/p&gt;', '2017-12-11 00:30:41', 'Sally', 'Finn'),
+(46, 3, 2, '&lt;p&gt;bbdfgdf&lt;/p&gt;', '2017-12-11 00:37:39', 'Sally', 'Tow1'),
+(48, 3, 32, '&lt;p&gt;1&lt;/p&gt;', '2017-12-11 00:54:43', 'Sally', 'tom'),
+(49, 3, 32, '&lt;p&gt;2&lt;/p&gt;', '2017-12-11 00:54:50', 'Sally', 'tom'),
+(50, 33, 4, '&lt;p&gt;hi&lt;/p&gt;', '2017-12-11 17:47:06', 'pragathi', 'Doc'),
+(51, 33, 31, '&lt;p&gt;hiiiiiiiiiii&lt;/p&gt;', '2017-12-11 17:47:18', 'pragathi', 'Nandi'),
+(52, 33, 6, '&lt;p&gt;hey there&lt;/p&gt;', '2017-12-11 17:49:02', 'pragathi', 'Lightning'),
+(53, 3, 8, '&lt;p&gt;hi&lt;/p&gt;', '2017-12-11 23:05:59', 'Sally', 'kavya1'),
+(54, 3, 32, '&lt;p&gt;hey there&lt;/p&gt;', '2017-12-11 23:06:14', 'Sally', 'tom'),
+(55, 3, 8, '&lt;p&gt;hello&lt;/p&gt;', '2017-12-11 23:06:42', 'Sally', 'kavya1'),
+(56, 3, 31, '&lt;p&gt;hello&lt;/p&gt;', '2017-12-11 23:07:31', 'Sally', 'Nandi'),
+(57, 3, 6, '&lt;p&gt;hi&lt;/p&gt;', '2017-12-11 23:10:11', 'Sally', 'Lightning'),
+(58, 3, 32, '&lt;p&gt;hiiiiiiiiiiiiiiiiiiiiiii&lt;/p&gt;', '2017-12-11 23:10:30', 'Sally', 'tom'),
+(59, 3, 32, '&lt;p&gt;hiiiiiiiiiiiiiiiiiiiiiiiiiiiiii&lt;/p&gt;', '2017-12-11 23:11:59', 'Sally', 'tom'),
+(60, 3, 8, '&lt;p&gt;hey&lt;/p&gt;', '2017-12-11 23:17:45', 'Sally', 'kavya1'),
+(61, 3, 31, '&lt;p&gt;hi&lt;/p&gt;', '2017-12-11 23:19:16', 'Sally', 'Nandi'),
+(62, 3, 8, '&lt;p&gt;hiiiiiii&lt;/p&gt;', '2017-12-11 23:19:55', 'Sally', 'kavya1'),
+(63, 3, 31, '&lt;p&gt;hi&lt;/p&gt;', '2017-12-11 23:20:16', 'Sally', 'Nandi'),
+(64, 3, 6, '&lt;p&gt;hi&lt;/p&gt;', '2017-12-11 23:50:43', 'Sally', 'Lightning'),
+(65, 3, 6, '&lt;p&gt;heyyyyyyyyyyyyyyyyyyyyyyyyyyy&lt;/p&gt;', '2017-12-11 23:51:10', 'Sally', 'Lightning'),
+(66, 3, 6, '&lt;p&gt;hiiiiiiiiii&lt;/p&gt;', '2017-12-11 23:51:45', 'Sally', 'Lightning'),
+(67, 3, 6, '&lt;p&gt;hiiiiiiiiiii&lt;/p&gt;', '2017-12-11 23:52:03', 'Sally', 'Lightning'),
+(68, 3, 2, '&lt;p&gt;hiiiiiiiiii&lt;/p&gt;', '2017-12-11 23:59:37', 'Sally', 'Tow1');
+
 
 -- --------------------------------------------------------
 
@@ -266,20 +316,21 @@ INSERT INTO `otp` (`user_id`, `otp`) VALUES
 CREATE TABLE `profile_pic` (
   `user_id` int(11) NOT NULL,
   `img_id` int(11) NOT NULL,
-  `img_path` varchar(255) NOT NULL
+  `img_path` varchar(255) NOT NULL,
+  `pic_select` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profile_pic`
 --
 
-INSERT INTO `profile_pic` (`user_id`, `img_id`, `img_path`) VALUES
-(1, 1, '4.jpeg'),
-(2, 6, '2.jpeg'),
-(3, 7, '3.jpeg'),
-(4, 8, '4.jpeg'),
-(6, 12, '6.jpeg'),
-(5, 13, '5.jpeg');
+INSERT INTO `profile_pic` (`user_id`, `img_id`, `img_path`, `pic_select`) VALUES
+(1, 1, '4.jpeg', 0),
+(2, 6, './uploads/images/2.jpeg', 0),
+(3, 7, './uploads/images/3.jpeg', 0),
+(4, 8, '4.jpeg', 0),
+(6, 12, '6.jpeg', 0),
+(5, 13, '5.jpeg', 0);
 
 -- --------------------------------------------------------
 
@@ -456,17 +507,17 @@ ALTER TABLE `channel`
 -- AUTO_INCREMENT for table `direct_message`
 --
 ALTER TABLE `direct_message`
-  MODIFY `dmessage_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `dmessage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 --
 -- AUTO_INCREMENT for table `profile_pic`
 --
 ALTER TABLE `profile_pic`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `reactions`
 --
@@ -476,7 +527,7 @@ ALTER TABLE `reactions`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `workspace`
 --
