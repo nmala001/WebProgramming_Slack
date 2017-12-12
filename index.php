@@ -47,7 +47,44 @@ if($_POST){
 				   }
 			}
 			else if($error==false){
-				//copy
+			      $sql = "SELECT * FROM user WHERE username = '$username'";
+		$result = $connect ->query($sql);
+
+		if($result-> num_rows == 1){
+
+			$password = md5($password);
+
+			$mainSql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+			$mainResult = $connect -> query($mainSql);
+
+			if($mainResult-> num_rows == 1){
+
+				$value = $mainResult -> fetch_assoc();
+				$user_id = $value['user_id'];
+				$username = $value['username'];
+				// print($username); die;
+
+				//set session
+
+				$_SESSION['userId'] = $user_id;
+				$_SESSION['userName'] = $username;
+
+					if ($username == "Admin"){
+						header('location: dashboard_admin.php');
+						
+					}else{
+						header('location: dashboard.php');
+					}
+			}else{
+
+			$errors[] = "Incorrect username/password combination";
+
+
+		}
+	}else{
+
+			$errors[] = "Username does not exists";
+
 			}	
 
 		}
