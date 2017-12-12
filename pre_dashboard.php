@@ -40,6 +40,7 @@ curl_close($ch);
 
 $username=$output["login"];
 $_SESSION["userName"]=$output["login"];
+$email=$output["email"];
 $_SESSION["payload"]=$output;
 
             
@@ -49,7 +50,9 @@ $_SESSION["payload"]=$output;
 				$value = $result -> fetch_assoc();
                 $_SESSION['userId'] = $value["user_id"];
             }else{
-            
+             $stmt="INSERT INTO `user`(`username`, `email` ,`password`) VALUES ('".$username."','".$email."','')";
+		 mysqli_query($connect,$stmt);
+		$_SESSION['userId'] = $connect->insert_id;
             //insert query to put username ;
             }
             
