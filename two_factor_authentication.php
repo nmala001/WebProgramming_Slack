@@ -97,7 +97,7 @@ function sendOTP() {
 		'X-Mailer: PHP/' . phpversion();
 	
 	$success = mail($email, $subject, $message, $headers);
-	if($success){
+	//if($success){
 	
 	  //echo "success";
 	  global $connect;
@@ -110,11 +110,11 @@ function sendOTP() {
 		   echo "Error :" .$sql."<br>".$connect->error;
 	  }
 	 // print_r(error_get_last());
-	} else {
-	  //echo "not sent";
-	  $errorMessage = error_get_last()['message'];
-	  //echo $errorMessage;
-	}
+	// } else {
+	//   //echo "not sent";
+	//   $errorMessage = error_get_last()['message'];
+	//   echo $errorMessage;
+	// }
 }
 
 /* function verifyOTP($OTP) {
