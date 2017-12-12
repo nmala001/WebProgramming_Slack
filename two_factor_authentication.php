@@ -89,15 +89,15 @@ function sendOTP() {
 	
 	//$_SESSION["OTP"] = $OTP; 
 	//echo($_SESSION['OTP']);
-	$email;
+	//$email;
 	$subject = 'Slack One Time Password';
 	$message = 'Please Enter the OTP to Login to slack Your One Time Password is' .$OTP;
 	$headers = 'From: nandith.malapati@gmail.com' . "\r\n" .
 		'Reply-To: nandith.malapati@gmail.com' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
 	
-	$success = mail($email, $subject, $message, $headers);
-	if($success){
+	//$success = mail($email, $subject, $message, $headers);
+	//if($success){
 	
 	  //echo "success";
 	  global $connect;
