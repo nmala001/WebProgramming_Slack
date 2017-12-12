@@ -8,6 +8,9 @@ require_once 'queries.php';
 
 $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
+$result_profile = $connect->query("SELECT * FROM profile_pic WHERE user_id = $user");
+$prof_row=$result_profile->fetch_assoc();
+$_SESSION["uImgPath"] = $prof_row['img_path'];
 //$fileDestination = $_POST['fileDestination'];
 
 //echo $fileDestination;
@@ -20,7 +23,7 @@ if(!isset($_SESSION['userName']) && !isset($_SESSION['userId'])){
 }
 ?>
 <!DOCTYPE html>
-<html>
+<meta charset="UTF-8">
 <head>
 	<title>Stud-Collab</title>
 
@@ -36,7 +39,7 @@ if(!isset($_SESSION['userName']) && !isset($_SESSION['userId'])){
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="./tinymce/tinymce.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <style type="text/css">
+  <style>
     
        table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
         table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
@@ -65,10 +68,11 @@ if(!isset($_SESSION['userName']) && !isset($_SESSION['userId'])){
 }*/
 
   </style>
-  <script type="text/javascript">
+  <script>
     
     var uname="<?php echo $_SESSION['userName']?>";
     var uid="<?php echo $_SESSION['userId']?>";
+    var uprofimg="<?php echo $_SESSION['uImgPath'] ?>";
     var selMessage = 0;
     var selChannel=0;
     var lastMsgId=0;
@@ -99,10 +103,10 @@ function showChannel(channel_id,status)
                   //if(d.user_id==uid){
                       if(d.reply_msg_id=="0"){
                                 if(d.file_path==""){
-                                         tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
+                                         tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
                                 }else{
                                       // this message has file path in it
-                                       tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p><a href='"+d.file_path+"'>"+d.file_path+"</a></p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
+                                       tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p><a href='"+d.file_path+"'>"+d.file_path+"</a></p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
                                 }
                             
                             }
@@ -117,7 +121,7 @@ function showChannel(channel_id,status)
 
                   //if(d.user_id==uid){
                       if(d.reply_msg_id!="0"){
-                             $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><p>"+d.created_time+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' id='dislikes' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)'>DisLikes <span class='badge'>"+d.dislikes+"</span></button></div></div>");
+                             $("#thread-"+d.reply_msg_id).append("<div class='media'><div class='media-left'><img src='"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"</h4><p>"+d.message+"</p><p>"+d.created_time+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' id='dislikes' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)'>DisLikes <span class='badge'>"+d.dislikes+"</span></button></div></div>");
                       }
                 });
 
@@ -287,7 +291,7 @@ function sendMessageToChannel(){
                   var chatTable=$('#example').DataTable();
                 
                   chatTable.row.add( [data,
-                  "<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                  "<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
                     ] ).draw( false );
 
                   $('#example').DataTable().order([0, 'desc']).draw();
@@ -399,7 +403,7 @@ function sendRepliesToChannel(){
           console.log("saving message to channel --- "+data);  
               lastMsgId= parseInt(data);
 
-               $("#thread-"+reply_msg_id).append("<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button></div></div>");
+               $("#thread-"+reply_msg_id).append("<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p><div id='thread-"+data+"'></div><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button></div></div>");
               
              },
              error:function(error_msg){
@@ -525,7 +529,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
       <div class="modal-body">
         <div class="form-group">
         <textarea id="replymsg"></textarea>
-        <input type="hidden" id="send_replyid"></input>
+        <input type="hidden" id="send_replyid">
       </div>
       </div>
       <div class="modal-footer">
@@ -591,6 +595,8 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
         <li class="active"><a href="#">Home</a></li>
         <li class="active"><a href="Help.php">Help</a></li>
         <li><a href="#">Settings</a></li>
+	<li class="active"><a href="invite_users_to channel.php">Invite-Users</a></li>
+         <li class="active"><a href="directmsg.php">Direct Message</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
         
       </ul>
@@ -605,12 +611,12 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
              ?>
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href=".\Profile.php">Profile</a></li>
-          <li><a href=".\UserMetrics.php">Usage</a></li>
+          <li><a href="Profile.php">Profile</a></li>
+          <li><a href="UserMetrics.php">Usage</a></li>
         </ul>
       </li>
               <?php var_dump($_SESSION['payload'])?>
-              <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
+              <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a></li>
       </ul>
 
     </div>
