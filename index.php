@@ -246,7 +246,12 @@ body {
 																													
 																													</div>
 																													<div style = "margin-top:25px;">
-																												<a class= "col-sm-offset-2" href="signup.php">Not a member? Sign in here</a>
+																												<a class= "col-sm-offset-2" href="signup.php">Not a member? Sign up here</a>
+																												<!-- git-->
+																												<a href="git_login.php">Sign In with Github</a>
+																												<!-- git-->
+																								
+																												
 																												</div>
 																								</form>
 																				</div>
