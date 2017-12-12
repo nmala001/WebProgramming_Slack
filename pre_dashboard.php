@@ -54,6 +54,6 @@ $_SESSION["payload"]=$output;
             }
             
 
-// header("location: dashboard.php?uname=".$username);
+header("location: dashboard.php?uname=".$username);
 
 ?> 
