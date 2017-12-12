@@ -82,7 +82,8 @@ CREATE TABLE `message` (
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `reply_msg_id` int(11) NOT NULL,
   `message` longtext CHARACTER SET latin1 NOT NULL,
-  `ch_id` int(11) NOT NULL
+  `ch_id` int(11) NOT NULL,
+  `file_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
