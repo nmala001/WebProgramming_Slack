@@ -15,11 +15,8 @@ echo "In pre_dash page";
                 $post = http_build_query(array(
     
                     'client_id' => $client_id,
-                    'redirect_url' => $redirect_url,
                     'client_secret' => 'b8194c65ca1393fcb1d9325ac22a222886316041',
                     'code' => $code,
-    
-    
                     ));
             }
     
@@ -50,43 +47,38 @@ echo "In pre_dash page";
             $url1 = "https://api.github.com/user?access_token =" .$access_token;
             $emails = file_get_contents($url1, false, $context);
             $emails = json_decode($emails, true);
-    
+    	    var_dump(emails);
+		
+	    echo $emails;
             $email = $emails[0];
     
-            $userPayLoad = [
+//             $userPayLoad = [
     
-            'username' => $username,
-            'email' => $email,
-            'fetched_from' => "github"
+//             'username' => $username,
+//             'email' => $email,
+//             'fetched_from' => "github"
     
-            ];
+//             ];
           
           //$_SESSION['userId'] = $user_id;
     
-            $_SESSION['payload'] =$userPayLoad;
+//             $_SESSION['payload'] =$userPayLoad;
     
-            $_SESSION['userName'] = $username;
+//             $_SESSION['userName'] = $username;
             
-            $sql = "SELECT * FROM user WHERE username = '$username'";
-		     $result = $connect ->query($sql);
-            if($result-> num_rows == 1){
-				$value = $result -> fetch_assoc();
-                $_SESSION['userId'] = $value["user_id"];
-            }else{
+//             $sql = "SELECT * FROM user WHERE username = '$username'";
+// 		     $result = $connect ->query($sql);
+//             if($result-> num_rows == 1){
+// 				$value = $result -> fetch_assoc();
+//                 $_SESSION['userId'] = $value["user_id"];
+//             }else{
             
-            //insert query to put username ;
-            }
+//             //insert query to put username ;
+//             }
             
 
-            header("location: dashboard.php?uname=".$username);
+//             header("location: dashboard.php?uname=".$username);
     
            // return $userPayLoad;
     
-    
-    
-    
-        }else{
-    
-            die('error');
-        }
 ?> 
