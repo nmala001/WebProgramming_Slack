@@ -114,13 +114,17 @@ $.ajax({
 console.log("saved direct message to database");  
 console.log(data);
                   //lastMsgId= parseInt(d.message_id);x
-                  var chatTable=$('#example').DataTable();
-                chatTable.row.add( [data,
-                  "<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p></div></div><hr>"] ).draw( false );
+		  
+		  showdirectmsgs(receiver_user_id,receiver_uname);
+		  
+		  
+//                   var chatTable=$('#example').DataTable();
+//                 chatTable.row.add( [data,
+//                   "<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+uname+"</h4><p>"+msg+"</p></div></div><hr>"] ).draw( false );
 
-                  $('#example').DataTable().order([0, 'desc']).draw();
-                  //to clear the previous typed message content
-                  tinymce.get("directmsg").setContent("");
+//                   $('#example').DataTable().order([0, 'desc']).draw();
+//                   //to clear the previous typed message content
+//                   tinymce.get("directmsg").setContent("");
                   
               
              },
