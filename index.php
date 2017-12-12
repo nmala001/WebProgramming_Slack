@@ -1,16 +1,18 @@
 <?php
 session_start();
-//require_once 'php_action/db_connect.php';
+require_once 'php_action/db_connect.php';
 // $random_number = int rand(	);
 
 //include 'two_factor_authentication.php';
 
 //$OTP = $_SESSION['OTP'];
 //var_dump($OTP);
-?>
+$errors=array();
 $error=false;
-
-		if(isset($_POST['g-recaptcha-response']))
+if($_POST){
+	$username= $_POST["username"];
+	$password =$_POST["password"];
+	if(isset($_POST['g-recaptcha-response']))
           $captcha=$_POST['g-recaptcha-response'];
 
     if(!$captcha){
@@ -32,76 +34,46 @@ $error=false;
         }
 
 		   if(empty($username)||empty($password)){
+			   if($username==""){
+				$error=true;
+				$errors[]="username is required";
+			   }
+		   		if($password==""){
+					$error=true;
+					echo '<script language="javascript">';
+					echo 'alert("Password is required")';
+					echo '</script>';
+					$errors[] = "Password is required";
+				   }
+			}
+			else if($error==false){
+				//copy
+			}	
+
+		}
+?>		
+    							  
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<head>
+	<title>Stud-Collab</title>
 
 	<!--custom css -->
-		   		$error=true;
+
 	<link rel="stylesheet" type="text/css" href="custom/css/custom.css">
-		   		$error=true;
-		   		echo '<script language="javascript">';
-          echo 'alert("Password is required")';
-        	echo '</script>';
-		   		$errors[] = "Password is required";
 
-		   }
-	}elseif($error==false){
-
-		$result = $connect ->query($sql);
-					
-					
-			
-
-      /* if(messageotp==rand){
-
-        if(username == "Admin"){
-
-			window.location.href = "dashboard_admin.php";
-			
-		}else{
-			window.location.href = "dashboard_admin.php";
-
-			//window.location.href = "dashboard.php";
-					
-			}
-		
-	  }else{
-
-		alert("The OTP that you entered is incorrect!!");
-
-	  } */
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 
-	
-
-	/* function insertOTP(){
-				var otp = document.getElementById('OTP').value
-				
-				$.ajax({
-							type: 'post',
-							url: 'two_factor_authentication.php',
-							data:"otp="+otp, 
-							success: function(response){
-								
-
-								},
-								error: function(response){
-								//var messageotp =response;	
-      							console.log("error");}
-							});
-	}
-
-
-								$('#verifyOTP').on('click', function() {
-								 // event1.preventDefault();
-								  var otp = document.getElementById('OTP').value
-								  
-
-								  if(rand == otp){
-
-									header('location: dashboard.php');
-								  }
-    							  
-
-
+  <script src="./tinymce/tinymce.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	 <link rel="stylesheet" type="text/css" href="custom/css/custom.css">
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 	<script>
@@ -149,7 +121,7 @@ function showDiv(){
 							data:"uname="+username+"&pwd="+password+"&name=login", 
 							success: function(response){
 								messageotp = response;
-								//alert(messageotp);
+								alert(messageotp);
 								
 								  console.log("OTP has been sent");
 								  //header('location: dashboard.php');
@@ -188,16 +160,8 @@ body {
 		</div>
 		<br><br>
 				<div  class= "container">
-					<div class="row vertical">
-							<div class="col-md-5 col-md-offset-4">
-													<div class="well"  class="panel panel-default">
-										<div class="panel-heading">
-											<h3 align="center" class="panel-title"> <b>Sign In</b></h3>
-										</div>
-										<div class="panel-body">
 
-												<div class="col-md-5 col-md-offset-4">
-
+						<div class="col-md-5 col-md-offset-4">
 																<div class="well" class="panel panel-default">
 																				<div class="panel-heading">
 																					<h3 style="text-align:center" class="panel-title"> <b>Sign In</b></h3>
@@ -233,50 +197,24 @@ body {
 																												</div>
 																												<div class="form-group">
 																													<div class="col-sm-offset-2 col-sm-10">
-																														<button type="submit" class="btn btn-success" style="width: 30%">Submit</button>
+																													<button id = "submit_login" onclick ="showDiv()" type="button" class="btn btn-success" style="width: 30%">Submit</button>
 																													</div>
 																												</div>
-																												<a href="signup.php">Not a member?Sign in here</a>
-																					</form>
+																												<div id="welcomeDiv" align="center"  style="display:none;margin-top: 5px;border-radius: 25px; border: 3px solid #ffffff; " class="answer_list" >
+																													<b> Enter OTP Below</b>
+																													<input type="number" class="form-control otpnew" id="otpnew" name="otpnew" placeholder="OTP"></input>
+																													<button id = "verifyOTP" type="button" onclick = "verOTP()" class="btn btn-default" style="width: 30%"> Verify OTP</button>
+																													
+																													</div>
+																													<div style = "margin-top:25px;">
+																												<a class= "col-sm-offset-2" href="signup.php">Not a member? Sign in here</a>
+																												</div>
+																								</form>
 																				</div>
 																</div>
-												</div>
-												<div class="form-group">
-													<label for="password" class="col-sm-2 control-label">Password</label>
-													<div class="col-sm-12">
-														<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="col-sm-offset-2 col-sm-10">
-														<div class="checkbox">
-															<label>
-																<input type="checkbox"> Remember me
-															</label>
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="col-sm-offset-2 col-sm-10">
-														<button id = "submit_login" onclick ="showDiv()" type="button" class="btn btn-success" style="width: 30%">Submit</button>
-													</div>
-												</div>
-												<div id="welcomeDiv" align="center"  style="display:none;margin-top: 5px;border-radius: 25px; border: 3px solid #ffffff; " class="answer_list" >
-													<b> Enter OTP Below</b>
-													<input type="number" class="form-control otpnew" id="otpnew" name="otpnew" placeholder="OTP"></input>
-													<button id = "verifyOTP" type="button" onclick = "verOTP()" class="btn btn-default" style="width: 30%"> Verify OTP</button>
-													
-													</div>
-													<div style = "margin-top:25px;">
-												<a class= "col-sm-offset-2" href="signup.php">Not a member? Sign in here</a>
-												</div>
-											</form>
-										</div>
-										</div>
-									</div>
-									</div>
-
 							</div>
+</div>
+
 
 
 
