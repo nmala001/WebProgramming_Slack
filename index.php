@@ -190,7 +190,7 @@ body {
 							</div>
 						<div class ="col-sm-10 " style= "padding-top:50px">
 						<hr >	
-						<div><b><h4 style = "color:#000000;text-align:center;font-size:100">SLACK </h4></b></div>
+						<div><b><h4 style = "color:#000000;text-align:center;font-size:100px">SLACK </h4></b></div>
 						<div style = "color:#ff0080;"><marquee >On a mission to make your work life simpler pleasant and more productive </marquee></div>
 						
 						<hr >
