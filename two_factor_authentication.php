@@ -7,7 +7,7 @@ $OTP= rand(10001,99999) . "\n";
 
 
 $_SESSION['OTP'] = $OTP;
-include 'C:\xampp\htdocs\Projects_AM\WebProgramming_Slack\php_action\db_connect.php';
+include './php_action/db_connect.php';
 
 
 /*if(isset($_SESSION['userId']) && isset($_SESSION['userName'])){
