@@ -45,7 +45,7 @@ require_once('./php_action/db_connect.php');
 				if($connect->query($sql)===TRUE)
 				    {
 				    	$message_id= $connect->insert_id;
-				    	echo $message_id;/*Msg id*/
+				    	echo $message_id."|".$fileNameNew;/*Msg id*/
 				    	
 				    }
 				    else 
