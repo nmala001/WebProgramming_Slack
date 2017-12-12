@@ -1,13 +1,14 @@
 <?php
 session_start();
-require_once 'C:\xampp\htdocs\Projects_AM\WebProgramming_Slack\php_action\db_connect.php';
+require_once 'php_action/db_connect.php';
+//require_once 'queries.php';
 
 
 $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
 ?>
 <!DOCTYPE html>
-<html>
+<meta charset="UTF-8">
 <head>
 	<title>Stud-Collab</title>
 
@@ -23,7 +24,7 @@ $username = $_SESSION['userName'];
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="./tinymce/tinymce.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <style type="text/css">
+  <style>
     
        table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
         table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
@@ -52,7 +53,7 @@ $username = $_SESSION['userName'];
 }*/
 
   </style>
-  <script type="text/javascript">
+  <script>
     
     var uname="<?php echo $_SESSION['userName']?>";
     var uid="<?php echo $_SESSION['userId']?>";
@@ -77,7 +78,7 @@ function showChannel(channel_id,status)
           dataType:"json",
           success : function(data) {
           console.log(data);  
-          var tableData=" <table id='example' class='display' cellspacing='0' width='100%''><thead><tr><th>Id</th><th>Messages</th></tr> </thead><tbody>";
+          var tableData=" <table id='example' class='display' cellspacing='0' width='100%'><thead><tr><th>Id</th><th>Messages</th></tr> </thead><tbody>";
         
               $.each(data,function(i,d){
                   lastMsgId= parseInt(d.message_id);
@@ -422,7 +423,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
       <div class="modal-body">
         <div class="form-group">
         <textarea id="replymsg"></textarea>
-        <input type="hidden" id="send_replyid"></input>
+        <input type="hidden" id="send_replyid">
       </div>
       </div>
       <div class="modal-footer">
@@ -488,6 +489,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
         <li class="active"><a href="#">Home</a></li>
         <li class="active"><a href="Help.php">Help</a></li>
         <li><a href="#">Settings</a></li>
+	<li class="active"><a href="invite_users_to channel.php">Invite-Users</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
         
       </ul>
@@ -502,11 +504,11 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
              ?>
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href=".\Profile.php">Profile</a></li>
-          <li><a href=".\UserMetrics.php">Usage</a></li>
+          <li><a href="Profile.php">Profile</a></li>
+          <li><a href="UserMetrics.php">Usage</a></li>
         </ul>
       </li>
-              <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
+              <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a></li>
       </ul>
 
     </div>

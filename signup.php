@@ -75,18 +75,40 @@ if ($_POST)
     if (empty($password))
     {
       $error = true;
+      echo '<script language="javascript">';
+      echo 'alert("Please enter password")';
+      echo '</script>';
       $errorPassword = 'Please enter password';
       echo "Please enter password";
     }
     elseif (strlen($password) < 6)
     {
       $error = true;
+      echo '<script language="javascript">';
+      echo 'alert("Password must be at least 6 characters")';
+      echo '</script>';
       $errorPassword = 'Password must be at least 6 characters';
       echo "Password must be at least 6 characters";
     }
+    if(isset($_POST['g-recaptcha-response']))
+          $captcha=$_POST['g-recaptcha-response'];
+
+    if(!$captcha){
+      $error = true;
+          echo '<script language="javascript">';
+          echo 'alert("Please check the the captcha form.")';
+          echo '</script>';
+          echo "Please check the the captcha form.";
+          
+                }
+      $response=json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Ld4aDsUAAAAAEt7IOzvYQ1etEXCNvfuOPod6bsu&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']), true);
+       if($response['success'] == false)
+        {
+          echo '<h2>Please check the the captcha form!</h2>';
+        }
     // insert into database
     // encrypt password with md5
-    $password = md5($password);
+      $password = md5($password);
     // insert data if no error
     if (!$error)
       {
@@ -113,6 +135,7 @@ if ($_POST)
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 <!--<script src="signup.js"></script>-->
 <script src="js/signup/validate.js"></script>
@@ -178,8 +201,12 @@ if ($_POST)
     </div>
     </div>
 </div>
-
-
+<div class="form-group">
+  <label class="col-md-4 control-label"></label>
+  <div class="col-md-4"><br>
+  <div class="g-recaptcha" data-sitekey="6Ld4aDsUAAAAACcz3qALipBOLjhjl9UwFieJK9tm"></div>
+  </div>
+</div>
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
