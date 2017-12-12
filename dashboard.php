@@ -1,14 +1,26 @@
 <?php
 session_start();
 require_once 'php_action/db_connect.php';
-//require_once 'queries.php';
+require_once 'queries.php';
+//require_once 'init.php';
+//require_once 'uploadfile.php';
 
 
 $user = $_SESSION['userId'];
 $username = $_SESSION['userName'];
+//$fileDestination = $_POST['fileDestination'];
+
+//echo $fileDestination;
+
+//fetchData();
+
+if(!isset($_SESSION['userName']) && !isset($_SESSION['userId'])){
+
+  header("location: index.php");
+}
 ?>
 <!DOCTYPE html>
-<meta charset="UTF-8">
+<html>
 <head>
 	<title>Stud-Collab</title>
 
@@ -24,7 +36,7 @@ $username = $_SESSION['userName'];
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="./tinymce/tinymce.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <style>
+  <style type="text/css">
     
        table.dataTable tr.odd { background-color: white;  border:1px lightgrey;}
         table.dataTable tr.even{ background-color: white; border:1px lightgrey; }
@@ -53,7 +65,7 @@ $username = $_SESSION['userName'];
 }*/
 
   </style>
-  <script>
+  <script type="text/javascript">
     
     var uname="<?php echo $_SESSION['userName']?>";
     var uid="<?php echo $_SESSION['userId']?>";
@@ -67,6 +79,7 @@ function showChannel(channel_id,status)
 {
 
   selChannel= channel_id;
+  $("#uploadChId").val(selChannel);
   // fire ajax call
   // get channel messages service
   $("#channelChat").empty();
@@ -78,15 +91,22 @@ function showChannel(channel_id,status)
           dataType:"json",
           success : function(data) {
           console.log(data);  
-          var tableData=" <table id='example' class='display' cellspacing='0' width='100%'><thead><tr><th>Id</th><th>Messages</th></tr> </thead><tbody>";
+          var tableData=" <table id='example' class='display' cellspacing='0' width='100%''><thead><tr><th>Id</th><th>Messages</th></tr> </thead><tbody>";
         
               $.each(data,function(i,d){
                   lastMsgId= parseInt(d.message_id);
 
                   //if(d.user_id==uid){
                       if(d.reply_msg_id=="0"){
-                             tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
-                      }
+                                if(d.file_path==""){
+                                         tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p>"+d.message+"</p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
+                                }else{
+                                      // this message has file path in it
+                                       tableData += "<tr><td>"+d.message_id+"</td><td><div class='media'><div class='media-left'><img src='./uploads/images/"+d.img_path+"' class='media-object' style='width:60px'></div><div class='media-body'><h4 class='media-heading'>"+d.username+"<p>"+d.created_time+"</p></h4><p><a href='"+d.file_path+"'>"+d.filepath+"</a></p><div id='thread-"+d.message_id+"'></div><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",1)'>Likes <span class='badge' id='likes'>"+d.likes+"</span></button><button type='button' class='btn btn-default btn-sm' onclick='addReactionToMessage(this,"+d.message_id+","+uid+",0)' >DisLikes <span class='badge' id='dislikes'>"+d.dislikes+"</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+d.message_id+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div></td></tr>";
+                                }
+                            
+                            }
+
               });
               tableData +="</tbody></table>";
 
@@ -130,7 +150,7 @@ $(document).ready(function() {
     //end_container_on_empty_block: true,
     //br_in_pre: true,
 
-    plugins: ['advlist autolink lists link image charmap print preview anchor textcolor',
+    plugins: ['advlist autolink lists image link charmap print preview anchor textcolor',
     'searchreplace visualblocks code fullscreen',
     'insertdatetime media table contextmenu paste code help'],
     menubar: "insert",
@@ -138,6 +158,7 @@ $(document).ready(function() {
     
     entity_encoding : "raw",
     toolbar : "imageupload media insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+
         setup: function(editor) {
             var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
             $(editor.getElement()).parent().append(inp);
@@ -201,6 +222,9 @@ $(document).ready(function() {
 
   });
 
+  /*$('#my-button').click(function(){
+    $('#my-file').click();
+});*/
   
 
   $('.channelbutton').on('click', function(event) {
@@ -254,7 +278,7 @@ function sendMessageToChannel(){
           type: 'POST',
           url: 'createnewmsgforchannel.php',
           contentType: "application/x-www-form-urlencoded;charset=ISO-8859-15",
-          data: {"channel_id":selChannel,"message":msg,"replymsgid":0},
+          data: {"channel_id":selChannel,"message":msg, "replymsgid":0},
           success : function(data) {
           console.log("saving message to channel --- ");  
 
@@ -276,9 +300,87 @@ function sendMessageToChannel(){
                 console.log(error_msg);
              }
         });
+}
 
-
+function sendFilesToServer(){
+  //ajax on success
     
+  var formData = new FormData();
+  formData.append("file",$("#file").prop('files')[0]);
+  formData.append("channel_id",selChannel);
+  formData.append("message_id",selMessage);
+    console.log(formData);
+     $.ajax({
+          type: 'POST',
+          url: 'uploadfile.php',
+          data: formData, // what to expect back from the PHP script, if anything
+          cache: false,
+          async:false,
+          contentType: false,
+          processData: false,
+          success : function(data) {
+          console.log("saving File to channel --- ");  
+
+         // alert("Entered the fileupload.php");
+
+          //alert(data);
+                  //lastMsgId= parseInt(d.message_id);
+                  var chatTable=$('#example').DataTable();
+                
+                 chatTable.row.add( [data,
+                  "<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'><a href='./files/"+$("#file").prop('files')[0].name+"'>"+$("#file").prop('files')[0].name+"</a></span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+data+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                    ] ).draw( false );
+
+                  $('#example').DataTable().order([0, 'desc']).draw();
+                  //to clear the previous typed message content
+                  tinymce.get("textmsg").setContent("");
+                  
+              
+             },
+             error:function(error_msg){
+                console.log(error_msg);
+             }
+        }); 
+
+}
+
+function retrieveFilesFromServer(){
+  //ajax on success
+    
+  
+    console.log(formData);
+     $.ajax({
+          type: 'POST',
+          url: 'uploadfile.php',
+          data: formData, // what to expect back from the PHP script, if anything
+          cache: false,
+          async:false,
+          contentType: false,
+          processData: false,
+          success : function(data) {
+          console.log("saving File to channel --- ");  
+
+          alert("Entered the fileupload.php");
+
+          alert(data);
+                  //lastMsgId= parseInt(d.message_id);
+                  var chatTable=$('#example').DataTable();
+                
+                 chatTable.row.add( [data,
+                  "<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'>"+fileDestination+"</span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+data+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                    ] ).draw( false );
+
+                  $('#example').DataTable().order([0, 'desc']).draw();
+                  //to clear the previous typed message content
+                  tinymce.get("textmsg").setContent("");
+                  
+              
+             },
+             error:function(error_msg){
+                console.log(error_msg);
+             }
+        }); 
+
 }
 
 function sendRepliesToChannel(){
@@ -423,7 +525,7 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
       <div class="modal-body">
         <div class="form-group">
         <textarea id="replymsg"></textarea>
-        <input type="hidden" id="send_replyid">
+        <input type="hidden" id="send_replyid"></input>
       </div>
       </div>
       <div class="modal-footer">
@@ -489,7 +591,6 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
         <li class="active"><a href="#">Home</a></li>
         <li class="active"><a href="Help.php">Help</a></li>
         <li><a href="#">Settings</a></li>
-	<li class="active"><a href="invite_users_to channel.php">Invite-Users</a></li>
         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
         
       </ul>
@@ -504,11 +605,12 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
              ?>
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="Profile.php">Profile</a></li>
-          <li><a href="UserMetrics.php">Usage</a></li>
+          <li><a href=".\Profile.php">Profile</a></li>
+          <li><a href=".\UserMetrics.php">Usage</a></li>
         </ul>
       </li>
-              <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a></li>
+              <?php var_dump($_SESSION['payload'])?>
+              <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Signout</a>
       </ul>
 
     </div>
@@ -551,6 +653,13 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
         </div>
       <div class="form-group" id="textAreaHolder">
         <textarea id="textmsg"></textarea><button class="btn btn-primary" onclick="sendMessageToChannel()">Send</button>
+      </div>
+      <div>
+          <input type="file" name="file" id="file"> 
+          <input type="hidden" name="channel_id" id="uploadChId">
+          <input type="hidden" name="user_id" id="uploadUId">
+          <input type="hidden" name="message_id" id="uploadMsgId">
+           <input id="upldBtn" type="button" value="Submit" onclick="sendFilesToServer()" />
       </div>
       
     </div>
