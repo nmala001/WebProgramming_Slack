@@ -43,7 +43,7 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
             //echo "Status of file:".$status;
            
         
-               $sql="INSERT INTO profile_pic (user_id,img_path) VALUES(".$user_id.",'".$fileName."') ON DUPLICATE KEY UPDATE img_path='".$fileName."',user_id=".$user_id."";
+               $sql="INSERT INTO profile_pic (user_id,img_path) VALUES(".$user_id.",'./uploads/images/".$fileName."') ON DUPLICATE KEY UPDATE img_path='./uploads/images/".$fileName."',user_id=".$user_id."";
                 //$sql="update profile_pic set img_path='".$fileName."' where user_id=".$_SESSION["userId"]."";
                 
                 if ($connect->query($sql) === TRUE) 
