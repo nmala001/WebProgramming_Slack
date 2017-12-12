@@ -33,24 +33,30 @@ echo "In pre_dash page";
             ]
     
             ];
+		
+	   echo "Access token: ".$access_token;
     
             //fetching user data
     
             $url = "https://api.github.com/user?access_token =" .$access_token;
             $context = stream_context_create($opts);
             $data = file_get_contents($url, false, $context);
+		
+	    var_dump($data);
             $user_data = json_decode($data, true);
+	    var_dump($user_data);
             $username = $user_data['login'];
     
             //fetching email data
     
-            $url1 = "https://api.github.com/user?access_token =" .$access_token;
-            $emails = file_get_contents($url1, false, $context);
-            $emails = json_decode($emails, true);
-    	    var_dump(emails);
+//             $url1 = "https://api.github.com/user?access_token =" .$access_token;
+//             $emails = file_get_contents($url1, false, $context);
+// 	    var_dump $emails;
+//             $emails = json_decode($emails, true);
+//     	    var_dump(emails);
 		
-	    echo $emails;
-            $email = $emails[0];
+// 	    echo $emails;
+//             $email = $emails[0];
     
 //             $userPayLoad = [
     
