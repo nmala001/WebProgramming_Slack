@@ -598,8 +598,8 @@ var pooler =setInterval(getNewMessagesforChannel,5000);
         <li><a href="#">Settings</a></li>
 	<li class="active"><a href="invite_users_to channel.php">Invite-Users</a></li>
          <li class="active"><a href="directmsg.php">Direct Message</a></li>
-        <li><a href="" class="createbutton">Create A Channel</a></li>        
-      </ul>
+         <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
+	    </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><input type="text" id="searchUser" style="margin-top: 10px;color:black;" onkeyup="search()" />
           <div id="searchResults" style="display: inline;position: absolute;background: white;color: blue;"></div>
