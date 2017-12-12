@@ -261,8 +261,7 @@ function search()
         <li><a href="#">Settings</a></li>
 	<li class="active"><a href="invite_users_to channel.php">Invite-Users</a></li>
   <li class="active"><a href="directmsg.php">Direct Message</a></li>
-        <li><button class="btn btn-primary navbar-btn createbutton">Create A Channel</button></li>
-        
+    <li><a href="" class="createbutton">Create A Channel</a></li>        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><input type="text" id="searchUser" style="margin-top: 10px;color:black;" onkeyup="search()" />
