@@ -323,6 +323,7 @@ function sendFilesToServer(){
           contentType: false,
           processData: false,
           success : function(data) {
+		  var fileinfo=data.split("|");
           console.log("saving File to channel --- ");  
 
          // alert("Entered the fileupload.php");
@@ -331,8 +332,8 @@ function sendFilesToServer(){
                   //lastMsgId= parseInt(d.message_id);
                   var chatTable=$('#example').DataTable();
                 
-                 chatTable.row.add( [data,
-                  "<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'><a href='./files/"+$("#file").prop('files')[0].name+"'>"+$("#file").prop('files')[0].name+"</a></span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+data+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                 chatTable.row.add( [fileinfo[0],
+                  "<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'><a href='./files/"+fileinfo[1]+"'>"+fileinfo[1]+"</a></span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+fileinfo[0]+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
                     ] ).draw( false );
 
                   $('#example').DataTable().order([0, 'desc']).draw();
