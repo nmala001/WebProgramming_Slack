@@ -325,12 +325,11 @@ CREATE TABLE `profile_pic` (
 --
 
 INSERT INTO `profile_pic` (`user_id`, `img_id`, `img_path`, `pic_select`) VALUES
-(1, 1, '4.jpeg', 0),
+(1, 1, './uploads/images/1.jpeg', 0),
 (2, 6, './uploads/images/2.jpeg', 0),
 (3, 7, './uploads/images/3.jpeg', 0),
-(4, 8, '4.jpeg', 0),
-(6, 12, '6.jpeg', 0),
-(5, 13, '5.jpeg', 0);
+(4, 8, './uploads/images/4.jpeg', 0),
+(5, 12, './uploads/images/5.jpeg', 0);
 
 -- --------------------------------------------------------
 
