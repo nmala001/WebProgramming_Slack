@@ -332,7 +332,7 @@ function sendFilesToServer(){
                   var chatTable=$('#example').DataTable();
                 
                  chatTable.row.add( [data,
-                  "<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'><a href='./files/"+$("#file").prop('files')[0].name+"'>"+$("#file").prop('files')[0].name+"</a></span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+data+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                  "<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'><a href='./files/"+$("#file").prop('files')[0].name+"'>"+$("#file").prop('files')[0].name+"</a></span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+data+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
                     ] ).draw( false );
 
                   $('#example').DataTable().order([0, 'desc']).draw();
@@ -371,7 +371,7 @@ function retrieveFilesFromServer(){
                   var chatTable=$('#example').DataTable();
                 
                  chatTable.row.add( [data,
-                  "<div class='media'><div class='media-left'><img src='./uploads/images/"+uid+".jpeg' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'>"+fileDestination+"</span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+data+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
+                  "<div class='media'><div class='media-left'><img src='"+uprofimg+"' class='media-object' style='width:60px'></div><div class='media-body'><span class='files'>"+fileDestination+"</span><h4 class='media-heading'>"+uname+"</h4><p></p><div id='thread-"+data+"'><button type='button' class='btn btn-default btn-sm'>Likes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm'>DisLikes <span class='badge'>0</span></button><button type='button' class='btn btn-default btn-sm reply_c' onclick='sendreplies("+data+")'><span class='glyphicon glyphicon-share-alt'></span>Reply</button></div></div>"
                     ] ).draw( false );
 
                   $('#example').DataTable().order([0, 'desc']).draw();
