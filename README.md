@@ -1,2 +1,3 @@
-# WebProgramming_Slack
-Creating the replica of slack website with identical features
+# StudCollab - A Collaboration and Interprofessional tool similar to Slack
+
+## Intro to Available Features
